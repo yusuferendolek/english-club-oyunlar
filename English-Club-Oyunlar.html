@@ -1,0 +1,1950 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Club – Grade 2</title>
+<style>
+:root{
+  --ink:#2B2A4C; --bg:#FFF6E5; --paper:#FFFFFF; --muted:#6B6A8A;
+  --red:#FF5A5F; --orange:#FF9F1C; --yellow:#FFD23F; --green:#2EC4B6; --lime:#8AC926;
+  --blue:#3A86FF; --purple:#8338EC; --pink:#FF70A6; --sky:#4CC9F0;
+  --bw:clamp(2px,.45vmin,4px);
+  --font:"Nunito","Baloo 2","Segoe UI","Trebuchet MS",system-ui,sans-serif;
+  --emoji:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--bg) radial-gradient(rgba(43,42,76,.07) 1.5px,transparent 1.6px) 0 0/26px 26px;color:var(--ink);font-family:var(--font);font-weight:700;display:flex;flex-direction:column;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,p{margin:0}
+.e{font-family:var(--emoji);font-weight:400;line-height:1.2;font-style:normal}
+b{font-weight:900}
+
+/* ---------- top bar ---------- */
+#topbar{flex:none;height:clamp(54px,9.5vh,86px);display:flex;align-items:center;gap:clamp(6px,1vmin,14px);padding:0 clamp(8px,1.4vmin,18px);background:var(--paper);border-bottom:var(--bw) solid var(--ink);position:relative;z-index:5}
+.tb-btn{flex:none;height:70%;min-width:0;aspect-ratio:1;border:var(--bw) solid var(--ink);border-radius:28%;background:var(--paper);box-shadow:0 .35vmin 0 var(--ink);display:grid;place-items:center;font-size:clamp(18px,3.3vh,30px);cursor:pointer;padding:0}
+.tb-btn:active{transform:translateY(2px);box-shadow:none}
+.tb-btn svg{width:.95em;height:.95em}
+.tb-title{display:flex;align-items:center;gap:.35em;font-size:clamp(18px,3.4vh,34px);font-weight:900;white-space:nowrap}
+.tabs{flex:1;display:flex;gap:clamp(4px,.8vmin,10px);justify-content:center;min-width:0;overflow-x:auto;scrollbar-width:none;padding:4px 2px 7px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:var(--bw) solid var(--ink);border-radius:999px;background:var(--paper);padding:.3em .8em;font-size:clamp(13px,2.2vh,21px);font-weight:800;cursor:pointer;box-shadow:0 .3vmin 0 var(--ink);white-space:nowrap;display:flex;align-items:center;gap:.35em}
+.tab.on{background:var(--yellow)}
+.tools{display:flex;gap:clamp(4px,.8vmin,10px);height:100%;align-items:center;flex:none}
+.star-btn{aspect-ratio:auto;padding:0 .45em;display:flex;gap:.25em;font-weight:900;font-size:clamp(16px,2.8vh,26px);background:#FFF4C2}
+.star-btn.bump{animation:popIn .45s cubic-bezier(.3,1.6,.6,1)}
+@media (max-width:1250px){.tb-title .t{display:none}.tab:not(.on) .l{display:none}}
+
+/* ---------- stage & common ---------- */
+#stage{flex:1;position:relative;min-height:0;overflow:hidden}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;padding:clamp(10px,2vmin,26px);gap:clamp(8px,1.5vmin,18px);animation:fadeIn .25s ease}
+.screen.nopad{padding:0}
+.row{display:flex;gap:clamp(8px,1.4vmin,16px);align-items:center;justify-content:center;flex-wrap:wrap}
+.card{background:var(--paper);border:var(--bw) solid var(--ink);border-radius:clamp(14px,2.6vmin,30px);box-shadow:0 .7vmin 0 var(--ink)}
+.btn{color:var(--ink);border:var(--bw) solid var(--ink);border-radius:999px;background:var(--paper);box-shadow:0 .5vmin 0 var(--ink);padding:.4em 1em;font-weight:900;font-size:clamp(15px,2.5vmin,28px);cursor:pointer;transition:transform .08s,box-shadow .08s;display:inline-flex;align-items:center;gap:.35em;white-space:nowrap}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(.4vmin);box-shadow:0 .1vmin 0 var(--ink)}
+.btn.big{font-size:clamp(19px,3.4vmin,38px)}
+.btn.y{background:var(--yellow)}.btn.g{background:#7BE0AD}.btn.b{background:#9BC7FF}.btn.p{background:#FFB3CF}.btn.o{background:#FFC478}.btn.v{background:#CDB4FF}
+.btn.on{background:var(--yellow)}
+.tab-pill{color:var(--ink);border:var(--bw) solid var(--ink);border-radius:999px;background:#fff;padding:.25em .85em;font-weight:900;font-size:clamp(14px,2.3vmin,25px);cursor:pointer;box-shadow:0 .35vmin 0 var(--ink);display:inline-flex;align-items:center;gap:.3em;white-space:nowrap}
+.tab-pill.on{background:var(--yellow)}
+.bubble{position:relative;background:var(--paper);border:var(--bw) solid var(--ink);border-radius:clamp(14px,3vmin,34px);padding:.35em .85em;font-weight:900;box-shadow:0 .6vmin 0 var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:.35em;background:#FFF1C1;border:var(--bw) solid var(--ink);border-radius:999px;padding:.2em .8em;font-weight:900}
+.chip.big{font-size:clamp(18px,3.6vmin,42px)}
+.chip.xl{font-size:clamp(22px,5vmin,58px);box-shadow:0 .6vmin 0 var(--ink)}
+.hint{color:var(--muted);font-weight:800}
+.blank{display:inline-block;min-width:3.2em;border-bottom:.12em dashed currentColor;height:.9em;vertical-align:baseline}
+.ctrl-br{position:absolute;right:clamp(10px,2vmin,24px);bottom:clamp(10px,2vmin,24px);display:flex;gap:clamp(6px,1.2vmin,14px);z-index:12;align-items:center}
+.intro{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:4vmin 6vmin;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2vmin;z-index:5;max-width:90%}
+.intro-e{font-size:clamp(50px,13vmin,150px)}
+.intro h2{font-size:clamp(30px,7vmin,80px);font-weight:900}
+.intro p{font-size:clamp(18px,3.4vmin,38px);color:var(--muted)}
+.answer{font-size:clamp(24px,5.5vmin,64px);font-weight:900;color:var(--purple);text-align:center}
+.pop{animation:popIn .45s cubic-bezier(.3,1.5,.6,1)}
+
+/* ---------- keyframes ---------- */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8%) rotate(3deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8%)}40%{transform:translateX(8%)}60%{transform:translateX(-5%)}80%{transform:translateX(5%)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+@keyframes bounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7%) scale(1.04,.97)}}
+@keyframes droop{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(4%) rotate(4deg)}}
+@keyframes nod{0%,100%{transform:rotate(0)}30%{transform:rotate(8deg) translateY(2%)}60%{transform:rotate(-2deg)}}
+@keyframes pulse{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.12) rotate(6deg)}}
+@keyframes sleepy{0%,100%{transform:rotate(-14deg) translateY(2%)}50%{transform:rotate(10deg)}}
+@keyframes rumble{0%,60%,100%{transform:translate(0,0)}64%{transform:translate(-3%,1%)}68%{transform:translate(3%,-1%)}72%{transform:translate(-3%,1%)}76%{transform:translate(3%,0)}}
+@keyframes tremble{0%,100%{transform:translate(0,0)}25%{transform:translate(-1.5%,1%)}50%{transform:translate(1.5%,-1%)}75%{transform:translate(-1%,-1%)}}
+@keyframes wobble{0%,100%{transform:skewX(0) rotate(0)}25%{transform:skewX(-6deg) rotate(-4deg)}75%{transform:skewX(6deg) rotate(4deg)}}
+@keyframes angry{0%,100%{transform:translateX(0) scale(1)}10%,30%,50%{transform:translateX(-4%) scale(1.05)}20%,40%{transform:translateX(4%) scale(1.05)}60%{transform:translateX(0) scale(1)}}
+@keyframes silly{0%{transform:rotate(0)}40%{transform:rotate(370deg) scale(1.1)}55%{transform:rotate(350deg)}70%,100%{transform:rotate(360deg)}}
+@keyframes floatUp{0%{transform:translateY(0) rotate(-10deg);opacity:0}10%{opacity:1}85%{opacity:1}100%{transform:translateY(-105vh) rotate(15deg);opacity:0}}
+@keyframes fallDown{0%{transform:translateY(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(105vh);opacity:0}}
+@keyframes toastIn{0%{transform:translate(-50%,-50%) scale(.4) rotate(-8deg);opacity:0}15%{transform:translate(-50%,-50%) scale(1.12) rotate(2deg);opacity:1}25%{transform:translate(-50%,-50%) scale(1) rotate(0)}80%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-60%) scale(.95)}}
+.a-bounce{animation:bounce 1s ease-in-out infinite}
+.a-droop{animation:droop 2.4s ease-in-out infinite}
+.a-nod{animation:nod 1.4s ease-in-out infinite}
+.a-pulse{animation:pulse 1.2s ease-in-out infinite}
+.a-sleepy{animation:sleepy 3s ease-in-out infinite}
+.a-rumble{animation:rumble 1.6s linear infinite}
+.a-shake{animation:angry 1.2s ease-in-out infinite}
+.a-wobble{animation:wobble 1.6s ease-in-out infinite}
+.a-tremble{animation:tremble .18s linear infinite}
+.a-spin{animation:silly 2.4s ease-in-out infinite}
+
+/* ---------- FX layers / modal ---------- */
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+#toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-size:clamp(40px,10vmin,130px);font-weight:900;color:var(--yellow);white-space:nowrap;pointer-events:none;opacity:0;z-index:61;text-shadow:.04em .04em 0 var(--ink),-.04em .04em 0 var(--ink),.04em -.04em 0 var(--ink),-.04em -.04em 0 var(--ink),0 .1em 0 var(--ink)}
+#toast .e{text-shadow:none}
+#toast.show{animation:toastIn 1.5s ease forwards}
+#mini{position:fixed;left:50%;bottom:3vmin;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.5em 1.1em;border-radius:999px;font-size:clamp(14px,2.4vmin,24px);opacity:0;transition:opacity .25s;pointer-events:none;z-index:62}
+#mini.show{opacity:1}
+#modal{position:fixed;inset:0;background:rgba(43,42,76,.55);display:grid;place-items:center;z-index:40;animation:fadeIn .2s}
+#modal[hidden]{display:none}
+.modal-box{position:relative;background:var(--paper);border:var(--bw) solid var(--ink);border-radius:clamp(16px,3vmin,34px);box-shadow:0 1vmin 0 var(--ink);padding:clamp(18px,3.5vmin,44px);width:min(92vw,980px);max-height:92vh;overflow:auto;display:flex;flex-direction:column;gap:2vmin;align-items:center;text-align:center;animation:popIn .3s}
+.modal-box h2{font-size:clamp(26px,5.5vmin,60px);font-weight:900}
+.modal-x{position:absolute;top:1.5vmin;right:1.5vmin;width:clamp(40px,6vmin,64px);height:clamp(40px,6vmin,64px);border-radius:50%;border:var(--bw) solid var(--ink);background:#fff;font-size:clamp(18px,3vmin,30px);cursor:pointer;font-weight:900}
+.slot{width:100%;border:var(--bw) solid var(--ink);border-radius:3vmin;background:#FFF4C2;padding:2vmin;overflow:hidden}
+.slot-name{font-size:clamp(44px,12vmin,140px);font-weight:900;line-height:1.15;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:.3em}
+.slot.win{background:#B9F3D0;animation:popIn .4s}
+.names-ta{width:100%;min-height:38vh;font:inherit;font-size:clamp(18px,3vmin,30px);font-weight:800;border:var(--bw) solid var(--ink);border-radius:2vmin;padding:1.5vmin 2vmin;resize:vertical;color:var(--ink);user-select:text;-webkit-user-select:text}
+.help-grid{display:grid;grid-template-columns:auto 1fr;gap:1.2vmin 3vmin;text-align:left;font-size:clamp(15px,2.5vmin,26px);align-items:center}
+kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;border-radius:.4em;padding:.05em .45em;background:#fff;font-family:var(--font);font-weight:900;font-size:.9em}
+.help-note{font-size:clamp(14px,2.2vmin,22px);color:var(--muted);text-align:left;line-height:1.4}
+
+/* ---------- home ---------- */
+.home{align-items:center}
+.home-head{text-align:center;flex:none;display:flex;flex-direction:column;align-items:center}
+.home-head h1{font-size:clamp(28px,6.5vmin,76px);font-weight:900;display:flex;align-items:center;gap:.3em}
+.home-head p{font-size:clamp(15px,2.8vmin,30px);color:var(--muted)}
+.wave{display:inline-block;transform-origin:70% 80%;animation:wave 1.8s ease-in-out infinite}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}}
+.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
+.tile{position:relative;border:var(--bw) solid var(--ink);border-radius:clamp(16px,3vmin,34px);background:var(--c);box-shadow:0 .8vmin 0 var(--ink);cursor:pointer;display:flex;align-items:center;gap:5%;padding:0 6%;text-align:left;container-type:size;overflow:hidden;transition:transform .12s;min-height:0}
+.tile:hover{transform:translateY(-.5vmin) rotate(-.6deg)}
+.tile:active{transform:translateY(.5vmin);box-shadow:0 .2vmin 0 var(--ink)}
+.tile .te{font-size:min(52cqh,28cqw);animation:float 3s ease-in-out infinite;animation-delay:var(--d)}
+.tile .tt{display:flex;flex-direction:column;min-width:0}
+.tile .tn{font-size:min(21cqh,12.5cqw);font-weight:900;line-height:1.05}
+.tile .ts{font-size:min(12cqh,7cqw);font-weight:800;opacity:.72}
+.tile .k{position:absolute;top:7%;right:4%;font-size:min(11cqh,6cqw);width:1.7em;height:1.7em;border-radius:50%;background:rgba(255,255,255,.75);display:grid;place-items:center;border:2px solid var(--ink);font-weight:900}
+
+/* ---------- learn grid + detail ---------- */
+.lgrid{flex:1;display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-template-rows:repeat(var(--rows),1fr);gap:clamp(8px,1.6vmin,18px);min-height:0}
+.lcard{border:var(--bw) solid var(--ink);border-radius:clamp(12px,2.2vmin,26px);background:var(--paper);box-shadow:0 .6vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2cqh;padding:0;min-height:0;min-width:0;overflow:hidden;container-type:size;transition:transform .12s}
+.lcard:hover{transform:translateY(-.4vmin) rotate(-1deg)}
+.lcard .e{font-size:min(50cqh,56cqw)}
+.lcard .w{font-size:min(15cqh,14cqw);font-weight:900;line-height:1.1}
+.lcard .num{font-size:min(56cqh,50cqw);font-weight:900;line-height:1}
+.lcard .splat-wrap{height:60cqh;aspect-ratio:1}
+.splat{width:100%;height:100%;display:block;overflow:visible}
+.detail{position:absolute;inset:0;background:var(--bg);z-index:3;animation:fadeIn .2s}
+.detail[hidden]{display:none}
+.det-body{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2vmin 13vmin;container-type:size;overflow:hidden}
+.detail.full .det-body{padding:0}
+.det-stack{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2cqh;text-align:center;position:relative;z-index:1;animation:popIn .4s cubic-bezier(.3,1.4,.6,1)}
+.det-word{font-size:min(14cqh,13cqw);font-weight:900;line-height:1.05}
+.det-sent{font-size:min(8cqh,6.5cqw);font-weight:900;color:var(--purple)}
+.det-sent small{font-size:.6em;color:var(--muted)}
+.emo-big{font-size:min(34cqh,34cqw);display:inline-block}
+.nav-arrow{position:absolute;top:50%;transform:translateY(-50%);width:clamp(48px,9vmin,96px);height:clamp(48px,9vmin,96px);border-radius:50%;border:var(--bw) solid var(--ink);background:var(--yellow);font-size:clamp(34px,7vmin,76px);font-weight:900;line-height:1;cursor:pointer;box-shadow:0 .5vmin 0 var(--ink);display:grid;place-items:center;z-index:4;padding:0 0 .12em}
+.nav-arrow.left{left:2vmin}.nav-arrow.right{right:2vmin}
+.det-tools{position:absolute;top:1.6vmin;right:1.6vmin;display:flex;gap:1vmin;z-index:5}
+.floaties{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.fl{position:absolute;bottom:-12%;animation:floatUp linear infinite}
+.floaties{opacity:.55}
+.floaties.down .fl{bottom:auto;top:-12%;animation-name:fallDown}
+.items-row{display:flex;gap:3cqw;justify-content:center}
+.item-card{display:flex;flex-direction:column;align-items:center;gap:.6cqh;background:#fff;border:var(--bw) solid var(--ink);border-radius:2vmin;padding:1.5cqh 2.5cqw;box-shadow:0 .5vmin 0 var(--ink);font-size:min(4.5cqh,3.2cqw);font-weight:900}
+.item-card .e{font-size:min(13cqh,10cqw)}
+.splat-big{position:relative;height:48cqh;aspect-ratio:1}
+.splat-big .splat{animation:pulse 2.4s ease-in-out infinite}
+.splat-word{position:absolute;inset:0;display:grid;place-items:center;font-size:min(10cqh,8cqw);font-weight:900;padding-top:4%}
+
+/* ---------- weather scenes ---------- */
+.scene{position:absolute;inset:0;overflow:hidden;container-type:size;background:var(--sky);isolation:isolate}
+.scene::after{content:'';position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:8}
+.scene.flash::after{animation:flashA .7s ease-out}
+@keyframes flashA{0%{opacity:0}6%{opacity:.85}16%{opacity:.1}26%{opacity:.7}100%{opacity:0}}
+.cloud{position:absolute;left:0;width:calc(var(--s)*1cqmin);height:calc(var(--s)*.36cqmin);background:var(--cc,#fff);border-radius:999px;animation:drift linear infinite;filter:drop-shadow(0 .8cqmin 0 rgba(43,42,76,.13));z-index:2}
+.cloud::before,.cloud::after{content:'';position:absolute;background:inherit;border-radius:50%}
+.cloud::before{width:52%;height:150%;left:14%;bottom:35%}
+.cloud::after{width:38%;height:115%;right:14%;bottom:40%}
+.cloud.still{animation:none}
+@keyframes drift{from{transform:translateX(-60cqmin)}to{transform:translateX(calc(100cqw + 10cqmin))}}
+.hill{position:absolute;border-radius:50%;background:var(--hc);z-index:3}
+.hill.h1{left:-15%;width:75%;height:45cqh;bottom:-24cqh}
+.hill.h2{right:-20%;width:85%;height:50cqh;bottom:-30cqh}
+.prop{position:absolute;font-family:var(--emoji);line-height:1;z-index:4}
+.prop.sway{transform-origin:50% 100%;animation:sway 1.8s ease-in-out infinite}
+.prop.sway.fast{animation-duration:.9s}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(8deg)}}
+.prop.flutter{animation:flutter 5s ease-in-out infinite}
+@keyframes flutter{0%,100%{transform:translate(0,0) rotate(-8deg)}25%{transform:translate(9cqmin,-7cqmin) rotate(8deg)}50%{transform:translate(18cqmin,0) rotate(-6deg)}75%{transform:translate(9cqmin,6cqmin) rotate(6deg)}}
+.prop.shiver{animation:tremble .15s linear infinite}
+.prop.throb{animation:pulse 1.4s ease-in-out infinite}
+.sun-svg{position:absolute;width:30cqmin;right:7cqw;top:6cqh;z-index:1;overflow:visible}
+.sun-svg .rays{animation:spin 18s linear infinite;transform-box:fill-box;transform-origin:center}
+.sun-svg .face{animation:bounce 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.drop{position:absolute;top:-8cqh;width:.55cqmin;height:5cqmin;border-radius:999px;background:linear-gradient(rgba(255,255,255,0),#E1F5FE);animation:fall linear infinite;z-index:5}
+@keyframes fall{to{transform:translate(-4cqmin,118cqh)}}
+.flake{position:absolute;top:-5cqh;border-radius:50%;background:#fff;animation:snow linear infinite;box-shadow:0 0 .6cqmin rgba(255,255,255,.9);z-index:5}
+@keyframes snow{0%{transform:translate(0,0)}25%{transform:translate(2.5cqmin,28cqh)}50%{transform:translate(-2cqmin,56cqh)}75%{transform:translate(2cqmin,84cqh)}100%{transform:translate(0,112cqh)}}
+.leaf{position:absolute;left:0;font-family:var(--emoji);line-height:1;animation:blow linear infinite;z-index:6}
+@keyframes blow{0%{transform:translate(-10cqw,0) rotate(0)}25%{transform:translate(20cqw,-6cqh) rotate(200deg)}50%{transform:translate(50cqw,5cqh) rotate(400deg)}75%{transform:translate(80cqw,-8cqh) rotate(600deg)}100%{transform:translate(115cqw,2cqh) rotate(800deg)}}
+.gust{position:absolute;left:0;height:.9cqmin;width:28cqmin;border-radius:999px;background:rgba(255,255,255,.9);animation:gust linear infinite;z-index:6}
+@keyframes gust{0%{transform:translateX(-40cqmin);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateX(110cqw);opacity:0}}
+.ripple{position:absolute;width:10cqmin;height:2.6cqmin;border:.45cqmin solid rgba(255,255,255,.75);border-radius:50%;animation:ripple 1.4s ease-out infinite;z-index:4}
+@keyframes ripple{from{transform:scale(.2);opacity:1}to{transform:scale(1.5);opacity:0}}
+.bolt{position:absolute;width:11cqmin;opacity:0;filter:drop-shadow(0 0 2cqmin #FFF59D);z-index:3}
+.scene.flash .bolt{animation:boltA .7s}
+@keyframes boltA{0%,100%{opacity:0}5%,32%{opacity:1}16%{opacity:.3}}
+.heat{position:absolute;width:3cqmin;height:22cqh;animation:rise 2.6s ease-in infinite;z-index:5;opacity:0}
+@keyframes rise{0%{transform:translateY(0);opacity:0}30%{opacity:.9}100%{transform:translateY(-30cqh);opacity:0}}
+.icicles{position:absolute;top:0;left:0;width:100%;height:13cqh;z-index:6}
+.scene-cap{position:absolute;left:0;right:0;bottom:3.5cqh;display:flex;flex-direction:column;align-items:center;gap:1.8cqh;z-index:9;pointer-events:none}
+.scene-label{background:#fff;border:var(--bw) solid var(--ink);border-radius:999px;padding:.12em .8em;font-size:min(10cqh,8cqw);font-weight:900;box-shadow:0 .7vmin 0 var(--ink);animation:popIn .45s cubic-bezier(.3,1.5,.6,1)}
+.scene-cap .chip{font-size:min(5.5cqh,4cqw)}
+.wm-host{position:absolute;inset:0;container-type:size}
+.wm-top{position:absolute;top:4cqh;left:0;right:0;display:flex;justify-content:center;z-index:9}
+.wm-top .scene-label{font-size:min(13cqh,10cqw)}
+.wm-bottom{position:absolute;bottom:15cqh;left:0;right:0;display:flex;justify-content:center;z-index:9}
+.wm-bottom .chip{font-size:min(7cqh,4.8cqw);animation:popIn .5s .2s both}
+
+/* ---------- today ---------- */
+.today{justify-content:center}
+.trow{flex:1;display:flex;flex-direction:column;justify-content:center;gap:1.4vmin;padding:1.4vmin 2.4vmin;min-height:0}
+.trow-head{display:flex;align-items:center;gap:2vmin;flex-wrap:wrap}
+.tq{font-size:clamp(18px,3.4vmin,38px);font-weight:900;color:var(--muted)}
+.tans{font-size:clamp(22px,4.6vmin,52px);font-weight:900;color:var(--purple)}
+.tpills{display:flex;flex-wrap:wrap;gap:1vmin}
+.pill{color:var(--ink);border:var(--bw) solid var(--ink);border-radius:999px;background:#fff;padding:.25em .75em;font-weight:900;font-size:clamp(15px,2.8vmin,32px);cursor:pointer;box-shadow:0 .4vmin 0 var(--ink);display:inline-flex;align-items:center;gap:.3em}
+.pill.on{background:var(--yellow);transform:translateY(-.3vmin) scale(1.05)}
+
+/* ---------- peek-a-boo ---------- */
+.peek{flex-direction:row;align-items:center;justify-content:center}
+.peek-box{position:relative;height:100%;max-height:100%;aspect-ratio:1;overflow:hidden;container-type:size;flex:none;background:#E8F7FF}
+.peek-content{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle,#fff 0 40%,#E3F2FD 75%)}
+.peek-content>.e{font-size:56cqmin}
+.peek-tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);z-index:20}
+.ptile{border:2px solid rgba(43,42,76,.45);background:var(--tc);font-size:9cqmin;font-weight:900;color:#fff;cursor:pointer;transition:transform .35s,opacity .35s;text-shadow:0 .5cqmin 0 rgba(43,42,76,.5);padding:0}
+.ptile:hover{filter:brightness(1.12)}
+.ptile.gone{transform:rotateY(90deg) scale(.5);opacity:0;pointer-events:none}
+.peek-side{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2vmin;text-align:center}
+.peek-q{font-size:clamp(22px,4.6vmin,54px)}
+.frame{font-size:clamp(18px,3.6vmin,42px);font-weight:900;color:var(--muted)}
+.peek-ans{min-height:1.4em;font-size:clamp(20px,4vmin,48px)}
+.peek-btns{display:flex;flex-wrap:wrap;gap:1.2vmin;justify-content:center}
+.hint-bubble{font-size:clamp(20px,4vmin,46px);color:var(--pink)}
+
+/* ---------- weather news ---------- */
+.news-head{display:flex;align-items:center;gap:2vmin;background:var(--red);color:#fff;border:var(--bw) solid var(--ink);border-radius:2vmin;padding:.8vmin 2vmin;box-shadow:0 .6vmin 0 var(--ink);flex:none}
+.news-title{font-size:clamp(22px,4.6vmin,54px);font-weight:900;letter-spacing:.04em;flex:1}
+.news-day{font-size:clamp(14px,2.6vmin,30px);font-weight:900}
+.live{display:inline-flex;align-items:center;gap:.4em;background:#fff;color:var(--red);border-radius:999px;padding:.15em .7em;font-weight:900;font-size:clamp(13px,2.2vmin,24px)}
+.live i{width:.7em;height:.7em;border-radius:50%;background:var(--red);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.news-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:1.6vmin;min-height:0}
+.city{border:var(--bw) solid var(--ink);border-radius:2.4vmin;background:linear-gradient(#E3F2FD,#fff);box-shadow:0 .6vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;container-type:size;min-height:0;gap:2cqh;padding:0}
+.city .e{font-size:min(46cqh,40cqw);animation:float 3s ease-in-out infinite}
+.city b{font-size:min(15cqh,13cqw)}
+.city .cwl{font-size:min(10cqh,9cqw);color:var(--muted)}
+.city.on{background:var(--yellow);transform:scale(1.04)}
+.news-foot{display:flex;align-items:center;gap:2vmin;flex:none;flex-wrap:wrap;justify-content:center}
+.news-frame{font-size:clamp(18px,3.8vmin,44px);font-weight:900;flex:1;text-align:center;min-width:50%}
+.news-rep{font-size:clamp(18px,3.4vmin,38px);font-weight:900}
+
+/* ---------- feelings games ---------- */
+.fc-top{display:flex;align-items:center;justify-content:center;gap:2vmin;flex:none}
+.fc-av{font-size:clamp(44px,10vmin,110px)}
+.fc-q{font-size:clamp(24px,5.5vmin,64px)}
+.fc-grid{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,1fr);gap:1.4vmin;min-height:0}
+.fc-face{border:var(--bw) solid var(--ink);border-radius:2vmin;background:#fff;box-shadow:0 .5vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.5cqh .5cqw;container-type:size;min-height:0;overflow:hidden;gap:1cqh}
+.fc-face .e{font-size:min(42cqh,62cqw);margin-top:2cqh}
+.fc-face b{font-size:min(11cqh,15cqw)}
+.fc-names{display:flex;flex-wrap:wrap;gap:.25em;justify-content:center;font-size:min(8cqh,10cqw)}
+.fc-names span{background:#E0F2FF;border:1.5px solid var(--ink);border-radius:999px;padding:0 .4em;font-weight:900;animation:popIn .4s}
+.fc-count{font-size:min(16cqh,20cqw);font-weight:900;color:var(--red)}
+.fc-face.hit{animation:popIn .4s;background:#FFF4C2}
+.fc-ans{flex:none;text-align:center;font-size:clamp(20px,4.4vmin,50px);font-weight:900;color:var(--purple);min-height:1.3em}
+.fc-ans small{color:var(--muted);font-size:.65em}
+.fguess{align-items:center;justify-content:center}
+.fg-title{font-size:clamp(24px,5.5vmin,62px)}
+.fg-window{width:min(52vmin,60vw);aspect-ratio:1;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:radial-gradient(#fff,#FFF4C2);flex:none}
+.fg-emo{font-size:min(38vmin,44vw);display:inline-block;transition:filter .3s,transform .3s}
+.fg-emo.blurry{transition:none;filter:blur(30px);transform:scale(3.4) rotate(-25deg)}
+.fg-emo.blurry.unblur{transition:filter 8s linear,transform 8s cubic-bezier(.25,.6,.3,1);filter:blur(0);transform:scale(1) rotate(0)}
+.fg-ans{min-height:1.3em;display:flex;align-items:center;gap:2vmin;flex-wrap:wrap;justify-content:center}
+.fsort{flex-direction:row;align-items:stretch}
+.bin{flex:1;border:var(--bw) solid var(--ink);border-radius:3vmin;box-shadow:0 .7vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;padding:2vmin;gap:2vmin;min-width:0}
+.bin.good{background:#C8F7DC}.bin.bad{background:#FFD3D6}
+.bin-h{font-size:clamp(26px,6vmin,70px);font-weight:900;display:flex;align-items:center;gap:.3em}
+.bin-items{display:flex;flex-wrap:wrap;gap:1vmin;justify-content:center;font-size:clamp(34px,8vmin,90px)}
+.bin-items .e{animation:popIn .4s}
+.fs-center{flex:1.1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vmin;min-width:0}
+.fs-card{padding:3vmin 4vmin;display:flex;flex-direction:column;align-items:center;gap:1vmin;animation:popIn .4s}
+.fs-card .e{font-size:clamp(70px,24vmin,260px)}
+.fs-card b{font-size:clamp(22px,5vmin,58px)}
+.fs-q{font-size:clamp(18px,3.6vmin,40px);font-weight:900;color:var(--muted);text-align:center}
+.fs-card.fly-l{animation:flyL .35s ease-in forwards}.fs-card.fly-r{animation:flyR .35s ease-in forwards}
+@keyframes flyL{to{transform:translateX(-60vw) scale(.3) rotate(-30deg);opacity:0}}
+@keyframes flyR{to{transform:translateX(60vw) scale(.3) rotate(30deg);opacity:0}}
+
+/* ---------- colors ---------- */
+.spy-top{display:flex;align-items:center;gap:2vmin;flex:none;flex-wrap:wrap;justify-content:center}
+.spy-eye{font-size:clamp(40px,9vmin,100px);animation:wiggle 2s ease-in-out infinite}
+.spy-q{font-size:clamp(20px,4.4vmin,50px);flex:1;min-width:40%;text-align:center}
+.cw{display:inline-block;padding:0 .4em;border-radius:.4em;border:var(--bw) solid var(--ink);animation:popIn .5s}
+.spy-btns{display:flex;gap:1vmin;flex-wrap:wrap;justify-content:center}
+.spy-field{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);container-type:size;background:linear-gradient(#FFFDF5,#FFF0D6);overflow:hidden}
+.spy-item{position:relative;border:none;background:none;cursor:pointer;font-size:min(25cqh,13cqw);display:grid;place-items:center;padding:0;transition:transform .2s,opacity .3s}
+.spy-item .e{display:inline-block;transform:rotate(var(--r)) translate(var(--x),var(--y))}
+.spy-item:hover .e{filter:drop-shadow(0 0 .2em #FFD23F)}
+.spy-item.no{animation:shake .45s}
+.spy-item.tried .e{opacity:.45}
+.spy-item.hint .e{animation:wiggle .45s 4}
+.spy-item.found{z-index:3}
+.spy-item.found .e{animation:popIn .6s;filter:drop-shadow(0 0 .25em #FFD23F)}
+.spy-item.done .e{opacity:.4}
+.spy-item.done::after{content:'✓';position:absolute;right:18%;top:8%;font-size:.45em;color:#1B9E5A;font-weight:900;font-family:var(--font)}
+.spy-item.ring::before{content:'';position:absolute;inset:6% 16%;border:.6vmin dashed var(--red);border-radius:50%;animation:spin 6s linear infinite}
+.hunt{align-items:center;justify-content:center;text-align:center;transition:background .4s,color .4s}
+.hunt-txt{font-size:clamp(34px,9vmin,110px);font-weight:900;line-height:1.15;animation:popIn .5s}
+.hunt-txt small{font-size:.6em}
+.hunt-cw{display:inline-block;padding:0 .3em;border-radius:.3em;background:rgba(255,255,255,.25);border:var(--bw) solid currentColor}
+.hunt-timer{width:clamp(80px,18vmin,200px);height:clamp(80px,18vmin,200px);position:relative;display:grid;place-items:center;font-size:clamp(34px,8vmin,90px);font-weight:900}
+.hunt-timer svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.magic{align-items:center;justify-content:center}
+.mix-row{display:flex;align-items:center;justify-content:center;gap:3vmin;width:100%}
+.mix-cell{display:flex;flex-direction:column;align-items:center;gap:1vmin;width:min(27vmin,22vw);transition:transform .7s cubic-bezier(.5,0,.5,1),opacity .7s}
+.mix-cell .splat-box{width:100%;aspect-ratio:1;position:relative}
+.mix-cell .lbl{font-size:clamp(20px,4.6vmin,54px);font-weight:900}
+.mix-op{font-size:clamp(40px,10vmin,120px);font-weight:900}
+.mix-row.mixing .ma{transform:translateX(70%) scale(.3) rotate(220deg);opacity:0}
+.mix-row.mixing .mb{transform:translateX(-70%) scale(.3) rotate(-220deg);opacity:0}
+.mix-q{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(40px,11vmin,130px);font-weight:900;color:#fff;text-shadow:0 .5vmin 0 var(--ink)}
+.mix-sent{font-size:clamp(22px,5vmin,60px);font-weight:900;color:var(--purple);min-height:1.3em;text-align:center}
+
+/* ---------- animals ---------- */
+.ani-det{display:flex;align-items:center;gap:4cqw}
+.ani-det .emo-big{font-size:min(44cqh,36cqw)}
+.sound-bubble{font-size:min(9cqh,6.5cqw);transform:rotate(-4deg);color:var(--red)}
+.asnd{align-items:center;justify-content:center}
+.asnd-q{font-size:clamp(24px,5.4vmin,62px)}
+.asnd-main{display:flex;align-items:center;gap:4vmin}
+.asnd-emo{font-size:clamp(90px,30vmin,330px);display:inline-block;transition:filter .6s}
+.asnd-emo.sil{filter:brightness(0) opacity(.85)}
+.asnd-sound{font-size:clamp(30px,8vmin,96px);color:var(--red);transform:rotate(-5deg)}
+.asnd-ans{min-height:1.3em}
+.miss-top{display:flex;align-items:center;justify-content:center;gap:2vmin;flex-wrap:wrap;flex:none}
+.miss-q{font-size:clamp(22px,5vmin,58px)}
+.miss-grid{flex:1;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:2vmin;min-height:0;grid-auto-rows:1fr}
+.mcard{border:var(--bw) solid var(--ink);border-radius:2.6vmin;background:#fff;box-shadow:0 .6vmin 0 var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;container-type:size;min-height:0;gap:2cqh;padding:0;animation:popIn .4s backwards}
+.mcard .e{font-size:min(55cqh,60cqw)}
+.mcard b{font-size:min(14cqh,15cqw)}
+.mcard.q{background:var(--yellow);cursor:pointer}
+.mcard.q .qm{font-size:min(70cqh,70cqw);font-weight:900;animation:wiggle 1s ease-in-out infinite}
+.mcard.found{background:#B9F3D0}
+.eyes-shut{position:absolute;inset:0;background:#2B2A4C;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vmin;z-index:10;animation:fadeIn .3s}
+.eyes-shut[hidden]{display:none}
+.eyes-shut .e{font-size:clamp(90px,26vmin,300px);animation:bounce 1.4s infinite}
+.eyes-shut div{font-size:clamp(34px,9vmin,110px);font-weight:900}
+.eyes-shut small{font-size:clamp(20px,4.5vmin,54px)}
+.amove{align-items:center;justify-content:center}
+.am-emo{font-size:clamp(110px,40vmin,440px);display:inline-block}
+.am-txt{font-size:clamp(30px,8vmin,96px);font-weight:900;text-align:center;animation:popIn .45s}
+.am-txt b{color:var(--red)}
+.m-hop{animation:mhop .7s cubic-bezier(.3,0,.5,1) infinite}
+@keyframes mhop{0%,100%{transform:translateY(0) scale(1.08,.92)}45%{transform:translateY(-30%) scale(.95,1.06)}}
+.m-flap{animation:mflap .5s ease-in-out infinite}
+@keyframes mflap{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-12%) rotate(10deg)}}
+.m-swim{animation:mswim 1.6s ease-in-out infinite}
+@keyframes mswim{0%,100%{transform:translateX(-20%) rotate(6deg)}50%{transform:translateX(20%) rotate(-6deg)}}
+.m-slither{animation:mslither 1s ease-in-out infinite}
+@keyframes mslither{0%,100%{transform:skewX(-14deg) translateX(-6%)}50%{transform:skewX(14deg) translateX(6%)}}
+.m-stomp{animation:mstomp 1s ease-in infinite}
+@keyframes mstomp{0%,100%{transform:translateY(0) rotate(-6deg)}25%{transform:translateY(-10%) rotate(-6deg)}50%{transform:translateY(0) rotate(6deg) scale(1.05,.95)}75%{transform:translateY(-10%) rotate(6deg)}}
+.m-dance{animation:mdance .8s ease-in-out infinite}
+@keyframes mdance{0%,100%{transform:rotate(-15deg) translateX(-8%)}50%{transform:rotate(15deg) translateX(8%)}}
+.m-wag{animation:wiggle .6s ease-in-out infinite}
+.m-waddle{animation:mwaddle .5s ease-in-out infinite}
+@keyframes mwaddle{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+.m-roar{animation:mroar 1.2s ease-in-out infinite}
+@keyframes mroar{0%,60%,100%{transform:scale(1)}20%{transform:scale(1.25)}30%{transform:scale(1.2) rotate(-4deg)}40%{transform:scale(1.25) rotate(4deg)}}
+
+/* ---------- numbers ---------- */
+.num-det{flex-direction:row;gap:5cqw}
+.num-left{display:flex;flex-direction:column;align-items:center}
+.num-big{font-size:min(50cqh,34cqw);font-weight:900;line-height:1;text-shadow:0 1.2cqh 0 var(--ink)}
+.num-right{display:flex;flex-direction:column;align-items:center;gap:3cqh}
+.tenframe{display:grid;grid-template-columns:repeat(5,min(11cqh,7.5cqw));gap:1cqh;padding:1.6cqh;background:#fff;border:var(--bw) solid var(--ink);border-radius:2vmin;box-shadow:0 .5vmin 0 var(--ink)}
+.tf-cell{aspect-ratio:1;border:2px dashed #C9C6E0;border-radius:1vmin;display:grid;place-items:center;font-size:min(8cqh,5.5cqw)}
+.tf-cell .e{opacity:.35;transition:transform .2s,opacity .2s}
+.tf-cell .e.lit{opacity:1;transform:scale(1.15)}
+.boom-set{flex:none;font-size:clamp(14px,2.2vmin,24px)}
+.boom-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;position:relative}
+.boom-turn{font-size:clamp(20px,4.2vmin,48px);font-weight:900;color:var(--muted);min-height:1.3em}
+.boom-num{font-size:clamp(90px,30vmin,330px);font-weight:900;line-height:1;color:var(--blue);text-shadow:0 1.2vmin 0 var(--ink)}
+.boom-num.ready{font-size:clamp(50px,14vmin,160px);color:var(--ink);text-shadow:none}
+.boom-num.isboom{color:var(--red);font-size:clamp(70px,22vmin,250px);animation:boomA .6s cubic-bezier(.3,1.7,.5,1)}
+.boom-num.done{font-size:clamp(40px,10vmin,120px);color:var(--purple);text-shadow:none}
+@keyframes boomA{0%{transform:scale(.2) rotate(-20deg)}60%{transform:scale(1.25) rotate(6deg)}100%{transform:scale(1) rotate(0)}}
+.boom-word{font-size:clamp(20px,5vmin,60px);font-weight:900;color:var(--muted);min-height:1.3em}
+.shake-screen{animation:shake .5s}
+.boom-strip{flex:none;display:flex;flex-wrap:wrap;gap:.6vmin;justify-content:center}
+.bs{width:clamp(26px,4.6vmin,52px);height:clamp(26px,4.6vmin,52px);border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-size:clamp(12px,2vmin,22px);font-weight:900;background:#fff;opacity:.45}
+.bs.past{opacity:1;background:#BDE0FE}.bs.bm{background:#FFD3D6}
+.count-top{display:flex;align-items:center;justify-content:center;gap:2vmin;flex-wrap:wrap;flex:none}
+.count-q{font-size:clamp(24px,5.4vmin,62px)}
+.count-field{flex:1;min-height:0;position:relative;container-type:size;background:linear-gradient(#F1FAFF,#FFFFFF)}
+.cnt-item{position:absolute;font-size:min(13cqh,8.5cqw);transform:translate(-50%,-50%);transition:transform .2s}
+.cnt-item.lit{transform:translate(-50%,-50%) scale(1.22)}
+.cnt-item.lit::after{content:attr(data-n);position:absolute;top:-22%;right:-22%;background:var(--red);color:#fff;border-radius:50%;font-size:.36em;min-width:1.6em;height:1.6em;display:grid;place-items:center;border:2px solid var(--ink);font-family:var(--font);font-weight:900}
+.count-bottom{display:flex;align-items:center;justify-content:center;gap:3vmin;flex:none;flex-wrap:wrap}
+.count-ans{font-size:clamp(24px,5.4vmin,62px);font-weight:900;color:var(--purple);min-width:30%;text-align:center}
+
+/* ---------- body & monsters ---------- */
+.bodyg{flex-direction:row;align-items:stretch}
+.body-fig{flex:none;height:100%;aspect-ratio:540/620;max-width:55%}
+.body-svg{width:100%;height:100%;display:block}
+.body-svg .labels{opacity:0;transition:opacity .3s}
+.body-svg.show-labels .labels{opacity:1}
+.body-svg .labels text{font-family:var(--font);font-weight:900;font-size:22px;fill:var(--ink);paint-order:stroke;stroke:#FFF6E5;stroke-width:6px}
+.body-svg .labels line{stroke:var(--ink);stroke-width:2;stroke-dasharray:4 4}
+.ring{fill:rgba(255,210,63,.3);stroke:#FF5A5F;stroke-width:6;stroke-dasharray:14 8;transform-box:fill-box;transform-origin:center;animation:ringPulse .9s ease-in-out infinite}
+@keyframes ringPulse{50%{transform:scale(1.15)}}
+.body-side{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3vmin;min-width:0;text-align:center}
+.body-cmd{font-size:clamp(30px,7.5vmin,90px);font-weight:900;line-height:1.15}
+.body-cmd .hl{color:var(--red);text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.12em}
+.monster{width:100%;height:100%;display:block;overflow:visible;animation:mbob 2.2s ease-in-out infinite}
+@keyframes mbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5%)}}
+.m-eyes{animation:mblink 4s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes mblink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.mmaker{flex-direction:row;align-items:stretch}
+.mm-fig{flex:none;height:100%;aspect-ratio:1;max-width:55%;padding:3vmin;background:radial-gradient(#fff,#F3EDFF)}
+.mm-side{flex:1;display:flex;flex-direction:column;justify-content:center;gap:1.4vmin;min-width:0}
+.mm-name{font-size:clamp(26px,6vmin,70px);font-weight:900;text-align:center}
+.mm-q{display:flex;align-items:center;justify-content:space-between;gap:1.5vmin;border:var(--bw) solid var(--ink);border-radius:999px;background:#fff;padding:.3em .9em;font-size:clamp(16px,3vmin,34px);font-weight:900;cursor:pointer;box-shadow:0 .4vmin 0 var(--ink);text-align:left}
+.mm-q{flex-wrap:wrap}
+.mm-q .mq{white-space:nowrap}
+.mm-q .ma{color:var(--purple);white-space:nowrap}
+.mm-q:not(.open) .ma{display:none}
+.mm-q:not(.open)::after{content:'?';color:var(--muted)}
+.mm-q.open{background:#F3EDFF}
+.mm-q.open .ma{animation:popIn .4s cubic-bezier(.3,1.6,.6,1)}
+.mwhich{gap:1.4vmin}
+.mw-top{flex:none;display:flex;flex-direction:column;align-items:center;gap:1vmin}
+.mw-q{font-size:clamp(20px,4.4vmin,50px)}
+.mw-clues{display:flex;gap:1vmin;flex-wrap:wrap;justify-content:center;min-height:2.2em;font-size:clamp(16px,3.2vmin,36px)}
+.mw-clues .chip{animation:popIn .4s}
+.mw-row{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:2vmin;min-height:0}
+.mw-card{border:var(--bw) solid var(--ink);border-radius:2.6vmin;background:#fff;box-shadow:0 .6vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;padding:1vmin;min-height:0;position:relative}
+.mw-card .mw-n{font-size:clamp(20px,4.4vmin,50px);font-weight:900;background:var(--yellow);border:var(--bw) solid var(--ink);border-radius:50%;width:1.6em;height:1.6em;display:grid;place-items:center;flex:none}
+.mw-card .mw-fig{flex:1;min-height:0;width:100%}
+.mw-card.wrong{animation:shake .45s;background:#FFE3E5}
+.mw-card.wrong::after{content:'✗';position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(60px,18vmin,200px);color:rgba(255,90,95,.55);font-weight:900;pointer-events:none}
+.mw-card.right{background:#B9F3D0;transform:scale(1.04);z-index:2}
+
+/* ---------- dance ---------- */
+.fd.disco{background:#3A2E7A}
+.disco-bg{position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,#FF70A6 0,transparent 35%),radial-gradient(circle at 80% 25%,#4CC9F0 0,transparent 35%),radial-gradient(circle at 50% 85%,#FFD23F 0,transparent 40%),#3A2E7A;animation:discoBg calc(var(--beat)*8) linear infinite}
+@keyframes discoBg{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+.lights{position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% -10%,rgba(255,255,255,.12) 0 6deg,transparent 6deg 18deg);animation:spin calc(var(--beat)*16) linear infinite;transform-origin:50% -10%;pointer-events:none}
+.fd-prompt{position:absolute;top:8%;left:0;right:0;text-align:center;color:#fff;font-size:clamp(34px,9vmin,110px);font-weight:900;text-shadow:0 .8vmin 0 rgba(0,0,0,.35);padding:0 3vmin}
+.dancers{position:absolute;left:0;right:0;bottom:16%;display:flex;justify-content:center;gap:3vmin}
+.dancer{font-size:clamp(50px,14vmin,160px);display:inline-block;animation:danceB calc(var(--beat)*2) ease-in-out infinite}
+@keyframes danceB{0%,100%{transform:translateY(0) rotate(-12deg)}25%{transform:translateY(-22%) rotate(0)}50%{transform:translateY(0) rotate(12deg)}75%{transform:translateY(-22%) rotate(0)}}
+.fd.frozen{background:linear-gradient(#BDEBFF,#E9F8FF);align-items:center;justify-content:center;text-align:center}
+.ice{position:absolute;inset:0;background:repeating-linear-gradient(60deg,rgba(255,255,255,.5) 0 2px,transparent 2px 60px),repeating-linear-gradient(-60deg,rgba(255,255,255,.5) 0 2px,transparent 2px 60px);pointer-events:none}
+.fz-txt{font-size:clamp(60px,18vmin,220px);font-weight:900;color:#1E88E5;text-shadow:0 1vmin 0 var(--ink);animation:popIn .4s cubic-bezier(.3,1.7,.5,1);position:relative}
+.fz-sub{font-size:clamp(26px,6vmin,70px);font-weight:900;position:relative;min-height:1.3em}
+.cd{display:inline-block;font-size:2em;color:var(--red);animation:popIn .4s}
+.simon{align-items:center;justify-content:center}
+.simon-card{width:min(92%,1300px);flex:1;max-height:76%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vmin;text-align:center;padding:3vmin;position:relative}
+.simon-card.is-simon{background:#E7FBEF}
+.simon-card.is-trick{background:#FFF0F5}
+.sm-says{font-size:clamp(28px,7vmin,84px);font-weight:900;color:#1B9E5A;animation:popIn .4s}
+.sm-says.ghost{visibility:hidden}
+.sm-cmd{font-size:clamp(36px,10vmin,120px);font-weight:900;line-height:1.1;display:flex;align-items:center;gap:.3em;flex-wrap:wrap;justify-content:center;animation:popIn .45s .1s backwards}
+.sm-badge{font-size:clamp(22px,5vmin,58px);font-weight:900;color:var(--red);opacity:0;transform:scale(.5);transition:all .3s cubic-bezier(.3,1.6,.6,1)}
+.sm-badge.show{opacity:1;transform:scale(1)}
+.sm-intro .e,.sm-lead .e{font-size:clamp(60px,15vmin,170px)}
+.sm-intro h2{font-size:clamp(34px,8vmin,96px);font-weight:900}
+.sm-intro p{font-size:clamp(18px,3.6vmin,40px);color:var(--muted)}
+.sm-lead{font-size:clamp(28px,6.5vmin,76px);font-weight:900;display:flex;align-items:center;gap:.3em}
+.sm-frame{font-size:clamp(26px,6vmin,70px);font-weight:900;color:#1B9E5A}
+.sm-ideas{display:flex;flex-wrap:wrap;gap:1vmin;justify-content:center;font-size:clamp(14px,2.6vmin,28px)}
+.can{align-items:center;justify-content:center}
+.can-card{width:min(92%,1300px);flex:1;max-height:80%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4vmin;text-align:center;padding:3vmin}
+.can-e{font-size:clamp(64px,18vmin,220px);display:inline-block;animation:bounce 1.2s ease-in-out infinite}
+.can-q{font-size:clamp(32px,8vmin,96px);font-weight:900}
+.can-a{font-size:clamp(28px,7vmin,84px);font-weight:900;color:#1B9E5A;animation:popIn .45s}
+.can-a u{text-decoration-color:var(--yellow);text-decoration-thickness:.15em}
+
+/* ---------- talk chain ---------- */
+.talk-qs{display:flex;flex-wrap:wrap;gap:.8vmin;justify-content:center;flex:none}
+.talk-qs .tab-pill{font-size:clamp(13px,2.1vmin,22px)}
+.talk-strip{flex:1;display:flex;flex-direction:column;justify-content:center;gap:2.4vmin;min-height:0}
+.tk-line{display:flex;align-items:center;gap:3vmin}
+.tk-line.ans{justify-content:flex-end}
+.tk-person{display:flex;flex-direction:column;align-items:center;gap:.6vmin;flex:none;width:clamp(100px,18vmin,210px)}
+.tk-av{font-size:clamp(50px,11vmin,124px);animation:float 3s ease-in-out infinite}
+.tk-name{font-size:clamp(16px,3vmin,34px);font-weight:900;background:#fff;border:var(--bw) solid var(--ink);border-radius:999px;padding:.05em .6em;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tk-b{font-size:clamp(24px,5.6vmin,66px);max-width:72%;animation:popIn .4s}
+.tk-b::before{content:'';position:absolute;top:50%;width:2.4vmin;height:2.4vmin;background:inherit;transform:translateY(-50%) rotate(45deg)}
+.tk-b.left::before{left:-1.45vmin;border-left:var(--bw) solid var(--ink);border-bottom:var(--bw) solid var(--ink)}
+.tk-b.right::before{right:-1.45vmin;border-right:var(--bw) solid var(--ink);border-top:var(--bw) solid var(--ink)}
+.tk-b.right{background:#EAF4FF}
+.tk-b.filled{background:#E7FBEF;color:#14794A}
+.talk-hints{display:flex;flex-wrap:wrap;gap:.8vmin;justify-content:center;flex:none;max-height:24%;overflow:auto}
+.hint-chip{display:inline-flex;align-items:center;gap:.3em;border:var(--bw) solid var(--ink);border-radius:999px;background:#fff;padding:.15em .7em;font-size:clamp(14px,2.5vmin,28px);font-weight:900;cursor:pointer;box-shadow:0 .3vmin 0 var(--ink)}
+.hint-chip:hover{background:#FFF4C2}
+.hint-chip .sw{width:1em;height:1em;border-radius:50%;border:2px solid var(--ink)}
+.hint-chip .hn{font-size:1.2em;color:var(--blue)}
+.talk-ctrl{display:flex;align-items:center;justify-content:flex-end;gap:2vmin;flex:none}
+.talk-ctrl .hint{font-size:clamp(15px,2.6vmin,28px)}
+
+/* ---------- hello ---------- */
+.hello{align-items:center;justify-content:center;text-align:center}
+.hello-top{display:flex;align-items:center;gap:3vmin}
+.hello-wave{font-size:clamp(60px,15vmin,170px);display:inline-block;transform-origin:70% 80%;animation:wave 1.6s ease-in-out infinite}
+.hello-q{font-size:clamp(26px,6vmin,70px)}
+.hello-frame{display:flex;align-items:center;gap:1.5vmin;padding:1.4vmin 3vmin;font-size:clamp(24px,5.4vmin,62px);font-weight:900}
+.name-in{font:inherit;font-weight:900;color:var(--blue);width:7em;border:none;border-bottom:.08em dashed var(--ink);background:transparent;outline:none;text-align:center;user-select:text;-webkit-user-select:text}
+.hello-greet{min-height:1.3em;font-size:clamp(26px,6.4vmin,74px);font-weight:900;color:var(--purple)}
+.hello-chips{display:flex;flex-wrap:wrap;gap:1vmin;justify-content:center;max-width:94%;max-height:24vh;overflow:auto;padding:4px}
+.name-chip{display:inline-flex;align-items:center;gap:.3em;border:var(--bw) solid var(--ink);border-radius:999px;background:#fff;padding:.15em .7em;font-size:clamp(15px,2.8vmin,30px);font-weight:900;cursor:pointer;box-shadow:0 .3vmin 0 var(--ink)}
+</style>
+</head>
+<body>
+<header id="topbar"></header>
+<main id="stage"></main>
+<canvas id="fx"></canvas>
+<div id="toast"></div>
+<div id="mini"></div>
+<div id="modal" hidden></div>
+<script>
+'use strict';
+/* ================= helpers ================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const stage = $('#stage'), topbar = $('#topbar');
+const rand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const shuffle = arr => { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const art = w => /^[aeiou]/i.test(w) ? 'an' : 'a';
+const NUMW = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twenty-one','twenty-two','twenty-three','twenty-four','twenty-five','twenty-six','twenty-seven','twenty-eight','twenty-nine','thirty'];
+const cnt = (n, s, p) => n === 0 ? `no ${p}` : `${NUMW[n]} ${n === 1 ? s : p}`;
+const bump = el => { if (!el) return; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); };
+
+/* timers owned by the current screen (cleared on every screen change) */
+const T = {
+  ids: new Set(),
+  after(fn, ms) { const id = setTimeout(() => { T.ids.delete(id); fn(); }, ms); T.ids.add(id); return id; },
+  every(fn, ms) { const id = setInterval(fn, ms); T.ids.add(id); return id; },
+  clear(id) { if (id == null) return; clearTimeout(id); clearInterval(id); T.ids.delete(id); },
+  clearAll() { T.ids.forEach(id => { clearTimeout(id); clearInterval(id); }); T.ids.clear(); }
+};
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('tegv-ec-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('tegv-ec-' + k, JSON.stringify(v)); } catch (e) { /* storage blocked: keep going */ } }
+};
+let NAMES = store.get('names', []);
+if (!Array.isArray(NAMES)) NAMES = [];
+let STARS = +store.get('stars', 0) || 0;
+let MUTED = !!store.get('muted', false);
+const saveNames = () => store.set('names', NAMES);
+
+const AVATARS = ['🦊','🐼','🐨','🐯','🦁','🐸','🐵','🐰','🐶','🐱','🐧','🦄','🐙','🦉','🐢','🐝','🦋','🐞','🐬','🦒','🐹','🐻','🐮','🐷'];
+function avatarOf(n) { let h = 7; for (const ch of String(n)) h = (h * 31 + ch.codePointAt(0)) >>> 0; return AVATARS[h % AVATARS.length]; }
+
+/* fair turn-taking: everybody gets a turn before anyone repeats */
+let BAG = [];
+function nextName(exclude) {
+  if (!NAMES.length) return null;
+  BAG = BAG.filter(n => NAMES.includes(n));
+  if (!BAG.length) BAG = shuffle(NAMES);
+  let i = BAG.findIndex(n => n !== exclude);
+  if (i < 0) { BAG = shuffle(NAMES); i = BAG.findIndex(n => n !== exclude); if (i < 0) return NAMES[0]; }
+  return BAG.splice(i, 1)[0];
+}
+
+/* ================= sound (Web Audio, works offline) ================= */
+const SFX = (() => {
+  let ctx = null, master = null, nbuf = null;
+  function init() {
+    if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return true; }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    try { ctx = new AC(); } catch (e) { return false; }
+    master = ctx.createGain(); master.gain.value = MUTED ? 0 : 0.8;
+    const comp = ctx.createDynamicsCompressor(); master.connect(comp); comp.connect(ctx.destination);
+    nbuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+    const d = nbuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    return true;
+  }
+  function env(g, t, vol, a, d, shape) {
+    g.gain.setValueAtTime(0.0001, t);
+    if (shape === 'pad') { g.gain.linearRampToValueAtTime(vol, t + a); g.gain.setValueAtTime(vol, t + Math.max(a, d - a)); g.gain.linearRampToValueAtTime(0.0001, t + d); }
+    else { g.gain.exponentialRampToValueAtTime(vol, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + d); }
+  }
+  function tone({ f = 440, f2 = 0, type = 'sine', t = 0, dur = .15, vol = .3, a = .005, shape = 'perc' }) {
+    if (!init()) return; const t0 = ctx.currentTime + t;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    env(g, t0, vol, a, dur, shape); o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + dur + .05);
+  }
+  function noise({ t = 0, dur = .3, vol = .3, ft = 'lowpass', f = 1000, f2 = 0, q = 1, a = .005, shape = 'perc' }) {
+    if (!init()) return null; const t0 = ctx.currentTime + t;
+    const s = ctx.createBufferSource(); s.buffer = nbuf; s.loop = true;
+    const fl = ctx.createBiquadFilter(); fl.type = ft; fl.frequency.setValueAtTime(f, t0); fl.Q.value = q;
+    if (f2) fl.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    const g = ctx.createGain(); env(g, t0, vol, a, dur, shape);
+    s.connect(fl); fl.connect(g); g.connect(master); s.start(t0, Math.random() * 1.5); s.stop(t0 + dur + .05);
+    return fl;
+  }
+  return {
+    init,
+    get ctx() { return ctx; }, get master() { return master; }, get noiseBuf() { return nbuf; },
+    setMute(m) { if (master) master.gain.value = m ? 0 : .8; },
+    pop() { tone({ f: 520, f2: 980, dur: .1, vol: .25 }); },
+    tick() { tone({ f: 1500, dur: .03, vol: .07, type: 'square' }); },
+    ding() { tone({ f: 880, dur: .3, vol: .22, type: 'triangle' }); tone({ f: 1320, dur: .4, vol: .18, type: 'triangle', t: .08 }); },
+    tada() { [523, 659, 784, 1047].forEach((f, i) => tone({ f, dur: i === 3 ? .6 : .2, vol: .2, type: 'triangle', t: i * .08 })); tone({ f: 2093, dur: .5, vol: .05, t: .32 }); },
+    wrong() { tone({ f: 240, f2: 150, dur: .25, vol: .12, type: 'square' }); },
+    whoosh() { noise({ ft: 'bandpass', f: 300, f2: 3000, q: 1.5, dur: .4, vol: .35, a: .08, shape: 'pad' }); },
+    boom() { noise({ f: 900, f2: 60, dur: 1.1, vol: .9 }); tone({ f: 110, f2: 32, dur: .9, vol: .8 }); },
+    thunder() { noise({ f: 1400, f2: 70, dur: 2.6, vol: .9, a: .02 }); noise({ f: 300, dur: 2, vol: .6, t: .35, a: .2, shape: 'pad' }); tone({ f: 60, f2: 30, dur: 1.5, vol: .5 }); },
+    rain(d = 3) { noise({ ft: 'highpass', f: 2500, dur: d, vol: .18, a: .5, shape: 'pad' }); noise({ ft: 'bandpass', f: 900, q: .7, dur: d, vol: .12, a: .5, shape: 'pad' }); for (let i = 0; i < 25; i++) tone({ f: 2000 + Math.random() * 3000, f2: 900, dur: .04, vol: .03, t: Math.random() * (d - .3) }); },
+    wind(d = 3) { const fl = noise({ ft: 'bandpass', f: 250, q: 4, dur: d, vol: .6, a: d * .3, shape: 'pad' }); if (!fl) return; const t0 = ctx.currentTime; fl.frequency.linearRampToValueAtTime(900, t0 + d * .45); fl.frequency.linearRampToValueAtTime(350, t0 + d); },
+    birds() { for (let k = 0; k < 3; k++) { const b = k * .55 + Math.random() * .2; for (let i = 0; i < 3; i++) tone({ f: 2400 + Math.random() * 800, f2: 3800 + Math.random() * 900, dur: .07, vol: .08, t: b + i * .11 }); } },
+    chimes() { [1568, 1760, 2093, 2349, 2637].forEach((f, i) => tone({ f, dur: .8, vol: .07, type: 'triangle', t: i * .22 + Math.random() * .1 })); },
+    sizzle() { noise({ ft: 'highpass', f: 4000, dur: 1.5, vol: .08, a: .3, shape: 'pad' }); },
+    freeze() { tone({ f: 1800, f2: 220, dur: .55, vol: .18, type: 'triangle' }); noise({ ft: 'highpass', f: 6000, dur: .5, vol: .12 }); [2637, 3136, 3520].forEach((f, i) => tone({ f, dur: .3, vol: .06, t: .35 + i * .07 })); },
+    boing() { tone({ f: 180, f2: 520, dur: .25, vol: .18 }); tone({ f: 520, f2: 260, dur: .2, vol: .12, t: .2 }); },
+    count(i) { tone({ f: 440 * Math.pow(2, Math.min(i, 24) / 12), dur: .14, vol: .18, type: 'triangle' }); },
+    drumroll(d = 1) { for (let t = 0; t < d; t += .05) noise({ ft: 'highpass', f: 1800, dur: .05, vol: .06 + t / d * .12, t }); },
+    beep(hi) { tone({ f: hi ? 1320 : 660, dur: hi ? .45 : .12, vol: .14, type: 'square' }); }
+  };
+})();
+
+/* ================= dance music (synthesised loop) ================= */
+const MUSIC = (() => {
+  let timer = null, g = null, step = 0, next = 0, bpm = 120, playing = false;
+  const mf = m => 440 * Math.pow(2, (m - 69) / 12);
+  const CH = [[60, 64, 67], [57, 60, 64], [53, 57, 60], [55, 59, 62]];           // C  Am  F  G
+  const MEL = [76,79,81,79,76,74,72,74, 76,0,79,76,74,72,69,72, 72,74,77,76,74,72,69,0, 74,74,76,74,71,67,71,74];
+  function osc(ctx, { f, type, t, dur, vol, lp }) {
+    const o = ctx.createOscillator(), gg = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t);
+    gg.gain.setValueAtTime(0.0001, t); gg.gain.exponentialRampToValueAtTime(vol, t + .008); gg.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    let node = o; if (lp) { const fl = ctx.createBiquadFilter(); fl.type = 'lowpass'; fl.frequency.value = lp; o.connect(fl); node = fl; }
+    node.connect(gg); gg.connect(g); o.start(t); o.stop(t + dur + .05);
+  }
+  function kick(ctx, t) { const o = ctx.createOscillator(), gg = ctx.createGain(); o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(42, t + .14); gg.gain.setValueAtTime(1, t); gg.gain.exponentialRampToValueAtTime(0.001, t + .3); o.connect(gg); gg.connect(g); o.start(t); o.stop(t + .32); }
+  function nz(ctx, t, f, dur, vol) { const s = ctx.createBufferSource(); s.buffer = SFX.noiseBuf; const fl = ctx.createBiquadFilter(); fl.type = 'highpass'; fl.frequency.value = f; const gg = ctx.createGain(); gg.gain.setValueAtTime(vol, t); gg.gain.exponentialRampToValueAtTime(0.001, t + dur); s.connect(fl); fl.connect(gg); gg.connect(g); s.start(t, Math.random()); s.stop(t + dur + .02); }
+  function playStep(ctx, s, t) {
+    const bar = (s >> 4) & 3, st = s & 15, sp = 60 / bpm / 4;
+    if (st % 4 === 0) kick(ctx, t);
+    if (st === 4 || st === 12) nz(ctx, t, 1500, .16, .32);
+    if (st % 2 === 0) nz(ctx, t, 7000, .04, st % 4 === 2 ? .12 : .05);
+    const root = CH[bar][0] - 24;
+    if ([0, 3, 6, 8, 11, 14].includes(st)) osc(ctx, { f: mf(st === 6 || st === 14 ? root + 12 : root), type: 'square', t, dur: sp * 1.6, vol: .22, lp: 500 });
+    if (st === 2 || st === 6 || st === 10 || st === 14) CH[bar].forEach(n => osc(ctx, { f: mf(n), type: 'triangle', t, dur: .12, vol: .07 }));
+    if (st % 2 === 0) { const m = MEL[bar * 8 + st / 2]; if (m) osc(ctx, { f: mf(m), type: 'square', t, dur: sp * 1.8, vol: .06, lp: 3000 }); }
+  }
+  function tick() { const ctx = SFX.ctx; if (!ctx || !playing) return; while (next < ctx.currentTime + .15) { playStep(ctx, step, next); next += 60 / bpm / 4; step = (step + 1) % 64; } }
+  return {
+    start(b = 120) { if (!SFX.init()) return; this.stop(); const ctx = SFX.ctx; bpm = b; g = ctx.createGain(); g.gain.value = .55; g.connect(SFX.master); step = 0; next = ctx.currentTime + .06; playing = true; timer = setInterval(tick, 25); tick(); },
+    stop() { playing = false; if (timer) { clearInterval(timer); timer = null; } if (g) { const gg = g; try { gg.gain.setTargetAtTime(0, SFX.ctx.currentTime, .02); } catch (e) {} setTimeout(() => { try { gg.disconnect(); } catch (e) {} }, 300); g = null; } },
+    get playing() { return playing; }
+  };
+})();
+
+/* ================= optional pronunciation (needs an English voice on the PC) ================= */
+const SPEAK = (() => {
+  let voice = null;
+  const ok = 'speechSynthesis' in window;
+  function find() { if (!ok) return null; const en = speechSynthesis.getVoices().filter(v => /^en([-_]|$)/i.test(v.lang)); voice = en.find(v => /US/i.test(v.lang) && v.localService) || en.find(v => v.localService) || en[0] || null; return voice; }
+  if (ok) { find(); speechSynthesis.onvoiceschanged = find; }
+  const clean = t => String(t).replace(/<[^>]+>/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}️‍]/gu, '').replace(/_+/g, ' ').trim();
+  return {
+    say(text) {
+      if (!ok) return mini('🔇 No voice on this computer');
+      if (!voice) find();
+      if (!voice) return mini('🔇 No English voice on this computer');
+      speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(clean(text)); u.voice = voice; u.lang = voice.lang; u.rate = .8; u.pitch = 1.1; speechSynthesis.speak(u);
+    },
+    stop() { if (ok) speechSynthesis.cancel(); }
+  };
+})();
+
+/* ================= visual FX ================= */
+const FX = (() => {
+  const cv = $('#fx'), cx = cv.getContext('2d'); let parts = [], raf = 0;
+  const COLS = ['#FF5A5F', '#FF9F1C', '#FFD23F', '#2EC4B6', '#3A86FF', '#8338EC', '#FF70A6', '#8AC926'];
+  function size() { const d = window.devicePixelRatio || 1; cv.width = innerWidth * d; cv.height = innerHeight * d; }
+  addEventListener('resize', size); size();
+  function loop() {
+    const d = window.devicePixelRatio || 1; cx.setTransform(d, 0, 0, d, 0, 0); cx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter(p => p.life > 0 && p.y < innerHeight + 40);
+    for (const p of parts) {
+      p.vy += p.g; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life--;
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.globalAlpha = Math.min(1, p.life / 30); cx.fillStyle = p.c;
+      if (p.sq) cx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); else { cx.beginPath(); cx.arc(0, 0, p.r / 2.5, 0, 7); cx.fill(); }
+      cx.restore();
+    }
+    raf = parts.length ? requestAnimationFrame(loop) : 0;
+    if (!raf) cx.clearRect(0, 0, innerWidth, innerHeight);
+  }
+  const run = () => { if (!raf) raf = requestAnimationFrame(loop); };
+  return {
+    burst(x = innerWidth / 2, y = innerHeight / 2, n = 110) {
+      for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 10; parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, g: .25, r: 6 + Math.random() * 8, c: pick(COLS), rot: Math.random() * 6, vr: (Math.random() - .5) * .4, life: 90 + Math.random() * 50, sq: Math.random() < .6 }); }
+      run();
+    },
+    rain(n = 150) {
+      for (let i = 0; i < n; i++) parts.push({ x: Math.random() * innerWidth, y: -20 - Math.random() * innerHeight * .6, vx: (Math.random() - .5) * 2, vy: 2 + Math.random() * 3, g: .06, r: 7 + Math.random() * 8, c: pick(COLS), rot: Math.random() * 6, vr: (Math.random() - .5) * .3, life: 220, sq: true });
+      run();
+    }
+  };
+})();
+
+const PRAISE = ['Great job!', 'Perfect!', 'Well done!', 'Bravo!', 'Super!', 'Excellent!', 'Good job!', 'Amazing!'];
+function bigToast(text, emoji = '') {
+  const t = $('#toast'); t.innerHTML = `${esc(text)}${emoji ? ` <span class="e">${emoji}</span>` : ''}`;
+  t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
+}
+let miniTimer = null;
+function mini(text) { const m = $('#mini'); m.textContent = text; m.classList.add('show'); clearTimeout(miniTimer); miniTimer = setTimeout(() => m.classList.remove('show'), 2200); }
+function celebrate(text, { star = true, emoji = '🎉', big = true, el = null } = {}) {
+  SFX.tada();
+  if (el) { const r = el.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, 70); }
+  else FX.burst();
+  if (big) bigToast(text || pick(PRAISE), emoji);
+  if (star) addStar();
+}
+function addStar(n = 1) {
+  STARS += n; store.set('stars', STARS);
+  const c = $('#starCount'); if (c) { c.textContent = STARS; const b = c.parentElement; b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+}
+
+/* ================= content ================= */
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const SEASONS = [{ w: 'spring', e: '🌸' }, { w: 'summer', e: '🏖️' }, { w: 'autumn', e: '🍂' }, { w: 'winter', e: '⛄' }];
+
+const FEELINGS = [
+  { id: 'happy', e: '😄', w: 'happy', act: 'Smile big!', ae: '😁', anim: 'a-bounce', fx: ['✨', '💛'] },
+  { id: 'sad', e: '😢', w: 'sad', act: 'Cry: boo-hoo!', ae: '😭', anim: 'a-droop', fx: ['💧'], down: true },
+  { id: 'good', e: '🙂', w: 'good', act: 'Thumbs up!', ae: '👍', anim: 'a-nod', fx: ['👍'] },
+  { id: 'bad', e: '😞', w: 'bad', alt: 'not so good', act: 'Thumbs down!', ae: '👎', anim: 'a-droop', fx: ['👎', '☁️'], down: true },
+  { id: 'great', e: '😃', w: 'great', act: 'Two thumbs up!', ae: '👍', anim: 'a-bounce', fx: ['⭐'] },
+  { id: 'wonderful', e: '🤩', w: 'wonderful', act: 'Jazz hands!', ae: '🙌', anim: 'a-pulse', fx: ['✨', '🌟'] },
+  { id: 'tired', e: '😴', w: 'tired', act: 'Shoulders down… yawn!', ae: '🥱', anim: 'a-sleepy', fx: ['💤'] },
+  { id: 'hungry', e: '😋', w: 'hungry', act: 'Rub your tummy!', ae: '🍔', anim: 'a-rumble', fx: ['🍔', '🍕', '🍎'] },
+  { id: 'angry', e: '😠', w: 'angry', act: 'Stomp your feet!', ae: '💢', anim: 'a-shake', fx: ['💢', '🔥'] },
+  { id: 'sick', e: '🤒', w: 'sick', act: 'Cough, cough!', ae: '🤧', anim: 'a-wobble', fx: ['🦠', '🤧'] },
+  { id: 'scared', e: '😱', w: 'scared', act: 'Hide your face!', ae: '🙈', anim: 'a-tremble', fx: ['👻', '❗'] },
+  { id: 'silly', e: '🤪', w: 'silly', act: 'Make a silly face!', ae: '😜', anim: 'a-spin', fx: ['🎈', '🌀'] }
+];
+
+const WEATHER = [
+  { id: 'sunny', e: '☀️', w: 'sunny', act: 'Put on your sunglasses!', ae: '😎' },
+  { id: 'cloudy', e: '☁️', w: 'cloudy', act: 'Make a big cloud with your arms!', ae: '🙆' },
+  { id: 'rainy', e: '🌧️', w: 'rainy', act: 'Open your umbrella!', ae: '☂️' },
+  { id: 'snowy', e: '❄️', w: 'snowy', act: 'Make a snowball!', ae: '⛄' },
+  { id: 'windy', e: '💨', w: 'windy', act: 'Sway like a tree!', ae: '🌳' },
+  { id: 'stormy', e: '⛈️', w: 'stormy', act: 'Jump and say BOOM!', ae: '⚡' },
+  { id: 'hot', e: '🥵', w: 'hot', act: 'Fan your face! Phew!', ae: '🌡️' },
+  { id: 'cold', e: '🥶', w: 'cold', act: 'Hug yourself! Brrr!', ae: '🧣' }
+];
+
+const COLORS = [
+  { id: 'red', hex: '#E53935', txt: '#fff', items: [['🍎', 'apple'], ['🍓', 'strawberry'], ['🚒', 'fire truck']] },
+  { id: 'blue', hex: '#1E88E5', txt: '#fff', items: [['🐳', 'whale'], ['👖', 'jeans'], ['💙', 'heart']] },
+  { id: 'yellow', hex: '#FDD835', txt: '#2B2A4C', items: [['🍌', 'banana'], ['🌻', 'sunflower'], ['🐥', 'chick']] },
+  { id: 'green', hex: '#43A047', txt: '#fff', items: [['🐸', 'frog'], ['🌳', 'tree'], ['🥦', 'broccoli']] },
+  { id: 'orange', hex: '#FB8C00', txt: '#fff', items: [['🍊', 'orange'], ['🥕', 'carrot'], ['🎃', 'pumpkin']] },
+  { id: 'purple', hex: '#8E24AA', txt: '#fff', items: [['🍇', 'grapes'], ['🍆', 'eggplant'], ['💜', 'heart']] },
+  { id: 'pink', hex: '#F06292', txt: '#fff', items: [['🐷', 'pig'], ['🌸', 'flower'], ['🦩', 'flamingo']] },
+  { id: 'brown', hex: '#8D6E63', txt: '#fff', items: [['🐻', 'bear'], ['🍪', 'cookie'], ['🌰', 'chestnut']] },
+  { id: 'black', hex: '#212121', txt: '#fff', items: [['🎩', 'hat'], ['🕷️', 'spider'], ['🎱', 'ball']] },
+  { id: 'white', hex: '#FFFFFF', txt: '#2B2A4C', items: [['⛄', 'snowman'], ['🥚', 'egg'], ['👻', 'ghost']] }
+];
+const colorOf = id => COLORS.find(c => c.id === id);
+
+const SPY = [
+  ['🍎', 'apple', 'red'], ['🚗', 'car', 'red'], ['🎈', 'balloon', 'red'],
+  ['🐳', 'whale', 'blue'], ['👖', 'jeans', 'blue'], ['🐟', 'fish', 'blue'],
+  ['🍌', 'banana', 'yellow'], ['🐥', 'chick', 'yellow'], ['⭐', 'star', 'yellow'], ['🍋', 'lemon', 'yellow'],
+  ['🐸', 'frog', 'green'], ['🌳', 'tree', 'green'], ['🦖', 'dinosaur', 'green'], ['🌵', 'cactus', 'green'],
+  ['🍊', 'orange', 'orange'], ['🥕', 'carrot', 'orange'], ['🏀', 'basketball', 'orange'], ['🎃', 'pumpkin', 'orange'],
+  ['🍇', 'grapes', 'purple'], ['🍆', 'eggplant', 'purple'],
+  ['🐷', 'pig', 'pink'], ['🌸', 'flower', 'pink'], ['🦩', 'flamingo', 'pink'],
+  ['🐻', 'bear', 'brown'], ['🍪', 'cookie', 'brown'],
+  ['🎩', 'hat', 'black'], ['🕷️', 'spider', 'black'],
+  ['⛄', 'snowman', 'white'], ['👻', 'ghost', 'white'], ['🥚', 'egg', 'white']
+].map(([e, n, c]) => ({ e, n, c }));
+
+const ANIMALS = [
+  { w: 'cat', p: 'cats', e: '🐱', s: 'Meow!', mv: 'Stretch like a cat!', a: 'm-wag' },
+  { w: 'dog', p: 'dogs', e: '🐶', s: 'Woof woof!', mv: 'Wag your tail like a dog!', a: 'm-wag' },
+  { w: 'bird', p: 'birds', e: '🐦', s: 'Tweet tweet!', mv: 'Fly like a bird!', a: 'm-flap' },
+  { w: 'fish', p: 'fish', e: '🐟', s: 'Blub blub!', mv: 'Swim like a fish!', a: 'm-swim', quiet: true },
+  { w: 'cow', p: 'cows', e: '🐮', s: 'Moo!', mv: 'Walk like a cow!', a: 'm-stomp' },
+  { w: 'horse', p: 'horses', e: '🐴', s: 'Neigh!', mv: 'Gallop like a horse!', a: 'm-hop' },
+  { w: 'sheep', p: 'sheep', e: '🐑', s: 'Baa!', mv: 'Jump like a sheep!', a: 'm-hop' },
+  { w: 'duck', p: 'ducks', e: '🦆', s: 'Quack quack!', mv: 'Walk like a duck!', a: 'm-waddle' },
+  { w: 'pig', p: 'pigs', e: '🐷', s: 'Oink oink!', mv: 'Dance like a pig!', a: 'm-dance' },
+  { w: 'frog', p: 'frogs', e: '🐸', s: 'Ribbit!', mv: 'Jump like a frog!', a: 'm-hop' },
+  { w: 'rabbit', p: 'rabbits', e: '🐰', s: 'Sniff sniff!', mv: 'Hop like a rabbit!', a: 'm-hop', quiet: true },
+  { w: 'lion', p: 'lions', e: '🦁', s: 'Roar!', mv: 'Roar like a lion!', a: 'm-roar' },
+  { w: 'monkey', p: 'monkeys', e: '🐵', s: 'Ooh ooh aah aah!', mv: 'Dance like a monkey!', a: 'm-dance' },
+  { w: 'elephant', p: 'elephants', e: '🐘', s: 'Toot toot!', mv: 'Stomp like an elephant!', a: 'm-stomp' },
+  { w: 'bear', p: 'bears', e: '🐻', s: 'Grrr!', mv: 'Walk like a big bear!', a: 'm-stomp' },
+  { w: 'snake', p: 'snakes', e: '🐍', s: 'Hiss!', mv: 'Wiggle like a snake!', a: 'm-slither' }
+];
+
+/* ================= graphics ================= */
+const SPLAT_D = 'M100 22C122 20 128 40 146 38C168 36 182 56 172 76C164 92 186 102 180 122C174 144 150 140 142 158C134 178 112 186 96 176C80 166 66 182 50 170C32 156 42 136 30 122C16 106 20 84 36 74C52 64 44 42 62 32C76 24 84 24 100 22Z';
+function splat(hex) {
+  return `<svg class="splat" viewBox="0 0 200 200"><g fill="${hex}" stroke="#2B2A4C" stroke-width="5" stroke-linejoin="round"><path d="${SPLAT_D}"/><circle cx="178" cy="36" r="9"/><circle cx="26" cy="168" r="8"/><circle cx="176" cy="172" r="6"/></g></svg>`;
+}
+function floaties(list, down, n = 10) {
+  return `<div class="floaties${down ? ' down' : ''}">${Array.from({ length: n }, (_, i) => `<span class="e fl" style="left:${(4 + Math.random() * 92).toFixed(1)}%;animation-delay:-${(Math.random() * 5).toFixed(2)}s;animation-duration:${(4 + Math.random() * 3).toFixed(2)}s;font-size:${(4.5 + Math.random() * 4).toFixed(1)}vmin">${list[i % list.length]}</span>`).join('')}</div>`;
+}
+
+function SUN(style = '') {
+  const rays = Array.from({ length: 12 }, (_, i) => `<rect x="-7" y="-98" width="14" height="30" rx="7" fill="#FFB703" transform="rotate(${i * 30})"/>`).join('');
+  return `<svg class="sun-svg" viewBox="-100 -100 200 200" style="${style}"><g class="rays">${rays}</g><g class="face"><circle r="60" fill="#FFD60A" stroke="#F4A100" stroke-width="5"/><circle cx="-21" cy="-10" r="7" fill="#2B2A4C"/><circle cx="21" cy="-10" r="7" fill="#2B2A4C"/><path d="M-24 14 Q0 38 24 14" stroke="#2B2A4C" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="-36" cy="10" r="8" fill="#FF8FA3" opacity=".7"/><circle cx="36" cy="10" r="8" fill="#FF8FA3" opacity=".7"/></g></svg>`;
+}
+function sceneHTML(id) {
+  const R = (n, f) => Array.from({ length: n }, (_, i) => f(i)).join('');
+  const r = (a, b) => (a + Math.random() * (b - a)).toFixed(2);
+  const cloud = (top, s, dur, cc = '#fff', still) => `<div class="cloud${still ? ' still' : ''}" style="top:${top}%;--s:${s};--cc:${cc};animation-duration:${dur}s;animation-delay:-${r(0, dur)}s${still ? `;transform:translateX(${still}cqw)` : ''}"></div>`;
+  const hills = (a, b) => `<div class="hill h2" style="--hc:${b}"></div><div class="hill h1" style="--hc:${a}"></div>`;
+  const prop = (e, x, y, s, cls = '', extra = '') => `<span class="prop ${cls}" style="left:${x}%;bottom:${y}%;font-size:${s}cqmin;${extra}">${e}</span>`;
+  const drops = (n, fast) => R(n, () => `<i class="drop" style="left:${r(-5, 108)}%;animation-duration:${r(fast ? .35 : .55, fast ? .6 : .9)}s;animation-delay:-${r(0, 1)}s"></i>`);
+  const flakes = (n, slow) => R(n, () => { const s = r(.8, 2.2); return `<i class="flake" style="left:${r(0, 100)}%;width:${s}cqmin;height:${s}cqmin;animation-duration:${r(slow ? 8 : 5, slow ? 14 : 10)}s;animation-delay:-${r(0, 12)}s"></i>`; });
+  const bolt = (x, y) => `<svg class="bolt" viewBox="0 0 60 120" style="left:${x}%;top:${y}%"><polygon points="34,0 8,64 28,64 18,120 54,46 33,46 46,0" fill="#FFEB3B" stroke="#F9A825" stroke-width="3"/></svg>`;
+  switch (id) {
+    case 'sunny': return `<div class="scene" style="--sky:linear-gradient(#36B5F5,#BDE9FF 75%)">${SUN()}${cloud(14, 22, 70)}${cloud(30, 15, 55)}${hills('#7CC855', '#5DAE3B')}${prop('🌻', 10, 7, 13, 'sway')}${prop('🌷', 24, 5, 9, 'sway')}${prop('🌼', 70, 7, 9, 'sway')}${prop('🌷', 86, 4, 10, 'sway')}${prop('🦋', 38, 42, 8, 'flutter')}</div>`;
+    case 'cloudy': return `<div class="scene" style="--sky:linear-gradient(#8FA6B2,#D5DEE3 80%)">${SUN('width:20cqmin;left:12cqw;right:auto;top:8cqh')}${cloud(9, 34, 0, '#ECEFF1', 4)}${cloud(4, 30, 60, '#CFD8DC')}${cloud(20, 40, 80, '#ECEFF1')}${cloud(34, 26, 50, '#B0BEC5')}${cloud(14, 22, 45, '#FFFFFF')}${cloud(42, 32, 70, '#CFD8DC')}${hills('#8DB36B', '#6E9950')}${prop('🌳', 78, 8, 16)}</div>`;
+    case 'rainy': return `<div class="scene" style="--sky:linear-gradient(#5F7480,#9AAAB4 80%)">${cloud(2, 40, 90, '#90A4AE')}${cloud(10, 34, 70, '#78909C')}${cloud(18, 28, 60, '#B0BEC5')}${cloud(5, 30, 80, '#78909C')}${drops(80)}${hills('#689F38', '#558B2F')}${R(5, () => `<i class="ripple" style="left:${r(5, 90)}%;bottom:${r(2, 12)}%;animation-delay:-${r(0, 1.4)}s"></i>`)}${prop('☔', 64, 6, 15)}</div>`;
+    case 'snowy': return `<div class="scene" style="--sky:linear-gradient(#9FA8DA,#E8EAF6 80%)">${cloud(3, 36, 90, '#E8EAF6')}${cloud(12, 28, 70, '#C5CAE9')}${flakes(70)}${hills('#FFFFFF', '#E3E8F4')}${prop('⛄', 16, 6, 22)}${prop('🌲', 74, 8, 18)}${prop('🌲', 86, 5, 13)}</div>`;
+    case 'windy': return `<div class="scene" style="--sky:linear-gradient(#4FC3F7,#E1F5FE 80%)">${cloud(6, 26, 10)}${cloud(20, 20, 8)}${cloud(32, 16, 12)}${R(7, () => `<i class="gust" style="top:${r(10, 70)}%;animation-duration:${r(1.4, 2.6)}s;animation-delay:-${r(0, 2.6)}s"></i>`)}${hills('#7CC855', '#5DAE3B')}${prop('🌳', 8, 6, 30, 'sway fast')}${R(14, i => `<span class="leaf" style="top:${r(15, 80)}%;font-size:${r(4, 7)}cqmin;animation-duration:${r(2.5, 4.5)}s;animation-delay:-${r(0, 4.5)}s">${['🍃', '🍂', '🍁'][i % 3]}</span>`)}</div>`;
+    case 'stormy': return `<div class="scene" style="--sky:linear-gradient(#232F36,#4E6470 85%)">${bolt(30, 16)}${bolt(66, 20)}${cloud(0, 44, 120, '#455A64')}${cloud(8, 38, 90, '#37474F')}${cloud(3, 34, 100, '#546E7A')}${cloud(14, 30, 80, '#37474F')}${drops(100, true)}${hills('#3E6B26', '#2E5A1C')}</div>`;
+    case 'hot': return `<div class="scene" style="--sky:linear-gradient(#FF8A50,#FFD180 75%)">${SUN('width:42cqmin;right:auto;left:50%;margin-left:-21cqmin;top:4cqh')}${R(6, () => `<svg class="heat" viewBox="0 0 20 100" preserveAspectRatio="none" style="left:${r(5, 92)}%;bottom:${r(14, 30)}%;animation-delay:-${r(0, 2.6)}s"><path d="M10 100 Q0 87 10 75 T10 50 T10 25 T10 0" stroke="rgba(255,255,255,.85)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`)}${hills('#FFCC80', '#FFB74D')}${prop('🌵', 9, 7, 20)}${prop('🌡️', 80, 10, 18, 'throb')}${prop('🍦', 64, 6, 11)}</div>`;
+    case 'cold': {
+      const ice = R(22, i => `<polygon points="${i * 4.6},0 ${i * 4.6 + 4.6},0 ${i * 4.6 + 2.3},${(3 + Math.random() * 8).toFixed(1)}" fill="#E1F5FE" stroke="#81D4FA" stroke-width=".3"/>`);
+      return `<div class="scene" style="--sky:linear-gradient(#7FD0F7,#E1F5FE 80%)"><svg class="icicles" viewBox="0 0 100 12" preserveAspectRatio="none">${ice}<rect width="100" height="1.6" fill="#fff"/></svg>${cloud(16, 24, 80, '#F5FBFF')}${flakes(28, true)}${hills('#F5FBFF', '#DDEFFC')}${prop('⛄', 12, 7, 22)}${prop('🥶', 70, 14, 20, 'shiver')}${prop('🌲', 88, 6, 14)}</div>`;
+    }
+  }
+  return '<div class="scene"></div>';
+}
+/* sounds + lightning for a scene that is now on screen; returns a stop function */
+function startScene(id, root) {
+  ({ sunny: () => SFX.birds(), cloudy: () => SFX.wind(2.5), rainy: () => SFX.rain(3), snowy: () => SFX.chimes(), windy: () => SFX.wind(3.5), stormy: () => SFX.rain(3), hot: () => SFX.sizzle(), cold: () => { SFX.wind(2.5); SFX.chimes(); } })[id]?.();
+  if (id !== 'stormy') return null;
+  let alive = true, tid = null;
+  const flash = () => {
+    if (!alive) return; const sc = root.querySelector('.scene'); if (!sc) return;
+    sc.classList.remove('flash'); void sc.offsetWidth; sc.classList.add('flash');
+    T.after(() => alive && SFX.thunder(), 280);
+    tid = T.after(flash, 3500 + Math.random() * 2500);
+  };
+  tid = T.after(flash, 900);
+  return () => { alive = false; T.clear(tid); };
+}
+
+/* ---------- body figure ---------- */
+const BODY_PTS = {
+  head: [[150, 112, 82]], hair: [[150, 66, 44]], eyes: [[126, 122, 17], [174, 122, 17]], ears: [[82, 126, 22], [218, 126, 22]],
+  nose: [[150, 138, 17]], mouth: [[150, 166, 22]], neck: [[150, 196, 20]], shoulders: [[100, 218, 22], [200, 218, 22]],
+  arms: [[80, 290, 30], [220, 290, 30]], hands: [[58, 348, 28], [242, 348, 28]], fingers: [[56, 362, 20], [244, 362, 20]],
+  tummy: [[150, 300, 36]], legs: [[122, 440, 30], [178, 440, 30]], knees: [[121, 462, 20], [179, 462, 20]],
+  feet: [[112, 546, 36], [188, 546, 36]], toes: [[106, 558, 22], [194, 558, 22]]
+};
+function bodySVG() {
+  const ink = '#2B2A4C', skin = '#F2C3A0', hair = '#6D4C41', shirt = '#FFD23F', shorts = '#3A86FF';
+  const limb = (d, w, c) => `<path d="${d}" stroke="${ink}" stroke-width="${w + 10}" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+  const S = `stroke="${ink}" stroke-width="5"`;
+  const toes = pts => pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5.5" fill="${skin}" stroke="${ink}" stroke-width="3"/>`).join('');
+  const fingers = pts => pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${skin}" stroke="${ink}" stroke-width="3.5"/>`).join('');
+  const L = [['hair', 58, 120, 60], ['eyes', 112, 126, 122], ['nose', 150, 150, 140], ['neck', 196, 140, 196], ['shoulders', 226, 100, 216], ['arms', 290, 82, 290], ['hands', 352, 40, 346], ['knees', 462, 114, 462], ['toes', 572, 100, 560]];
+  const Rr = [['head', 70, 196, 80], ['ears', 128, 232, 126], ['mouth', 170, 166, 166], ['tummy', 300, 170, 300], ['fingers', 376, 252, 362], ['legs', 430, 182, 430], ['feet', 540, 214, 546]];
+  const labels = L.map(([t, y, px, py]) => `<line x1="-6" y1="${y - 7}" x2="${px}" y2="${py}"/><text x="-12" y="${y}" text-anchor="end">${t}</text>`).join('') +
+    Rr.map(([t, y, px, py]) => `<line x1="306" y1="${y - 7}" x2="${px}" y2="${py}"/><text x="312" y="${y}">${t}</text>`).join('');
+  return `<svg class="body-svg" viewBox="-10 0 540 620"><g transform="translate(110,6)">
+    ${limb('M124 380 L120 528', 30, skin)}${limb('M176 380 L180 528', 30, skin)}
+    <ellipse cx="112" cy="546" rx="30" ry="16" fill="${skin}" ${S}/><ellipse cx="188" cy="546" rx="30" ry="16" fill="${skin}" ${S}/>
+    ${toes([[92, 556], [102, 560], [113, 561], [124, 559], [176, 559], [187, 561], [198, 560], [208, 556]])}
+    <path d="M112 462 q9 6 18 0" stroke="${ink}" stroke-width="3" fill="none"/><path d="M170 462 q9 6 18 0" stroke="${ink}" stroke-width="3" fill="none"/>
+    ${limb('M104 226 Q78 280 62 334', 26, skin)}${limb('M196 226 Q222 280 238 334', 26, skin)}
+    ${fingers([[44, 358], [54, 364], [65, 361], [235, 361], [246, 364], [256, 358]])}
+    <circle cx="58" cy="346" r="19" fill="${skin}" ${S}/><circle cx="242" cy="346" r="19" fill="${skin}" ${S}/>
+    <path d="M96 336 H204 L210 400 H158 L150 372 L142 400 H90 Z" fill="${shorts}" ${S} stroke-linejoin="round"/>
+    <rect x="136" y="176" width="28" height="34" rx="8" fill="${skin}" ${S}/>
+    <path d="M98 214 Q150 200 202 214 L232 262 L208 276 L200 252 L202 346 H98 L100 252 L92 276 L68 262 Z" fill="${shirt}" ${S} stroke-linejoin="round"/>
+    <path d="M150 272 l8 16 18 2 -13 12 4 18 -17 -9 -17 9 4 -18 -13 -12 18 -2Z" fill="#FF70A6" stroke="${ink}" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="82" cy="126" r="15" fill="${skin}" ${S}/><circle cx="218" cy="126" r="15" fill="${skin}" ${S}/>
+    <circle cx="150" cy="118" r="68" fill="${skin}" ${S}/>
+    <path d="M84 116 C78 62 116 40 150 42 C188 42 224 64 216 116 C204 96 186 84 164 88 C146 74 118 80 106 96 C98 100 90 106 84 116 Z" fill="${hair}" ${S} stroke-linejoin="round"/>
+    <circle cx="126" cy="122" r="8" fill="${ink}"/><circle cx="174" cy="122" r="8" fill="${ink}"/><circle cx="129" cy="119" r="2.6" fill="#fff"/><circle cx="177" cy="119" r="2.6" fill="#fff"/>
+    <circle cx="108" cy="148" r="9" fill="#FF8FA3" opacity=".55"/><circle cx="192" cy="148" r="9" fill="#FF8FA3" opacity=".55"/>
+    <path d="M150 128 Q143 144 153 146" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M130 158 Q150 182 170 158 Z" fill="#E85D75" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/>
+    <g class="hl"></g><g class="labels">${labels}</g></g></svg>`;
+}
+
+/* ---------- monsters ---------- */
+const MCOL = [{ w: 'green', h: '#6BCB77' }, { w: 'purple', h: '#A66CFF' }, { w: 'pink', h: '#FF7EB6' }, { w: 'orange', h: '#FF9F1C' }, { w: 'blue', h: '#4D96FF' }, { w: 'red', h: '#FF595E' }, { w: 'yellow', h: '#FFD93D' }];
+const MNAMES = ['Zog', 'Bibo', 'Gloop', 'Fizz', 'Momo', 'Wobble', 'Snork', 'Pip', 'Blub', 'Ziggy', 'Tiki', 'Grumbo', 'Noodle', 'Bop', 'Fuzzy', 'Zuzu'];
+function makeMonster(o = {}) {
+  return { color: o.color || pick(MCOL), eyes: o.eyes ?? rand(1, 5), arms: o.arms ?? pick([0, 2, 2, 3, 4, 4, 6]), legs: o.legs ?? rand(1, 4), horns: o.horns ?? rand(0, 3), teeth: o.teeth ?? rand(0, 4), shape: o.shape || pick(['round', 'tall', 'wide']), name: o.name || pick(MNAMES), spots: Math.random() < .5 };
+}
+function monsterSVG(m) {
+  const ink = '#2B2A4C', c = m.color.h, cx = 120, cy = 118;
+  const [rx, ry] = { round: [68, 66], tall: [56, 80], wide: [84, 58] }[m.shape];
+  const top = cy - ry, bot = cy + ry;
+  let s = '';
+  const spread = m.legs === 1 ? 0 : Math.min(rx * 1.3, 34 * (m.legs - 1));
+  for (let i = 0; i < m.legs; i++) {
+    const x = m.legs === 1 ? cx : cx - spread / 2 + spread * i / (m.legs - 1);
+    s += `<rect x="${x - 9}" y="${bot - 20}" width="18" height="${250 - bot}" rx="8" fill="${c}" stroke="${ink}" stroke-width="4"/><ellipse cx="${x}" cy="250" rx="17" ry="9" fill="${c}" stroke="${ink}" stroke-width="4"/>`;
+  }
+  const arm = (side, k, n) => {
+    const y0 = cy - 6 + (k - (n - 1) / 2) * 26;
+    const dx = rx * Math.sqrt(Math.max(0, 1 - ((y0 - cy) / ry) ** 2)) * .9;
+    const x0 = cx + side * dx, x1 = x0 + side * 46, y1 = y0 - 22;
+    const d = `M${x0.toFixed(1)} ${y0.toFixed(1)} Q${(x0 + side * 34).toFixed(1)} ${(y0 + 16).toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+    return `<path d="${d}" stroke="${ink}" stroke-width="16" fill="none" stroke-linecap="round"/><path d="${d}" stroke="${c}" stroke-width="8" fill="none" stroke-linecap="round"/><circle cx="${x1.toFixed(1)}" cy="${y1.toFixed(1)}" r="9" fill="${c}" stroke="${ink}" stroke-width="4"/>`;
+  };
+  const nl = Math.ceil(m.arms / 2), nr = Math.floor(m.arms / 2);
+  for (let k = 0; k < nl; k++) s += arm(-1, k, nl);
+  for (let k = 0; k < nr; k++) s += arm(1, k, nr);
+  for (let i = 0; i < m.horns; i++) {
+    const off = i - (m.horns - 1) / 2, x = cx + off * 36, yb = top + 14 + Math.abs(off) * 10;
+    s += `<path d="M${x - 11} ${yb} L${x + off * 10} ${yb - 40} L${x + 11} ${yb} Z" fill="#FFF1C1" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/>`;
+  }
+  s += `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${c}" stroke="${ink}" stroke-width="5"/>`;
+  s += `<ellipse cx="${cx}" cy="${cy + ry * .45}" rx="${rx * .55}" ry="${ry * .36}" fill="#fff" opacity=".3"/>`;
+  if (m.spots) s += `<circle cx="${cx - rx * .6}" cy="${cy + ry * .12}" r="7" fill="${ink}" opacity=".13"/><circle cx="${cx + rx * .62}" cy="${cy - ry * .02}" r="5" fill="${ink}" opacity=".13"/><circle cx="${cx + rx * .4}" cy="${cy + ry * .62}" r="6" fill="${ink}" opacity=".13"/>`;
+  const er = [0, 24, 18, 15, 13, 12][m.eyes];
+  const rows = m.eyes <= 3 ? [m.eyes] : m.eyes === 4 ? [2, 2] : [3, 2];
+  const ey0 = cy - ry * .4;
+  let eyes = '';
+  rows.forEach((n, ri) => {
+    const y = ey0 + ri * er * 2.2 - (rows.length - 1) * er * 1.1;
+    for (let i = 0; i < n; i++) {
+      const x = cx + (i - (n - 1) / 2) * er * 2.4;
+      eyes += `<circle cx="${x}" cy="${y}" r="${er}" fill="#fff" stroke="${ink}" stroke-width="4"/><circle cx="${x + er * .15}" cy="${y + er * .1}" r="${er * .48}" fill="${ink}"/><circle cx="${x + er * .3}" cy="${y - er * .12}" r="${er * .16}" fill="#fff"/>`;
+    }
+  });
+  s += `<g class="m-eyes">${eyes}</g>`;
+  const my = cy + ry * .36, mw = Math.min(34, rx * .5);
+  s += `<path d="M${cx - mw} ${my} Q${cx} ${my + mw * 1.1} ${cx + mw} ${my} Z" fill="#7A1F3D" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/>`;
+  for (let i = 0; i < m.teeth; i++) {
+    const x = m.teeth === 1 ? cx : cx - mw * .6 + mw * 1.2 * i / (m.teeth - 1);
+    s += `<path d="M${x - 6} ${my} L${x + 6} ${my} L${x} ${my + 11} Z" fill="#fff" stroke="${ink}" stroke-width="2" stroke-linejoin="round"/>`;
+  }
+  return `<svg class="monster" viewBox="-20 0 280 268">${s}</svg>`;
+}
+
+/* ================= reusable game shells ================= */
+/* card grid → click a card to open a big "detail" page with ‹ › arrows */
+function learnGrid(st, { items, cols, rows, card, detail, say, onShow, detailCls = '' }) {
+  st.innerHTML = `<div class="screen"><div class="lgrid" style="--cols:${cols};--rows:${rows}">${items.map((it, i) => `<button class="lcard" data-i="${i}">${card(it, i)}</button>`).join('')}</div><div class="detail ${detailCls}" hidden></div></div>`;
+  const grid = $('.lgrid', st), det = $('.detail', st);
+  let idx = -1, cleanup = null;
+  function open(i) {
+    idx = (i + items.length) % items.length; const it = items[idx];
+    if (cleanup) { cleanup(); cleanup = null; }
+    det.innerHTML = `<div class="det-body">${detail(it, idx)}</div><button class="nav-arrow left" data-nav="-1">‹</button><button class="nav-arrow right" data-nav="1">›</button><div class="det-tools">${say ? '<button class="btn" data-say title="Pronounce">🔊</button>' : ''}<button class="btn" data-close title="All cards (Esc)">✕</button></div>`;
+    det.hidden = false; SFX.pop();
+    if (onShow) cleanup = onShow(it, det) || null;
+  }
+  function close() { if (cleanup) { cleanup(); cleanup = null; } det.hidden = true; det.innerHTML = ''; idx = -1; }
+  grid.onclick = e => { const b = e.target.closest('.lcard'); if (b) open(+b.dataset.i); };
+  det.onclick = e => {
+    const n = e.target.closest('[data-nav]'); if (n) return open(idx + +n.dataset.nav);
+    if (e.target.closest('[data-close]')) return close();
+    if (e.target.closest('[data-say]')) return SPEAK.say(say(items[idx]));
+  };
+  return {
+    next() { open(idx + 1); }, action() { open(idx + 1); },
+    prev() { open(idx < 0 ? items.length - 1 : idx - 1); },
+    back() { if (idx >= 0) { close(); return true; } return false; },
+    destroy() { if (cleanup) cleanup(); }
+  };
+}
+
+/* picture hidden under 16 numbered tiles — kids call numbers and guess */
+function peekGame(st, { pool, content, answer, prompt, frameQ, hint, onReveal }) {
+  let bag = [], item = null, revealed = false, cleanup = null;
+  const COLS = ['#FF5A5F', '#FF9F1C', '#FFD23F', '#2EC4B6', '#3A86FF', '#8338EC', '#FF70A6', '#8AC926'];
+  st.innerHTML = `<div class="screen peek">
+    <div class="peek-box card" id="pbox"></div>
+    <div class="peek-side">
+      <div class="bubble peek-q">${prompt}</div>
+      <div class="frame">${frameQ}</div>
+      <div class="peek-ans" id="pans"></div>
+      <div class="peek-btns"><button class="btn y big" id="pOpen">🧩 Open</button>${hint ? '<button class="btn p" id="pHint">💡 Hint</button>' : ''}<button class="btn g" id="pAll">👀 Show</button><button class="btn b" id="pNext">Next ▶</button></div>
+      <div class="hint">Say a number! <span class="e">🔢</span></div>
+    </div></div>`;
+  const box = $('#pbox', st), ans = $('#pans', st);
+  function newItem() {
+    if (cleanup) { cleanup(); cleanup = null; }
+    if (!bag.length) bag = shuffle(pool);
+    item = bag.pop(); revealed = false; ans.innerHTML = '';
+    box.innerHTML = `<div class="peek-content">${content(item)}</div><div class="peek-tiles">${Array.from({ length: 16 }, (_, i) => `<button class="ptile" style="--tc:${COLS[(i + Math.floor(i / 4) * 3) % COLS.length]}">${i + 1}</button>`).join('')}</div>`;
+    SFX.whoosh();
+  }
+  function reveal() {
+    if (revealed) return; revealed = true;
+    $$('.ptile', box).forEach(t => t.classList.add('gone'));
+    ans.innerHTML = `<div class="answer pop">${answer(item)}</div>`;
+    celebrate(null, { el: box });
+    if (onReveal) cleanup = onReveal(item, box);
+  }
+  function openTile(t) { if (!t || t.classList.contains('gone')) return; t.classList.add('gone'); SFX.pop(); if (!$$('.ptile:not(.gone)', box).length) reveal(); }
+  function openRandom() { const left = $$('.ptile:not(.gone)', box); if (!left.length) return reveal(); openTile(pick(left)); }
+  box.onclick = e => openTile(e.target.closest('.ptile'));
+  $('#pOpen', st).onclick = openRandom; $('#pAll', st).onclick = reveal; $('#pNext', st).onclick = newItem;
+  if (hint) $('#pHint', st).onclick = () => hint(item, ans);
+  newItem();
+  const step = () => revealed ? newItem() : openRandom();
+  return { action: step, next: step, destroy() { if (cleanup) cleanup(); } };
+}
+
+/* ================= HELLO ================= */
+function helloNames(st) {
+  st.innerHTML = `<div class="screen hello">
+    <div class="hello-top"><span class="e hello-wave">👋</span><div class="bubble hello-q">Hello! What's your name?</div></div>
+    <div class="hello-frame card">My name is <input id="nameIn" class="name-in" maxlength="18" autocomplete="off" spellcheck="false" placeholder="…">. <button class="btn g" id="nameOk" title="Enter">✅</button></div>
+    <div class="hello-greet" id="greet"></div>
+    <div class="hello-chips" id="chips"></div>
+    <div class="row"><button class="btn b" id="toFeel">Next: How are you? <span class="e">😊</span></button></div>
+  </div>`;
+  const inp = $('#nameIn', st), greet = $('#greet', st), chips = $('#chips', st);
+  const draw = () => { chips.innerHTML = NAMES.map(n => `<button class="name-chip" data-n="${esc(n)}"><span class="e">${avatarOf(n)}</span>${esc(n)}</button>`).join(''); };
+  const say = html => { greet.innerHTML = html; bump(greet); };
+  function submit() {
+    let n = inp.value.trim().replace(/\s+/g, ' ');
+    if (!n) { inp.focus(); return; }
+    n = n.charAt(0).toLocaleUpperCase('tr-TR') + n.slice(1);
+    const isNew = !NAMES.some(x => x.toLocaleLowerCase('tr-TR') === n.toLocaleLowerCase('tr-TR'));
+    if (isNew) { NAMES.push(n); saveNames(); }
+    inp.value = ''; draw();
+    say(`Nice to meet you, <b>${esc(n)}</b>! <span class="e">🤝</span>`);
+    celebrate(`Hello, ${n}!`, { star: isNew, emoji: avatarOf(n) });
+    inp.focus();
+  }
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submit(); } });
+  $('#nameOk', st).onclick = submit;
+  $('#toFeel', st).onclick = () => go('feelings', 'check');
+  chips.onclick = e => { const b = e.target.closest('.name-chip'); if (!b) return; SFX.pop(); say(`Hello, <b>${esc(b.dataset.n)}</b>! <span class="e">👋</span> How are you?`); };
+  draw();
+  setTimeout(() => inp.focus(), 60);
+  return { action() { inp.focus(); } };
+}
+
+/* ================= WEATHER ================= */
+function weatherToday(st) {
+  const rowsDef = [
+    { id: 'day', q: 'What day is it today?', e: '📅', opts: DAYS.map(d => ({ v: d, l: d })), ans: v => `Today is ${v}.` },
+    { id: 'season', q: 'What season is it?', e: '🍁', opts: SEASONS.map(s => ({ v: s.w, l: `<span class="e">${s.e}</span>${s.w}` })), ans: v => `It's ${v}.` },
+    { id: 'weather', q: "How's the weather today?", e: '🌦️', opts: WEATHER.map(w => ({ v: w.w, l: `<span class="e">${w.e}</span>${w.w}` })), ans: v => `It's ${v}!` }
+  ];
+  const done = new Set();
+  st.innerHTML = `<div class="screen today">${rowsDef.map(r => `<section class="trow card" data-row="${r.id}"><div class="trow-head"><span class="tq"><span class="e">${r.e}</span> ${r.q}</span><span class="tans"></span></div><div class="tpills">${r.opts.map(o => `<button class="pill" data-v="${esc(o.v)}">${o.l}</button>`).join('')}</div></section>`).join('')}</div>`;
+  st.onclick = e => {
+    const p = e.target.closest('.pill'); if (!p) return;
+    const sec = p.closest('.trow'), r = rowsDef.find(x => x.id === sec.dataset.row);
+    $$('.pill', sec).forEach(x => x.classList.toggle('on', x === p));
+    const a = $('.tans', sec); a.textContent = r.ans(p.dataset.v); bump(a); SFX.ding();
+    if (r.id === 'weather') { const w = WEATHER.find(x => x.w === p.dataset.v); a.innerHTML += ` <span class="e">${w.e}</span>`; }
+    done.add(r.id);
+    if (done.size === 3 && !st.dataset.cheered) { st.dataset.cheered = 1; T.after(() => celebrate('Great!', { emoji: '🌈' }), 300); }
+  };
+  return { destroy() { st.onclick = null; delete st.dataset.cheered; } };
+}
+
+function weatherLearn(st) {
+  return learnGrid(st, {
+    items: WEATHER, cols: 4, rows: 2, detailCls: 'full',
+    card: w => `<span class="e">${w.e}</span><span class="w">${w.w}</span>`,
+    detail: w => `${sceneHTML(w.id)}<div class="scene-cap"><div class="scene-label">It's ${w.w}!</div><div class="chip"><span class="e">${w.ae}</span> ${w.act}</div></div>`,
+    say: w => `It's ${w.w}!`,
+    onShow: (w, el) => startScene(w.id, el)
+  });
+}
+
+function weatherMoves(st) {
+  let cur = null, stop = null, autoId = null;
+  st.innerHTML = `<div class="screen nopad"><div class="wm-host" id="wmHost"></div><div class="ctrl-br"><button class="btn" id="autoBtn">⏯ Auto</button><button class="btn y big" id="nextBtn">Next ▶</button></div></div>`;
+  const host = $('#wmHost', st);
+  host.innerHTML = `<div class="intro card"><div class="e intro-e">🌦️🕺</div><h2>Weather moves!</h2><p>Look at the weather. Say it and move!</p><button class="btn y big" id="goBtn">Start ▶</button></div>`;
+  function show() {
+    if (stop) { stop(); stop = null; }
+    cur = pick(WEATHER.filter(w => w !== cur));
+    host.innerHTML = `${sceneHTML(cur.id)}<div class="wm-top"><div class="scene-label">It's ${cur.w}!</div></div><div class="wm-bottom"><div class="chip xl"><span class="e">${cur.ae}</span> ${cur.act}</div></div>`;
+    stop = startScene(cur.id, host); SFX.whoosh();
+  }
+  $('#goBtn', st).onclick = show; $('#nextBtn', st).onclick = show;
+  $('#autoBtn', st).onclick = e => {
+    const b = e.currentTarget;
+    if (autoId) { T.clear(autoId); autoId = null; b.classList.remove('on'); }
+    else { autoId = T.every(show, 7000); b.classList.add('on'); show(); }
+  };
+  return { action: show, next: show, destroy() { if (stop) stop(); } };
+}
+
+function weatherPeek(st) {
+  return peekGame(st, {
+    pool: WEATHER, prompt: "How's the weather? <span class='e'>🤔</span>", frameQ: 'Is it sunny? … Is it rainy?',
+    content: w => sceneHTML(w.id),
+    answer: w => `It's ${w.w}! <span class="e">${w.e}</span>`,
+    hint: (w, ans) => { startScene(w.id === 'stormy' ? 'rainy' : w.id, st); if (w.id === 'stormy') T.after(() => SFX.thunder(), 600); ans.innerHTML = `<div class="hint-bubble pop">Listen! <span class="e">👂</span></div>`; },
+    onReveal: (w, box) => startScene(w.id, box)
+  });
+}
+
+function weatherNews(st) {
+  const CITIES = ['İstanbul', 'Ankara', 'İzmir', 'Antalya', 'Erzurum', 'Trabzon'];
+  let fc = [];
+  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+  st.innerHTML = `<div class="screen news">
+    <div class="news-head"><span class="live"><i></i>LIVE</span><span class="news-title">WEATHER NEWS <span class="e">📺</span></span><span class="news-day">${today}</span></div>
+    <div class="news-grid" id="nGrid"></div>
+    <div class="news-foot"><div class="news-rep" id="nRep"></div><div class="news-frame" id="nFrame"></div>
+      <div class="row"><button class="btn p" id="nRepBtn">🎤 Reporter</button><button class="btn y" id="nNew">🎲 New weather</button></div></div></div>`;
+  const grid = $('#nGrid', st), frame = $('#nFrame', st), rep = $('#nRep', st);
+  const blankFrame = () => { frame.innerHTML = `Hello! In <span class="blank"></span>, it's <span class="blank"></span>!`; };
+  function gen() {
+    fc = CITIES.map(c => ({ c, w: pick(WEATHER.filter(w => w.id !== 'hot' && w.id !== 'cold')) }));
+    grid.innerHTML = fc.map((f, i) => `<button class="city" data-i="${i}"><span class="e">${f.w.e}</span><b>${f.c}</b><span class="cwl">${f.w.w}</span></button>`).join('');
+    blankFrame(); SFX.whoosh();
+  }
+  grid.onclick = e => {
+    const b = e.target.closest('.city'); if (!b) return; const f = fc[+b.dataset.i];
+    $$('.city', grid).forEach(x => x.classList.toggle('on', x === b));
+    frame.innerHTML = `In <b>${f.c}</b>, it's <b style="color:var(--blue)">${f.w.w}</b>! <span class="e">${f.w.e}</span>`; bump(frame); SFX.ding();
+  };
+  $('#nNew', st).onclick = gen;
+  $('#nRepBtn', st).onclick = () => { const n = nextName(); rep.innerHTML = n ? `<span class="e">🎤${avatarOf(n)}</span> ${esc(n)}` : '<span class="e">🎤</span> You!'; bump(rep); SFX.pop(); };
+  gen();
+  return { action: gen };
+}
+
+/* ================= FEELINGS ================= */
+function feelLearn(st) {
+  return learnGrid(st, {
+    items: FEELINGS, cols: 4, rows: 3,
+    card: f => `<span class="e">${f.e}</span><span class="w">${f.w}</span>`,
+    detail: f => `${floaties(f.fx, f.down)}<div class="det-stack"><span class="e emo-big ${f.anim}">${f.e}</span><div class="det-word">${f.w}</div><div class="det-sent">I'm ${f.w}!${f.alt ? ` <small>(I'm ${f.alt}.)</small>` : ''}</div><div class="chip big"><span class="e">${f.ae}</span> ${f.act}</div></div>`,
+    say: f => `I'm ${f.w}!`
+  });
+}
+
+function feelCheck(st) {
+  let who = null; const answers = new Map(); const counts = {};
+  st.innerHTML = `<div class="screen fcheck">
+    <div class="fc-top"><span class="e fc-av" id="fcAv">🙂</span><div class="bubble fc-q" id="fcQ">How are you?</div><button class="btn y" id="fcNext">🎲 Next friend</button><button class="btn" id="fcReset" title="Clear">↺</button></div>
+    <div class="fc-grid">${FEELINGS.map(f => `<button class="fc-face" data-id="${f.id}"><span class="e">${f.e}</span><b>${f.w}</b><span class="fc-names"></span></button>`).join('')}</div>
+    <div class="fc-ans" id="fcAns">&nbsp;</div></div>`;
+  const q = $('#fcQ', st), av = $('#fcAv', st), ans = $('#fcAns', st);
+  function nextFriend() {
+    who = nextName(who);
+    q.innerHTML = who ? `How are you, <b>${esc(who)}</b>?` : 'How are you?';
+    av.textContent = who ? avatarOf(who) : '🙂';
+    ans.innerHTML = '&nbsp;'; bump(q); SFX.whoosh();
+  }
+  function drawNames() {
+    $$('.fc-face', st).forEach(b => {
+      const id = b.dataset.id, box = $('.fc-names', b);
+      const ns = [...answers].filter(([, f]) => f === id).map(([n]) => n);
+      box.innerHTML = ns.map(n => `<span>${esc(n)}</span>`).join('') + (counts[id] ? `<span class="fc-count">×${counts[id]}</span>` : '');
+    });
+  }
+  st.querySelector('.fc-grid').onclick = e => {
+    const b = e.target.closest('.fc-face'); if (!b) return; const f = FEELINGS.find(x => x.id === b.dataset.id);
+    if (who) answers.set(who, f.id); else counts[f.id] = (counts[f.id] || 0) + 1;
+    drawNames(); b.classList.remove('hit'); void b.offsetWidth; b.classList.add('hit'); SFX.ding();
+    ans.innerHTML = who ? `${esc(who)}: “I'm ${f.w}!” <span class="e">${f.e}</span> &nbsp;<small>→ ${esc(who)} is ${f.w}.</small>` : `I'm ${f.w}! <span class="e">${f.e}</span>`;
+    bump(ans);
+  };
+  $('#fcNext', st).onclick = nextFriend;
+  $('#fcReset', st).onclick = () => { answers.clear(); for (const k in counts) delete counts[k]; drawNames(); ans.innerHTML = '&nbsp;'; };
+  if (NAMES.length) nextFriend();
+  return { action: nextFriend, next: nextFriend };
+}
+
+function feelGuess(st) {
+  let f = null, phase = 'idle', bag = [], tid = null;
+  st.innerHTML = `<div class="screen fguess">
+    <div class="bubble fg-title">How do I feel? <span class="e">🤔</span></div>
+    <div class="fg-window card"><span class="e fg-emo" id="fgEmo">❓</span></div>
+    <div class="fg-ans" id="fgAns"><span class="hint">Press Go and guess!</span></div>
+    <div class="row"><button class="btn y big" id="fgGo">▶ Go!</button><button class="btn g" id="fgShow">👀 Show</button></div></div>`;
+  const emo = $('#fgEmo', st), ans = $('#fgAns', st);
+  function start() {
+    if (!bag.length) bag = shuffle(FEELINGS);
+    f = bag.pop(); phase = 'guess'; ans.innerHTML = '<span class="hint">I\'m … ?</span>';
+    emo.textContent = f.e; emo.className = 'e fg-emo blurry'; void emo.offsetWidth; emo.classList.add('unblur');
+    SFX.whoosh(); T.clear(tid); tid = T.after(reveal, 9000);
+  }
+  function reveal() {
+    if (phase !== 'guess') return; phase = 'shown'; T.clear(tid);
+    emo.className = 'e fg-emo ' + f.anim;
+    ans.innerHTML = `<div class="answer pop">I'm ${f.w}!</div><span class="chip big pop"><span class="e">${f.ae}</span> ${f.act}</span>`;
+    celebrate(null, { star: false, big: false, el: emo });
+  }
+  const step = () => phase === 'guess' ? reveal() : start();
+  $('#fgGo', st).onclick = start; $('#fgShow', st).onclick = reveal;
+  return { action: step, next: step };
+}
+
+function feelSort(st) {
+  let queue = [], cur = null, busy = false;
+  st.innerHTML = `<div class="screen fsort">
+    <button class="bin good" id="binG"><div class="bin-h"><span class="e">👍</span> Good</div><div class="bin-items"></div></button>
+    <div class="fs-center"><div id="fsSlot"></div><div class="fs-q">Good <span class="e">👍</span> or bad <span class="e">👎</span>?<br><small class="hint">← / →</small></div></div>
+    <button class="bin bad" id="binB"><div class="bin-h"><span class="e">👎</span> Bad</div><div class="bin-items"></div></button></div>`;
+  const slot = $('#fsSlot', st), binG = $('#binG', st), binB = $('#binB', st);
+  function reset() { queue = shuffle(FEELINGS); $$('.bin-items', st).forEach(b => b.innerHTML = ''); showNext(); }
+  function showNext() {
+    cur = queue.shift(); busy = false;
+    if (!cur) { slot.innerHTML = `<div class="fs-card card"><span class="e">🎉</span><b>All done!</b><button class="btn y" id="fsAgain">↺ Again</button></div>`; $('#fsAgain', st).onclick = reset; celebrate(); return; }
+    slot.innerHTML = `<div class="fs-card card"><span class="e ${cur.anim}">${cur.e}</span><b>I'm ${cur.w}.</b></div>`;
+  }
+  function put(side) {
+    if (!cur || busy) return; busy = true;
+    const bin = side === 'good' ? binG : binB, c = $('.fs-card', slot);
+    c.classList.add(side === 'good' ? 'fly-l' : 'fly-r');
+    $('.bin-items', bin).insertAdjacentHTML('beforeend', `<span class="e" title="${cur.w}">${cur.e}</span>`);
+    SFX.ding(); T.after(showNext, 330);
+  }
+  binG.onclick = () => put('good'); binB.onclick = () => put('bad');
+  reset();
+  return {
+    key(e) { if (e.key === 'ArrowLeft') { put('good'); return true; } if (e.key === 'ArrowRight') { put('bad'); return true; } return false; },
+    action() { if (!cur) reset(); }
+  };
+}
+
+/* ================= COLORS ================= */
+function colorLearn(st) {
+  return learnGrid(st, {
+    items: COLORS, cols: 5, rows: 2,
+    card: c => `<div class="splat-wrap">${splat(c.hex)}</div><span class="w">${c.id}</span>`,
+    detail: c => `<div class="det-stack"><div class="splat-big">${splat(c.hex)}<span class="splat-word" style="color:${c.txt}">${c.id}</span></div><div class="det-sent">It's ${c.id}!</div><div class="items-row">${c.items.map(([e, n]) => `<div class="item-card"><span class="e">${e}</span><span>${c.id} ${n}</span></div>`).join('')}</div></div>`,
+    say: c => c.id
+  });
+}
+
+function colorSpy(st) {
+  let items = [], target = null, phase = 'idle';
+  st.innerHTML = `<div class="screen spy">
+    <div class="spy-top"><span class="e spy-eye">👀</span><div class="bubble spy-q" id="spyQ"></div>
+      <div class="spy-btns"><button class="btn y big" id="spyGo">👀 I spy!</button><button class="btn p" id="spyTurn">🙋 Your turn</button><button class="btn" id="spyNew" title="New picture">🔄</button></div></div>
+    <div class="spy-field card" id="spyField"></div></div>`;
+  const q = $('#spyQ', st), field = $('#spyField', st), goBtn = $('#spyGo', st);
+  const idleQ = () => { q.innerHTML = 'I spy with my little eye…'; goBtn.innerHTML = '👀 I spy!'; };
+  function build() {
+    const byColor = {}; shuffle(SPY).forEach(it => (byColor[it.c] = byColor[it.c] || []).push(it));
+    let chosen = Object.values(byColor).map(l => l[0]);
+    const extra = shuffle(Object.values(byColor).filter(l => l.length > 1).map(l => l[1]));
+    chosen = shuffle(chosen.concat(extra.slice(0, 15 - chosen.length)));
+    items = chosen.map(it => ({ ...it, done: false }));
+    field.innerHTML = items.map((it, i) => `<button class="spy-item" data-i="${i}" title="${it.n}"><span class="e" style="--r:${rand(-14, 14)}deg;--x:${rand(-14, 14)}%;--y:${rand(-12, 12)}%">${it.e}</span></button>`).join('');
+    phase = 'idle'; target = null; idleQ();
+  }
+  const elOf = it => field.children[items.indexOf(it)];
+  function spy() {
+    let left = items.filter(i => !i.done);
+    if (!left.length) { build(); left = items; }
+    target = pick(left); const c = colorOf(target.c);
+    $$('.spy-item', field).forEach(b => b.classList.remove('tried', 'hint', 'ring', 'found'));
+    q.innerHTML = `I spy with my little eye something <span class="cw" style="background:${c.hex};color:${c.txt}">${c.id.toUpperCase()}</span>!`;
+    phase = 'guess'; goBtn.innerHTML = '💡 Hint'; SFX.drumroll(.6); T.after(() => SFX.ding(), 600);
+  }
+  function found(it) {
+    const el = elOf(it); it.done = true; el.classList.add('found', 'done');
+    q.innerHTML = `Yes! The ${it.c} ${it.n}! <span class="e">${it.e}</span>`; goBtn.innerHTML = '👀 I spy!';
+    phase = 'idle'; celebrate(null, { el });
+  }
+  field.onclick = e => {
+    const b = e.target.closest('.spy-item'); if (!b) return; const it = items[+b.dataset.i];
+    if (phase === 'guess') {
+      if (it === target) found(it);
+      else { b.classList.remove('no'); void b.offsetWidth; b.classList.add('no', 'tried'); SFX.wrong(); }
+    } else if (phase === 'turn') { b.classList.toggle('ring'); SFX.pop(); }
+    else SFX.pop();
+  };
+  function main() {
+    if (phase === 'guess') { const el = elOf(target); el.classList.remove('hint'); void el.offsetWidth; el.classList.add('hint'); SFX.boing(); }
+    else if (phase === 'turn') { phase = 'idle'; idleQ(); $$('.spy-item', field).forEach(b => b.classList.remove('ring')); }
+    else spy();
+  }
+  goBtn.onclick = main;
+  $('#spyTurn', st).onclick = () => {
+    const n = nextName(); phase = 'turn'; goBtn.innerHTML = '✅ Done';
+    $$('.spy-item', field).forEach(b => b.classList.remove('tried', 'hint', 'ring'));
+    q.innerHTML = `${n ? `<span class="e">${avatarOf(n)}</span> <b>${esc(n)}</b>: ` : ''}I spy with my little eye something <span class="blank"></span>!`;
+    SFX.pop();
+  };
+  $('#spyNew', st).onclick = build;
+  build();
+  return { action: main };
+}
+
+function colorHunt(st) {
+  let bag = [], left = 0, tid = null, c = null;
+  st.innerHTML = `<div class="screen hunt" id="hunt"><div class="hunt-txt" id="huntTxt"><span class="e">🏃</span> Touch it!<br><small>Find the color in our classroom!</small></div><div class="hunt-timer" id="huntTimer"></div><div class="ctrl-br"><button class="btn y big" id="huntNext">▶ Go!</button></div></div>`;
+  const hunt = $('#hunt', st), txt = $('#huntTxt', st), tm = $('#huntTimer', st), btn = $('#huntNext', st);
+  const C = 2 * Math.PI * 44;
+  function draw() { tm.innerHTML = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="rgba(255,255,255,.25)" stroke="currentColor" stroke-opacity=".25" stroke-width="9"/><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - left / 10)}" style="transition:stroke-dashoffset .9s linear"/></svg><span>${left}</span>`; }
+  function next() {
+    if (!bag.length) bag = shuffle(COLORS);
+    c = bag.pop(); T.clear(tid);
+    hunt.style.background = c.hex; hunt.style.color = c.txt;
+    hunt.style.boxShadow = c.id === 'white' ? 'inset 0 0 0 1vmin #2B2A4C' : 'none';
+    txt.innerHTML = `Touch something<br><span class="hunt-cw">${c.id.toUpperCase()}</span>! <span class="e">👉</span>`; bump(txt);
+    left = 10; draw(); SFX.whoosh(); btn.innerHTML = 'Next color ▶';
+    tid = T.every(() => {
+      left--; draw();
+      if (left > 0) SFX.beep(false);
+      else { T.clear(tid); SFX.beep(true); txt.innerHTML = `STOP! <span class="e">✋</span><br><small>What is it? It's ${art(c.id)} ${c.id} …</small>`; bump(txt); }
+    }, 1000);
+  }
+  btn.onclick = next;
+  return { action: next, next };
+}
+
+function colorMagic(st) {
+  const MIX = [['red', 'yellow', 'orange', '#FB8C00'], ['blue', 'yellow', 'green', '#43A047'], ['red', 'blue', 'purple', '#8E24AA'], ['red', 'white', 'pink', '#F48FB1'], ['black', 'white', 'gray', '#9E9E9E'], ['blue', 'white', 'light blue', '#81D4FA']];
+  let i = -1, phase = 'ask';
+  st.innerHTML = `<div class="screen magic"><div class="bubble asnd-q">Color magic! <span class="e">✨🎨</span></div><div class="mix-row" id="mixRow"></div><div class="mix-sent" id="mixSent"></div><div class="row"><button class="btn y big" id="mixGo">✨ Mix!</button><button class="btn b" id="mixNext">Next ▶</button></div></div>`;
+  const row = $('#mixRow', st), sent = $('#mixSent', st), go = $('#mixGo', st);
+  function next() {
+    i = (i + 1) % MIX.length; phase = 'ask'; const [a, b] = MIX[i];
+    row.className = 'mix-row';
+    row.innerHTML = `<div class="mix-cell ma"><div class="splat-box">${splat(colorOf(a).hex)}</div><span class="lbl">${a}</span></div><span class="mix-op">+</span><div class="mix-cell mb"><div class="splat-box">${splat(colorOf(b).hex)}</div><span class="lbl">${b}</span></div><span class="mix-op">=</span><div class="mix-cell mr"><div class="splat-box">${splat('#E0E0E0')}<span class="mix-q">?</span></div><span class="lbl">?</span></div>`;
+    sent.innerHTML = `<span class="hint">${cap(a)} and ${b} make… ?</span>`; go.disabled = false; SFX.pop();
+  }
+  function mix() {
+    if (phase !== 'ask') return next(); phase = 'mixing';
+    const [a, b, r, hex] = MIX[i]; row.classList.add('mixing'); SFX.whoosh();
+    T.after(() => {
+      const cell = $('.mr', row); cell.querySelector('.splat-box').innerHTML = splat(hex); cell.querySelector('.lbl').textContent = r; bump(cell);
+      sent.innerHTML = `${cap(a)} and ${b} make <b style="color:${hex}">${r.toUpperCase()}</b>!`; bump(sent);
+      phase = 'done'; row.classList.remove('mixing'); celebrate(null, { star: false, big: false, el: cell });
+    }, 750);
+  }
+  go.onclick = mix; $('#mixNext', st).onclick = next;
+  next();
+  return { action: () => phase === 'done' ? next() : mix(), next: () => phase === 'done' ? next() : mix() };
+}
+
+/* ================= ANIMALS ================= */
+function animalLearn(st) {
+  return learnGrid(st, {
+    items: ANIMALS, cols: 4, rows: 4,
+    card: a => `<span class="e">${a.e}</span><span class="w">${a.w}</span>`,
+    detail: a => `<div class="det-stack"><div class="ani-det"><span class="e emo-big ${a.a}">${a.e}</span><div class="bubble sound-bubble">${a.s}</div></div><div class="det-word">${a.w}</div><div class="det-sent">It's ${art(a.w)} ${a.w}!</div><div class="chip big"><span class="e">🕺</span> ${a.mv}</div></div>`,
+    say: a => `It's ${art(a.w)} ${a.w}!`
+  });
+}
+
+function animalPeek(st) {
+  return peekGame(st, {
+    pool: ANIMALS, prompt: "What is it? <span class='e'>🤔</span>", frameQ: 'Is it a …? &nbsp;Is it an …?',
+    content: a => `<span class="e">${a.e}</span>`,
+    answer: a => `It's ${art(a.w)} ${a.w}! <span class="e">${a.e}</span>`,
+    hint: (a, ans) => { ans.innerHTML = `<div class="bubble hint-bubble pop">“${a.s}”</div>`; SFX.boing(); }
+  });
+}
+
+function animalSounds(st) {
+  let mode = 'who', a = null, shown = false, bag = [];
+  const POOL = ANIMALS.filter(x => !x.quiet);
+  st.innerHTML = `<div class="screen asnd">
+    <div class="row"><button class="tab-pill on" data-m="who"><span class="e">🔊</span> Who says…?</button><button class="tab-pill" data-m="what"><span class="e">🐮</span> What does it say?</button></div>
+    <div class="bubble asnd-q" id="asQ"></div>
+    <div class="asnd-main"><span class="e asnd-emo" id="asE"></span><div class="bubble asnd-sound" id="asS"></div></div>
+    <div class="asnd-ans" id="asA"></div>
+    <div class="row"><button class="btn y big" id="asGo">👀 Show</button><button class="btn b" id="asNext">Next ▶</button></div></div>`;
+  const Q = $('#asQ', st), E = $('#asE', st), S = $('#asS', st), A = $('#asA', st);
+  function render() {
+    shown = false; A.innerHTML = '';
+    if (mode === 'who') { Q.innerHTML = `Who says “${a.s}”?`; E.className = 'e asnd-emo sil'; S.textContent = a.s; }
+    else { Q.innerHTML = `What does the ${a.w} say?`; E.className = 'e asnd-emo'; S.textContent = '?'; }
+    E.textContent = a.e; bump(Q);
+  }
+  function next() { if (!bag.length) bag = shuffle(POOL); a = bag.pop(); render(); SFX.whoosh(); }
+  function show() {
+    if (shown) return next(); shown = true;
+    E.className = 'e asnd-emo ' + a.a; S.textContent = a.s; bump(S);
+    A.innerHTML = mode === 'who' ? `<div class="answer pop">The ${a.w}! It's ${art(a.w)} ${a.w}.</div>` : `<div class="answer pop">The ${a.w} says “${a.s}”</div>`;
+    celebrate(null, { star: false, big: false, el: E });
+  }
+  st.querySelector('.row').onclick = e => { const b = e.target.closest('[data-m]'); if (!b) return; mode = b.dataset.m; $$('[data-m]', st).forEach(x => x.classList.toggle('on', x === b)); render(); SFX.pop(); };
+  $('#asGo', st).onclick = show; $('#asNext', st).onclick = next;
+  next();
+  return { action: show, next: show };
+}
+
+function animalMissing(st) {
+  let n = 6, set = [], missing = -1, phase = 'look';
+  st.innerHTML = `<div class="screen miss">
+    <div class="miss-top"><div class="bubble miss-q" id="mQ"></div><div class="row">${[4, 6, 8].map(k => `<button class="tab-pill ${k === n ? 'on' : ''}" data-n="${k}">${k}</button>`).join('')}</div></div>
+    <div class="miss-grid" id="mGrid"></div>
+    <div class="row"><button class="btn y big" id="mGo"></button></div>
+    <div class="eyes-shut" id="mShut" hidden><span class="e">🙈</span><div>Close your eyes!</div><small>Shhh… <span class="e">🤫</span></small></div></div>`;
+  const q = $('#mQ', st), grid = $('#mGrid', st), btn = $('#mGo', st), shut = $('#mShut', st);
+  function draw() {
+    grid.style.setProperty('--cols', n === 6 ? 3 : 4);
+    grid.innerHTML = set.map((a, i) => {
+      if (i === missing && phase === 'guess') return `<button class="mcard q" data-q style="animation-delay:${i * .05}s"><span class="qm">?</span></button>`;
+      return `<div class="mcard ${i === missing && phase === 'found' ? 'found' : ''}" style="animation-delay:${i * .05}s"><span class="e">${a.e}</span><b>${a.w}</b></div>`;
+    }).join('');
+  }
+  function newSet() { set = shuffle(ANIMALS).slice(0, n); missing = -1; phase = 'look'; q.innerHTML = 'Look! Say the animals! <span class="e">👀</span>'; btn.innerHTML = '🙈 Close your eyes!'; draw(); }
+  function step() {
+    if (phase === 'look') { phase = 'shut'; missing = rand(0, n - 1); shut.hidden = false; btn.innerHTML = '👀 Open your eyes!'; SFX.whoosh(); }
+    else if (phase === 'shut') { phase = 'guess'; shut.hidden = true; q.innerHTML = "What's missing? <span class='e'>🤔</span>"; btn.innerHTML = '✨ Show'; draw(); SFX.boing(); }
+    else if (phase === 'guess') { phase = 'found'; const a = set[missing]; q.innerHTML = `The ${a.w}! <span class="e">${a.e}</span>`; btn.innerHTML = '▶ New animals'; draw(); celebrate(); }
+    else newSet();
+  }
+  btn.onclick = step; shut.onclick = step;
+  grid.onclick = e => { if (e.target.closest('[data-q]')) step(); };
+  st.querySelector('.miss-top .row').onclick = e => { const b = e.target.closest('[data-n]'); if (!b) return; n = +b.dataset.n; $$('[data-n]', st).forEach(x => x.classList.toggle('on', x === b)); newSet(); };
+  newSet();
+  return { action: step, next: step };
+}
+
+function animalMove(st) {
+  let a = null, bag = [], autoId = null;
+  st.innerHTML = `<div class="screen amove"><div><span class="e am-emo" id="amE">🐾</span></div><div class="am-txt" id="amT">Move like an animal!</div>
+    <div class="ctrl-br"><button class="btn" id="amMusic">🎵 Music</button><button class="btn" id="amAuto">⏯ Auto</button><button class="btn y big" id="amNext">Next ▶</button></div></div>`;
+  const E = $('#amE', st), Tx = $('#amT', st);
+  function next() {
+    if (!bag.length) bag = shuffle(ANIMALS); a = bag.pop();
+    E.textContent = a.e; E.className = 'e am-emo ' + a.a;
+    Tx.innerHTML = a.mv.replace(a.w, `<b>${a.w}</b>`); bump(Tx); SFX.pop();
+  }
+  $('#amNext', st).onclick = next;
+  $('#amMusic', st).onclick = e => { const b = e.currentTarget; if (MUSIC.playing) { MUSIC.stop(); b.classList.remove('on'); } else { MUSIC.start(116); b.classList.add('on'); } };
+  $('#amAuto', st).onclick = e => { const b = e.currentTarget; if (autoId) { T.clear(autoId); autoId = null; b.classList.remove('on'); } else { autoId = T.every(next, 6000); b.classList.add('on'); next(); } };
+  return { action: next, next };
+}
+
+/* ================= NUMBERS ================= */
+const PAL = ['#FF5A5F', '#FF9F1C', '#E8B500', '#2EC4B6', '#3A86FF', '#8338EC', '#FF70A6', '#5FA318'];
+function numLearn(st) {
+  const EM = ['🍎', '⭐', '🐞', '🎈', '🍓', '🐟', '🌸', '🍪', '🐥', '🚗'];
+  return learnGrid(st, {
+    items: Array.from({ length: 20 }, (_, i) => i + 1), cols: 5, rows: 4,
+    card: n => `<span class="num" style="color:${PAL[n % PAL.length]}">${n}</span><span class="w">${NUMW[n]}</span>`,
+    detail: n => {
+      const e = EM[n % EM.length];
+      return `<div class="det-stack num-det"><div class="num-left"><div class="num-big" style="color:${PAL[n % PAL.length]}">${n}</div><div class="det-word">${NUMW[n]}</div></div>
+        <div class="num-right"><div class="tenframe">${Array.from({ length: Math.ceil(n / 5) * 5 }, (_, i) => `<span class="tf-cell">${i < n ? `<span class="e">${e}</span>` : ''}</span>`).join('')}</div>
+        ${n <= 10 ? `<div class="chip big"><span class="e">🖐️</span> Show me ${NUMW[n]} ${n === 1 ? 'finger' : 'fingers'}!</div>` : '<div class="chip big"><span class="e">🗣️</span> Count with me!</div>'}</div></div>`;
+    },
+    say: n => NUMW[n],
+    onShow: (n, el) => {
+      const cells = $$('.tf-cell .e', el); let i = 0;
+      const id = T.every(() => { if (i >= cells.length) { T.clear(id); return; } cells[i].classList.add('lit'); SFX.count(i); i++; }, 380);
+      return () => T.clear(id);
+    }
+  });
+}
+
+function numBoom(st) {
+  const WORDS = [['BOOM', '💥'], ['ZIP-ZAP', '⚡'], ['SPLASH', '💦'], ['SHHH', '🤫']];
+  let k = 5, max = 20, wi = 0, n = 0, t0 = 0, turn = 0, order = NAMES.slice();
+  st.innerHTML = `<div class="screen boom">
+    <div class="boom-set row"><span class="hint">No-no numbers:</span>${[3, 4, 5].map(x => `<button class="tab-pill ${x === k ? 'on' : ''}" data-k="${x}">${x}, ${x * 2}, ${x * 3}…</button>`).join('')}
+      <span class="hint">&nbsp;Say:</span>${WORDS.map((w, i) => `<button class="tab-pill ${i === wi ? 'on' : ''}" data-w="${i}"><span class="e">${w[1]}</span>${w[0]}</button>`).join('')}
+      <span class="hint">&nbsp;To:</span>${[10, 20, 30].map(x => `<button class="tab-pill ${x === max ? 'on' : ''}" data-m="${x}">${x}</button>`).join('')}</div>
+    <div class="boom-main" id="bMain"><div class="boom-turn" id="bTurn"></div><div class="boom-num ready" id="bNum">Ready?</div><div class="boom-word" id="bWord"></div></div>
+    <div class="boom-strip" id="bStrip"></div>
+    <div class="row"><button class="btn y big" id="bGo">Next ▶</button><button class="btn" id="bReset">↺ Again</button></div></div>`;
+  const num = $('#bNum', st), word = $('#bWord', st), turnEl = $('#bTurn', st), strip = $('#bStrip', st), main = $('#bMain', st);
+  const isBoom = x => x % k === 0;
+  function drawStrip() { strip.innerHTML = Array.from({ length: max }, (_, i) => { const x = i + 1; return `<span class="bs ${x <= n ? 'past' : ''} ${x <= n && isBoom(x) ? 'bm' : ''}">${x <= n && isBoom(x) ? `<span class="e">${WORDS[wi][1]}</span>` : x}</span>`; }).join(''); }
+  function drawTurn() { turnEl.innerHTML = order.length && n < max ? `<span class="e">${avatarOf(order[turn % order.length])}</span> ${esc(order[turn % order.length])}, your turn!` : ''; }
+  function reset() { n = 0; turn = 0; order = shuffle(NAMES); num.className = 'boom-num ready'; num.textContent = 'Ready?'; word.innerHTML = `We can't say <b>${k}, ${k * 2}, ${k * 3}…</b> Say <b>${WORDS[wi][0]}!</b> <span class="e">${WORDS[wi][1]}</span>`; drawStrip(); drawTurn(); }
+  function step() {
+    if (n >= max) return reset();
+    if (n === 0) t0 = performance.now();
+    n++; turn++;
+    if (isBoom(n)) {
+      num.className = 'boom-num isboom'; num.innerHTML = `${WORDS[wi][0]}! <span class="e">${WORDS[wi][1]}</span>`; word.textContent = `(${n})`;
+      SFX.boom(); main.classList.remove('shake-screen'); void main.offsetWidth; main.classList.add('shake-screen');
+    } else {
+      num.className = 'boom-num'; num.textContent = n; word.textContent = NUMW[n]; bump(num); SFX.count(n % 12);
+    }
+    drawStrip(); drawTurn();
+    if (n >= max) T.after(() => { const s = Math.round((performance.now() - t0) / 1000); num.className = 'boom-num done'; num.innerHTML = `Great counting! <span class="e">🎉</span>`; word.innerHTML = `<span class="e">⏱️</span> ${s} seconds — can we go faster?`; celebrate(); }, 900);
+  }
+  st.querySelector('.boom-set').onclick = e => {
+    const b = e.target.closest('.tab-pill'); if (!b) return;
+    if (b.dataset.k) k = +b.dataset.k; if (b.dataset.w) wi = +b.dataset.w; if (b.dataset.m) max = +b.dataset.m;
+    $$('.tab-pill', b.parentElement).forEach(x => { const grp = b.dataset.k ? 'k' : b.dataset.w ? 'w' : 'm'; if (x.dataset[grp] !== undefined) x.classList.toggle('on', x === b); });
+    reset(); SFX.pop();
+  };
+  $('#bGo', st).onclick = step; $('#bReset', st).onclick = reset;
+  reset();
+  return { action: step, next: step };
+}
+
+function numCount(st) {
+  let maxN = 10, a = null, n = 0, phase = 'ask', cid = null, last = null;
+  st.innerHTML = `<div class="screen count">
+    <div class="count-top"><div class="bubble count-q" id="cQ"></div><div class="row">${[10, 20].map(x => `<button class="tab-pill ${x === maxN ? 'on' : ''}" data-r="${x}">1–${x}</button>`).join('')}</div></div>
+    <div class="count-field card" id="cField"></div>
+    <div class="count-bottom"><div class="count-ans" id="cAns"></div><div class="row"><button class="btn y big" id="cGo">🔢 Count!</button><button class="btn b" id="cNext" title="New animals">🎲</button></div></div></div>`;
+  const q = $('#cQ', st), field = $('#cField', st), ans = $('#cAns', st), go = $('#cGo', st);
+  function round() {
+    T.clear(cid); a = pick(ANIMALS.filter(x => x !== last)); last = a;
+    n = maxN === 20 ? rand(8, 20) : rand(2, 10);
+    const COLS = 6, ROWS = 4, cells = shuffle([...Array(COLS * ROWS).keys()]).slice(0, n).sort((x, y) => x - y);
+    field.innerHTML = cells.map(c => { const cx = (c % COLS + .5 + (Math.random() - .5) * .45) / COLS * 100, cy = (Math.floor(c / COLS) + .5 + (Math.random() - .5) * .4) / ROWS * 100; return `<span class="e cnt-item" style="left:${cx.toFixed(1)}%;top:${cy.toFixed(1)}%">${a.e}</span>`; }).join('');
+    q.innerHTML = `How many ${a.p}? <span class="e">🤔</span>`; ans.innerHTML = ''; phase = 'ask'; go.innerHTML = '🔢 Count!'; SFX.whoosh();
+  }
+  function done() { T.clear(cid); phase = 'done'; $$('.cnt-item', field).forEach((el, i) => { el.classList.add('lit'); el.dataset.n = i + 1; }); ans.innerHTML = `${cap(NUMW[n])} ${n === 1 ? a.w : a.p}! <span class="e">${a.e}</span>`; bump(ans); go.innerHTML = '▶ Next'; celebrate(null, { star: false }); }
+  function count() {
+    if (phase === 'counting') return done();
+    if (phase === 'done') return round();
+    phase = 'counting'; go.innerHTML = '⏩ Skip'; const els = $$('.cnt-item', field); let i = 0;
+    cid = T.every(() => { if (i >= els.length) return done(); els[i].classList.add('lit'); els[i].dataset.n = i + 1; ans.textContent = NUMW[i + 1]; SFX.count(i); i++; }, 480);
+  }
+  go.onclick = count; $('#cNext', st).onclick = round;
+  st.querySelector('.count-top .row').onclick = e => { const b = e.target.closest('[data-r]'); if (!b) return; maxN = +b.dataset.r; $$('[data-r]', st).forEach(x => x.classList.toggle('on', x === b)); round(); };
+  round();
+  return { action: count, next: count };
+}
+
+/* ================= BODY & MONSTERS ================= */
+const BODY_CMDS = [
+  ['Touch your head!', 'head', '🙆'], ['Touch your hair!', 'hair', '💇'], ['Point to your eyes!', 'eyes', '👀'], ['Touch your ears!', 'ears', '👂'],
+  ['Touch your nose!', 'nose', '👃'], ['Open your mouth!', 'mouth', '👄'], ['Touch your neck!', 'neck', '🦒'], ['Touch your shoulders!', 'shoulders', '🤷'],
+  ['Wave your arms!', 'arms', '🙌'], ['Clap your hands!', 'hands', '👏'], ['Wiggle your fingers!', 'fingers', '🖐️'], ['Rub your tummy!', 'tummy', '😋'],
+  ['Shake your legs!', 'legs', '🦵'], ['Touch your knees!', 'knees', '🦵'], ['Stomp your feet!', 'feet', '🦶'], ['Touch your toes!', 'toes', '🦶'],
+  ['Close your eyes!', 'eyes', '😌'], ['Pull your ears!', 'ears', '👂'], ['Tap your head!', 'head', '👆'], ['Shrug your shoulders!', 'shoulders', '🤷']
+];
+function bodyTouch(st) {
+  let cur = null, autoId = null;
+  st.innerHTML = `<div class="screen bodyg"><div class="body-fig">${bodySVG()}</div>
+    <div class="body-side"><div class="body-cmd" id="bCmd">Head, shoulders,<br>knees and toes! <span class="e">🎵</span></div>
+      <div class="row"><button class="btn y big" id="bNext">Next ▶</button><button class="btn" id="bLab">🏷️ Names</button><button class="btn" id="bAuto">⏯ Auto</button></div></div></div>`;
+  const svg = $('.body-svg', st), hl = $('.hl', st), cmd = $('#bCmd', st);
+  function next() {
+    cur = pick(BODY_CMDS.filter(c => c !== cur));
+    hl.innerHTML = BODY_PTS[cur[1]].map(([x, y, r]) => `<circle class="ring" cx="${x}" cy="${y}" r="${r}"/>`).join('');
+    cmd.innerHTML = cur[0].replace(/(\w+)!$/, '<span class="hl">$1</span>!') + ` <span class="e">${cur[2]}</span>`;
+    bump(cmd); SFX.pop();
+  }
+  $('#bNext', st).onclick = next;
+  $('#bLab', st).onclick = e => { svg.classList.toggle('show-labels'); e.currentTarget.classList.toggle('on'); SFX.pop(); };
+  $('#bAuto', st).onclick = e => { const b = e.currentTarget; if (autoId) { T.clear(autoId); autoId = null; b.classList.remove('on'); } else { autoId = T.every(next, 3500); b.classList.add('on'); next(); } };
+  return { action: next, next };
+}
+
+const MQ = [
+  { q: 'What color is it?', a: m => `It's ${m.color.w}.` },
+  { q: 'How many eyes?', a: m => `It has ${cnt(m.eyes, 'eye', 'eyes')}.` },
+  { q: 'How many arms?', a: m => `It has ${cnt(m.arms, 'arm', 'arms')}.` },
+  { q: 'How many legs?', a: m => `It has ${cnt(m.legs, 'leg', 'legs')}.` },
+  { q: 'How many horns?', a: m => `It has ${cnt(m.horns, 'horn', 'horns')}.` },
+  { q: 'How many teeth?', a: m => `It has ${cnt(m.teeth, 'tooth', 'teeth')}.` }
+];
+function monsterMaker(st) {
+  let m = null;
+  st.innerHTML = `<div class="screen mmaker"><div class="mm-fig card" id="mmFig"></div>
+    <div class="mm-side"><div class="mm-name" id="mmName"></div><div id="mmQs" style="display:flex;flex-direction:column;gap:1.2vmin"></div>
+      <div class="row"><button class="btn y big" id="mmNext">Next ▶</button><button class="btn p" id="mmNew">🎲 New monster</button></div></div></div>`;
+  const fig = $('#mmFig', st), name = $('#mmName', st), qs = $('#mmQs', st);
+  function newM() {
+    m = makeMonster(); fig.innerHTML = monsterSVG(m); bump(fig);
+    name.innerHTML = `This is <b style="color:${m.color.h};-webkit-text-stroke:1px #2B2A4C">${m.name}</b>! <span class="e">👋</span>`;
+    qs.innerHTML = MQ.map((q, i) => `<button class="mm-q" data-i="${i}"><span class="mq">${q.q}</span><span class="ma">${q.a(m)}</span></button>`).join('');
+    SFX.boing();
+  }
+  function step() { const nx = $('.mm-q:not(.open)', qs); if (nx) { nx.classList.add('open'); SFX.ding(); } else newM(); }
+  qs.onclick = e => { const b = e.target.closest('.mm-q'); if (!b) return; b.classList.toggle('open'); SFX.pop(); };
+  $('#mmNext', st).onclick = step; $('#mmNew', st).onclick = newM;
+  newM();
+  return { action: step, next: step };
+}
+
+function monsterWhich(st) {
+  let ms = [], t = 0, clues = [], shown = 0, solved = false;
+  const KEYS = ['eyes', 'arms', 'legs', 'horns'];
+  const SING = { eyes: 'eye', arms: 'arm', legs: 'leg', horns: 'horn' };
+  st.innerHTML = `<div class="screen mwhich">
+    <div class="mw-top"><div class="bubble mw-q" id="mwQ"></div><div class="mw-clues" id="mwC"></div></div>
+    <div class="mw-row" id="mwRow"></div>
+    <div class="row"><button class="btn y big" id="mwNext">👂 Next clue</button><button class="btn p" id="mwYou">🙋 Your turn</button><button class="btn b" id="mwNew">🎲 New</button></div></div>`;
+  const q = $('#mwQ', st), C = $('#mwC', st), row = $('#mwRow', st), nextBtn = $('#mwNext', st);
+  function gen() {
+    const cols = shuffle(MCOL).slice(0, 4);
+    for (let tries = 0; tries < 300; tries++) {
+      ms = cols.map(c => makeMonster({ color: c, eyes: rand(1, 3), arms: pick([0, 2, 4]), legs: rand(1, 4), horns: rand(0, 2), teeth: rand(0, 3) }));
+      t = rand(0, 3); const tg = ms[t];
+      if (ms.some((m, i) => i !== t && KEYS.every(k => m[k] === tg[k]))) continue;
+      clues = shuffle(KEYS);
+      if (ms.filter(m => m[clues[0]] === tg[clues[0]]).length < 2 && tries < 250) continue;
+      break;
+    }
+    shown = 0; solved = false;
+    q.innerHTML = 'Listen! Which monster is it? <span class="e">🕵️</span>'; C.innerHTML = '';
+    row.innerHTML = ms.map((m, i) => `<button class="mw-card" data-i="${i}"><span class="mw-n">${i + 1}</span><div class="mw-fig">${monsterSVG(m)}</div></button>`).join('');
+    nextBtn.innerHTML = '👂 Next clue'; SFX.whoosh();
+  }
+  const clueText = k => { const v = ms[t][k]; return `I have ${cnt(v, SING[k], k)}.`; };
+  function showClue() { if (shown >= clues.length) return; C.insertAdjacentHTML('beforeend', `<span class="chip"><span class="e">🗣️</span> ${clueText(clues[shown])}</span>`); shown++; SFX.ding(); if (shown >= clues.length) nextBtn.innerHTML = '👀 Show'; }
+  function solve(i) {
+    if (solved) return; const card = row.children[i];
+    if (i === t) {
+      solved = true; card.classList.add('right'); while (shown < clues.length) showClue();
+      q.innerHTML = `Yes! Monster ${NUMW[t + 1]}! <span class="e">🎉</span>`; nextBtn.innerHTML = '🎲 New'; celebrate(`Monster ${t + 1}!`, { el: card });
+    } else { card.classList.remove('wrong'); void card.offsetWidth; card.classList.add('wrong'); SFX.wrong(); }
+  }
+  function step() { if (solved) return gen(); if (shown < clues.length) return showClue(); solve(t); }
+  row.onclick = e => { const b = e.target.closest('.mw-card'); if (b) solve(+b.dataset.i); };
+  nextBtn.onclick = step; $('#mwNew', st).onclick = gen;
+  $('#mwYou', st).onclick = () => { const n = nextName(); C.innerHTML = ''; solved = true; nextBtn.innerHTML = '🎲 New'; q.innerHTML = `${n ? `<span class="e">${avatarOf(n)}</span> <b>${esc(n)}</b>: ` : ''}Pick a monster. Say: “I have <span class="blank"></span>.”`; bump(q); SFX.pop(); };
+  gen();
+  return { action: step, next: step };
+}
+
+/* ================= DANCE ================= */
+function danceFreeze(st) {
+  let bpm = 120, state = 'intro', autoF = true;
+  const PROMPTS = [['Dance!', '💃'], ['Dance like a monkey!', '🐵'], ['Jump, jump, jump!', '🦘'], ['Wave your arms!', '🙌'], ['Shake your body!', '🕺'], ['Clap your hands!', '👏'], ['Turn around!', '🔄'], ['Dance like a robot!', '🤖'], ['Hop like a frog!', '🐸'], ['Fly like a bird!', '🐦'], ['Swim like a fish!', '🐟'], ['Dance like a cat!', '🐱'], ['Stomp like an elephant!', '🐘'], ['Wiggle your fingers!', '🖐️']];
+  const DANCERS = ['💃', '🕺', '🐵', '🐸', '🐻', '🐧'];
+  st.innerHTML = `<div class="screen nopad fd" id="fd"></div>`;
+  const root = $('#fd', st);
+  function intro() {
+    state = 'intro'; MUSIC.stop(); T.clearAll(); root.className = 'screen nopad fd';
+    root.innerHTML = `<div class="intro card"><div class="e intro-e">💃🎵🥶</div><h2>Freeze dance!</h2><p>Music on → <b>dance!</b> &nbsp; Music off → <b>FREEZE!</b></p><div class="row">${[['Slow', 92, '🐢'], ['Normal', 120, '🙂'], ['Fast', 146, '🐇']].map(([l, b, e]) => `<button class="tab-pill ${b === bpm ? 'on' : ''}" data-bpm="${b}"><span class="e">${e}</span> ${l}</button>`).join('')}</div><button class="btn y big" id="fdGo">▶ Start!</button></div>`;
+  }
+  function prompt() { const el = $('#fdP', root); if (!el) return; const p = pick(PROMPTS); el.innerHTML = `${p[0]} <span class="e">${p[1]}</span>`; bump(el); }
+  function dance() {
+    state = 'dance'; T.clearAll();
+    root.className = 'screen nopad fd disco'; root.style.setProperty('--beat', (60 / bpm).toFixed(3) + 's');
+    root.innerHTML = `<div class="disco-bg"></div><div class="lights"></div><div class="fd-prompt" id="fdP"></div><div class="dancers">${DANCERS.map((d, i) => `<span class="e dancer" style="animation-delay:-${(i * 60 / bpm / 2).toFixed(2)}s">${d}</span>`).join('')}</div>
+      <div class="ctrl-br"><button class="btn" id="fdAuto">${autoF ? '🎲 Auto freeze: ON' : '✋ Auto freeze: OFF'}</button><button class="btn p big" id="fdFreeze">🥶 Freeze!</button><button class="btn" id="fdStop" title="Stop">⏹</button></div>`;
+    MUSIC.start(bpm); prompt(); T.every(prompt, 5200);
+    if (autoF) T.after(freeze, rand(7, 15) * 1000);
+  }
+  function freeze() {
+    if (state !== 'dance') return; state = 'frozen'; T.clearAll(); MUSIC.stop(); SFX.freeze();
+    root.className = 'screen nopad fd frozen';
+    root.innerHTML = `<div class="ice"></div><div class="fz-txt">FREEZE! <span class="e">🥶</span></div><div class="fz-sub" id="fzSub">Don't move! <span class="e">🤫</span></div><div class="ctrl-br"><button class="btn y big" id="fdResume">▶ Dance again</button><button class="btn" id="fdStop" title="Stop">⏹</button></div>`;
+    if (autoF) T.after(countdown, 4500);
+  }
+  function countdown() {
+    if (state !== 'frozen') return; state = 'count'; let c = 3; const s = $('#fzSub', root);
+    const tick = () => { if (state !== 'count') return; if (c === 0) return dance(); s.innerHTML = `<span class="cd">${c}</span>`; SFX.beep(false); c--; T.after(tick, 850); };
+    tick();
+  }
+  root.onclick = e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.bpm) { bpm = +b.dataset.bpm; $$('[data-bpm]', root).forEach(x => x.classList.toggle('on', x === b)); SFX.pop(); return; }
+    ({ fdGo: dance, fdFreeze: freeze, fdResume: dance, fdStop: intro,
+      fdAuto: () => { autoF = !autoF; b.textContent = autoF ? '🎲 Auto freeze: ON' : '✋ Auto freeze: OFF'; if (autoF && state === 'dance') T.after(freeze, rand(6, 12) * 1000); } })[b.id]?.();
+  };
+  intro();
+  const step = () => state === 'dance' ? freeze() : dance();
+  return { action: step, next: step, back() { if (state !== 'intro') { intro(); return true; } return false; }, destroy() { MUSIC.stop(); } };
+}
+
+const SIMON = [['Jump!', '🦘'], ['Clap your hands!', '👏'], ['Touch your nose!', '👃'], ['Turn around!', '🔄'], ['Sit down!', '⬇️'], ['Stand up!', '⬆️'], ['Hop on one leg!', '🦩'], ['Wave your hands!', '👋'], ['Shake your head!', '🙅'], ['Touch your toes!', '🦶'], ['Dance!', '💃'], ['Fly like a bird!', '🐦'], ['Swim like a fish!', '🐟'], ['Stomp your feet!', '🐘'], ['Wiggle your fingers!', '🖐️'], ['Touch your ears!', '👂'], ['Look up!', '👆'], ['Look down!', '👇'], ['Make a happy face!', '😄'], ['Make a sad face!', '😢'], ['Make an angry face!', '😠'], ['Roar like a lion!', '🦁'], ['Put your hands up!', '🙌'], ['Touch your head!', '🙆'], ['Point to something red!', '🔴'], ['Point to something blue!', '🔵'], ['Show me five fingers!', '🖐️'], ['Hug yourself!', '🤗'], ['Rub your tummy!', '😋'], ['Touch your shoulders!', '🤷']];
+function danceSimon(st) {
+  let hints = true, cur = null, tid = null;
+  st.innerHTML = `<div class="screen simon">
+    <div class="simon-card card" id="smCard"><div class="sm-intro"><span class="e">🗣️</span><h2>Simon says…</h2><p>Do it only when <b>Simon says</b>!</p></div></div>
+    <div class="row"><button class="btn y big" id="smGo">🎲 Next</button><button class="btn g" id="smYes">✅ Simon says</button><button class="btn p" id="smNo">😜 Trick</button><button class="btn" id="smLead">🙋 Kid leader</button><button class="btn on" id="smHint">💡 Hints</button></div></div>`;
+  const card = $('#smCard', st);
+  function show(simon) {
+    T.clear(tid); cur = pick(SIMON.filter(c => c !== cur));
+    card.className = 'simon-card card ' + (simon ? 'is-simon' : 'is-trick');
+    card.innerHTML = `<div class="sm-says ${simon ? '' : 'ghost'}">Simon says…</div><div class="sm-cmd"><span class="e">${cur[1]}</span>${cur[0]}</div><div class="sm-badge" id="smBadge"><span class="e">😜</span> Simon didn't say!</div>`;
+    simon ? SFX.ding() : SFX.pop();
+    if (!simon && hints) tid = T.after(() => { const b = $('#smBadge', card); if (b) { b.classList.add('show'); SFX.boing(); } }, 2600);
+  }
+  const rnd = () => show(Math.random() < .7);
+  $('#smGo', st).onclick = rnd; $('#smYes', st).onclick = () => show(true); $('#smNo', st).onclick = () => show(false);
+  $('#smHint', st).onclick = e => { hints = !hints; e.currentTarget.classList.toggle('on', hints); };
+  $('#smLead', st).onclick = () => {
+    T.clear(tid); const n = nextName(); card.className = 'simon-card card is-simon';
+    card.innerHTML = `<div class="sm-lead"><span class="e">${n ? avatarOf(n) : '🙋'}</span><b>${n ? esc(n) : 'You'}</b> is Simon!</div><div class="sm-frame">“Simon says <span class="blank"></span>!”</div><div class="sm-ideas">${shuffle(SIMON).slice(0, 8).map(c => `<span class="chip"><span class="e">${c[1]}</span>${c[0]}</span>`).join('')}</div>`;
+    SFX.tada();
+  };
+  return { action: rnd, next: rnd };
+}
+
+const CAN = [
+  { q: 'Can you jump?', a: 'I can jump with my legs!', e: '🦘' }, { q: 'Can you hop on one leg?', a: 'I can hop with one leg!', e: '🦩' },
+  { q: 'Can you dance?', a: 'I can dance with my whole body!', e: '💃' }, { q: 'Can you read?', a: 'I can read with my eyes!', e: '📖' },
+  { q: 'Can you draw?', a: 'I can draw with my hand!', e: '🖍️' }, { q: 'Can you write?', a: 'I can write with my fingers!', e: '✍️' },
+  { q: 'Can you swim?', a: 'I can swim with my arms and legs!', e: '🏊' }, { q: 'Can you clap?', a: 'I can clap with my hands!', e: '👏' },
+  { q: 'Can you run?', a: 'I can run with my legs!', e: '🏃' }, { q: 'Can you sing?', a: 'I can sing with my mouth!', e: '🎤' },
+  { q: 'Can you listen?', a: 'I can listen with my ears!', e: '👂' }, { q: 'Can you fly?', a: "No, I can't! I'm not a bird!", e: '🦅', no: true }
+];
+function danceCan(st) {
+  let bag = [], c = null, phase = 'a';
+  st.innerHTML = `<div class="screen can"><div class="can-card card" id="canCard"></div><div class="row"><button class="btn y big" id="canGo">Next ▶</button></div></div>`;
+  const card = $('#canCard', st);
+  function step() {
+    if (phase === 'q') {
+      phase = 'a';
+      card.insertAdjacentHTML('beforeend', `<div class="can-a">${c.no ? c.a : c.a.replace('I can', '<u>I can</u>')}</div><div class="chip big pop"><span class="e">${c.no ? '😂' : '🕺'}</span> ${c.no ? 'Flap your arms anyway!' : 'Show me!'}</div>`);
+      SFX.tada(); return;
+    }
+    if (!bag.length) bag = shuffle(CAN); c = bag.pop(); phase = 'q';
+    card.innerHTML = `<span class="e can-e">${c.e}</span><div class="can-q">${c.q}</div><div class="row"><span class="chip big">Yes, I can! <span class="e">👍</span></span><span class="chip big">No, I can't! <span class="e">👎</span></span></div>`;
+    bump(card); SFX.pop();
+  }
+  $('#canGo', st).onclick = step;
+  step();
+  return { action: step, next: step };
+}
+
+/* ================= TALK CHAIN ================= */
+const CAN_VERBS = [['jump', '🦘'], ['dance', '💃'], ['swim', '🏊'], ['sing', '🎤'], ['hop on one leg', '🦩'], ['fly', '🐦'], ['clap your hands', '👏'], ['roar like a lion', '🦁'], ['count to ten', '🔟'], ['touch your toes', '🦶']];
+const TALK_Q = [
+  { id: 'name', e: '🙋', short: 'Name', q: () => "What's your name?", a: 'My name is ___.', hints: who => [{ t: who, e: '✅' }], fill: t => `My name is ${t}.` },
+  { id: 'feel', e: '😊', short: 'How are you?', q: n => `How are you${n}?`, a: "I'm ___.", hints: () => FEELINGS.map(f => ({ t: f.w, e: f.e })), fill: t => `I'm ${t}!` },
+  { id: 'age', e: '🎂', short: 'Age', q: n => `How old are you${n}?`, a: "I'm ___.", hints: () => [6, 7, 8, 9, 10].map(x => ({ t: NUMW[x], n: x })), fill: t => `I'm ${t}!` },
+  { id: 'color', e: '🎨', short: 'Color', q: n => `What's your favorite color${n}?`, a: 'My favorite color is ___.', hints: () => COLORS.map(c => ({ t: c.id, sw: c.hex })), fill: t => `My favorite color is ${t}!` },
+  { id: 'animal', e: '🐾', short: 'Animal', q: n => `What's your favorite animal${n}?`, a: 'I like ___.', hints: () => ANIMALS.map(a => ({ t: a.p, e: a.e })), fill: t => `I like ${t}!` },
+  { id: 'weather', e: '🌦️', short: 'Weather', q: n => `How's the weather today${n}?`, a: "It's ___.", hints: () => WEATHER.map(w => ({ t: w.w, e: w.e })), fill: t => `It's ${t}!` },
+  { id: 'day', e: '📅', short: 'Day', q: n => `What day is it today${n}?`, a: 'Today is ___.', hints: () => DAYS.map(d => ({ t: d })), fill: t => `Today is ${t}!` },
+  { id: 'can', e: '💪', short: 'Can you…?', q: (n, v) => `Can you ${v[0]}${n}? <span class="e">${v[1]}</span>`, a: "Yes, I can! / No, I can't!", hints: () => [{ t: 'Yes, I can!', e: '👍' }, { t: "No, I can't!", e: '👎' }], fill: t => t }
+];
+function talkChain(st) {
+  let qsel = 'mix', asker = null, answerer = null, q = null, verb = null;
+  const TEACHER = { name: 'Teacher', av: '🦉' };
+  st.innerHTML = `<div class="screen talk">
+    <div class="talk-qs">${[['mix', '🎲', 'Mix']].concat(TALK_Q.map(x => [x.id, x.e, x.short])).map(([id, e, l]) => `<button class="tab-pill ${id === qsel ? 'on' : ''}" data-q="${id}"><span class="e">${e}</span> ${l}</button>`).join('')}</div>
+    <div class="talk-strip">
+      <div class="tk-line ask"><div class="tk-person" id="tkA"></div><div class="bubble tk-b left" id="tkQ"></div></div>
+      <div class="tk-line ans"><div class="bubble tk-b right" id="tkR"></div><div class="tk-person" id="tkB"></div></div>
+    </div>
+    <div class="talk-hints" id="tkH"></div>
+    <div class="talk-ctrl"><span class="hint" id="tkN"></span><button class="btn y big" id="tkGo">Next ▶</button></div></div>`;
+  const A = $('#tkA', st), B = $('#tkB', st), Q = $('#tkQ', st), Rb = $('#tkR', st), H = $('#tkH', st), N = $('#tkN', st);
+  const person = p => `<span class="e tk-av">${p.av}</span><span class="tk-name">${esc(p.name)}</span>`;
+  const chip = h => `<button class="hint-chip" data-t="${esc(h.t)}">${h.sw ? `<span class="sw" style="background:${h.sw}"></span>` : ''}${h.n ? `<b class="hn">${h.n}</b>` : ''}${h.e ? `<span class="e">${h.e}</span>` : ''}<span>${esc(h.t)}</span></button>`;
+  function pickQ() { q = qsel === 'mix' ? pick(TALK_Q.filter(x => x !== q)) : TALK_Q.find(x => x.id === qsel); verb = pick(CAN_VERBS); }
+  function render() {
+    A.innerHTML = person(asker); B.innerHTML = person(answerer);
+    const nm = answerer.name === 'You' ? '' : `, ${esc(answerer.name)}`;
+    Q.innerHTML = q.id === 'name' ? q.q() : q.q(nm, verb);
+    Rb.className = 'bubble tk-b right'; Rb.innerHTML = q.a.replace('___', '<span class="blank"></span>');
+    H.innerHTML = q.hints(answerer.name).map(chip).join('');
+    N.innerHTML = NAMES.length > 1 ? `Then <b>${esc(answerer.name)}</b> asks a friend! <span class="e">➡️</span>` : '';
+    bump(Q); bump(Rb);
+  }
+  function turn(first) {
+    asker = first || !answerer || answerer.name === 'You' ? TEACHER : answerer;
+    const nm = nextName(asker.name);
+    answerer = nm ? { name: nm, av: avatarOf(nm) } : { name: 'You', av: '🙂' };
+    if (asker.name === answerer.name) asker = TEACHER;
+    pickQ(); render(); SFX.whoosh();
+  }
+  H.onclick = e => {
+    const b = e.target.closest('.hint-chip'); if (!b) return;
+    Rb.innerHTML = q.fill(b.dataset.t) + (b.querySelector('.e') ? ` <span class="e">${b.querySelector('.e').textContent}</span>` : '');
+    Rb.classList.add('filled'); bump(Rb); SFX.ding();
+    const r = Rb.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, 40);
+  };
+  st.querySelector('.talk-qs').onclick = e => { const b = e.target.closest('[data-q]'); if (!b) return; qsel = b.dataset.q; $$('[data-q]', st).forEach(x => x.classList.toggle('on', x === b)); pickQ(); render(); SFX.pop(); };
+  $('#tkGo', st).onclick = () => turn(false);
+  turn(true);
+  return { action: () => turn(false), next: () => turn(false) };
+}
+
+/* ================= menu ================= */
+const TOPICS = [
+  { id: 'hello', e: '👋', name: 'Hello!', sub: "What's your name?", color: '#FFB4A2', modes: [{ id: 'names', e: '🙋', name: 'My name is…', run: helloNames }] },
+  { id: 'weather', e: '🌦️', name: 'Weather', sub: "How's the weather?", color: '#9BD1FF', modes: [
+    { id: 'today', e: '📅', name: 'Today', run: weatherToday }, { id: 'learn', e: '🌈', name: 'Learn', run: weatherLearn },
+    { id: 'moves', e: '🕺', name: 'Weather moves', run: weatherMoves }, { id: 'peek', e: '🙈', name: 'Peek-a-boo', run: weatherPeek },
+    { id: 'news', e: '📺', name: 'Weather news', run: weatherNews }] },
+  { id: 'feelings', e: '😊', name: 'Feelings', sub: 'How are you?', color: '#FFE066', modes: [
+    { id: 'learn', e: '😀', name: 'Learn', run: feelLearn }, { id: 'check', e: '🙋', name: 'How are you?', run: feelCheck },
+    { id: 'guess', e: '🔍', name: 'Guess!', run: feelGuess }, { id: 'sort', e: '👍', name: 'Good or bad?', run: feelSort }] },
+  { id: 'colors', e: '🎨', name: 'Colors', sub: 'I spy…', color: '#FFB3DE', modes: [
+    { id: 'learn', e: '🖍️', name: 'Learn', run: colorLearn }, { id: 'spy', e: '👀', name: 'I spy', run: colorSpy },
+    { id: 'hunt', e: '🏃', name: 'Touch it!', run: colorHunt }, { id: 'magic', e: '✨', name: 'Color magic', run: colorMagic }] },
+  { id: 'animals', e: '🐾', name: 'Animals', sub: "What's this?", color: '#B5E48C', modes: [
+    { id: 'learn', e: '🐶', name: 'Learn', run: animalLearn }, { id: 'peek', e: '🙈', name: 'Peek-a-boo', run: animalPeek },
+    { id: 'sounds', e: '🔊', name: 'Who says…?', run: animalSounds }, { id: 'missing', e: '❓', name: "What's missing?", run: animalMissing },
+    { id: 'move', e: '🐸', name: 'Move like…', run: animalMove }] },
+  { id: 'numbers', e: '🔢', name: 'Numbers', sub: '1 to 20', color: '#FFC97A', modes: [
+    { id: 'learn', e: '🔢', name: 'Learn', run: numLearn }, { id: 'boom', e: '💥', name: 'BOOM!', run: numBoom }, { id: 'count', e: '🧮', name: 'How many?', run: numCount }] },
+  { id: 'body', e: '👾', name: 'Monsters', sub: 'Body parts', color: '#CDB4FF', modes: [
+    { id: 'touch', e: '👆', name: 'Touch your…', run: bodyTouch }, { id: 'maker', e: '👾', name: 'Monster maker', run: monsterMaker }, { id: 'which', e: '🕵️', name: 'Which monster?', run: monsterWhich }] },
+  { id: 'dance', e: '💃', name: 'Dance!', sub: 'Move & Freeze', color: '#7FDBCA', modes: [
+    { id: 'freeze', e: '🥶', name: 'Freeze dance', run: danceFreeze }, { id: 'simon', e: '🗣️', name: 'Simon says', run: danceSimon }, { id: 'can', e: '💪', name: 'I can…', run: danceCan }] },
+  { id: 'talk', e: '💬', name: 'Talk Time', sub: 'Ask a friend!', color: '#A0E7E5', modes: [{ id: 'chain', e: '💬', name: 'Talk chain', run: talkChain }] }
+];
+
+function HOME(st) {
+  st.innerHTML = `<div class="screen home">
+    <div class="home-head"><h1>Hello, friends! <span class="e wave">👋</span></h1><p>Let's speak English!</p></div>
+    <div class="tiles">${TOPICS.map((t, i) => `<button class="tile" data-t="${t.id}" style="--c:${t.color};--d:${(i * .2).toFixed(1)}s"><span class="k">${i + 1}</span><span class="e te">${t.e}</span><span class="tt"><span class="tn">${t.name}</span><span class="ts">${t.sub}</span></span></button>`).join('')}</div></div>`;
+  st.querySelector('.tiles').onclick = e => { const b = e.target.closest('.tile'); if (b) { SFX.pop(); go(b.dataset.t); } };
+  return {};
+}
+
+/* ================= navigation ================= */
+let current = { topic: null, mode: null, inst: null };
+const FS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+function renderTopbar() {
+  const tp = TOPICS.find(t => t.id === current.topic);
+  topbar.innerHTML = `${tp
+    ? `<button class="tb-btn" data-tb="home" title="Home (Esc)">🏠</button><div class="tb-title"><span class="e">${tp.e}</span><span class="t">${tp.name}</span></div>
+       <nav class="tabs">${tp.modes.length > 1 ? tp.modes.map((m, i) => `<button class="tab ${m.id === current.mode ? 'on' : ''}" data-mode="${m.id}" title="${i + 1}"><span class="e">${m.e}</span><span class="l">${m.name}</span></button>`).join('') : ''}</nav>`
+    : `<div class="tb-title"><span class="e">🌟</span><span class="t">English Club</span></div><nav class="tabs"></nav>`}
+    <div class="tools">
+      <button class="tb-btn" data-tb="pick" title="Who's next? (N)">🎯</button>
+      <button class="tb-btn star-btn" data-tb="star" title="+1 star for the class"><span class="e">⭐</span><b id="starCount">${STARS}</b></button>
+      <button class="tb-btn" data-tb="mute" title="Sound on/off (M)">${MUTED ? '🔇' : '🔊'}</button>
+      <button class="tb-btn" data-tb="fs" title="Full screen (F)">${FS_ICON}</button>
+      <button class="tb-btn" data-tb="help" title="Help (?)">❔</button>
+    </div>`;
+}
+topbar.onclick = e => {
+  const t = e.target.closest('.tab'); if (t) { SFX.pop(); return go(current.topic, t.dataset.mode); }
+  const b = e.target.closest('[data-tb]'); if (!b) return;
+  ({ home: () => go(null), pick: () => openPicker(true), star: () => { addStar(); SFX.ding(); const r = b.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height, 30); }, mute: toggleMute, fs: toggleFS, help: openHelp })[b.dataset.tb]();
+};
+function go(topicId, modeId) {
+  try { current.inst?.destroy?.(); } catch (err) { console.error(err); }
+  T.clearAll(); MUSIC.stop(); SPEAK.stop();
+  stage.onclick = null; stage.innerHTML = '';
+  const tp = TOPICS.find(t => t.id === topicId);
+  if (!tp) {
+    current = { topic: null, mode: null, inst: null }; renderTopbar(); current.inst = HOME(stage);
+    history.replaceState(null, '', location.pathname + location.search); return;
+  }
+  const m = tp.modes.find(x => x.id === modeId) || tp.modes[0];
+  current = { topic: tp.id, mode: m.id, inst: null }; renderTopbar();
+  try { current.inst = m.run(stage) || {}; } catch (err) { console.error(err); current.inst = {}; }
+  history.replaceState(null, '', '#' + tp.id + '/' + m.id);
+  const on = $('.tab.on', topbar); if (on) on.scrollIntoView({ inline: 'center', block: 'nearest' });
+}
+function toggleMute() { MUTED = !MUTED; store.set('muted', MUTED); SFX.setMute(MUTED); const b = $('[data-tb="mute"]', topbar); if (b) b.textContent = MUTED ? '🔇' : '🔊'; if (!MUTED) SFX.pop(); }
+function toggleFS() { if (document.fullscreenElement) document.exitFullscreen?.(); else document.documentElement.requestFullscreen?.().catch(() => {}); }
+
+/* ================= modals ================= */
+const MODAL = {
+  open: false, onKey: null, timers: [],
+  show(html, onKey) {
+    const m = $('#modal'); this.clearTimers();
+    m.innerHTML = `<div class="modal-box">${html}<button class="modal-x" data-close title="Close (Esc)">✕</button></div>`;
+    m.hidden = false; this.open = true; this.onKey = onKey || null;
+    m.onclick = e => { if (e.target === m || e.target.closest('[data-close]')) this.close(); };
+    return m.firstElementChild;
+  },
+  close() { const m = $('#modal'); this.clearTimers(); m.hidden = true; m.innerHTML = ''; this.open = false; this.onKey = null; },
+  later(fn, ms) { const id = setTimeout(fn, ms); this.timers.push(id); return id; },
+  clearTimers() { this.timers.forEach(clearTimeout); this.timers = []; }
+};
+function openNames() {
+  const box = MODAL.show(`<h2><span class="e">👥</span> Our class</h2><p class="help-note">Her satıra bir isim yaz (virgülle de ayırabilirsin). İsimler bu bilgisayarda saklanır.</p>
+    <textarea class="names-ta" id="namesTa" placeholder="Ali&#10;Ayşe&#10;Can…">${esc(NAMES.join('\n'))}</textarea>
+    <div class="row"><button class="btn g big" id="nmSave">✅ Save</button><button class="btn" id="nmClear">🗑️ Clear</button></div>`);
+  const ta = $('#namesTa', box); setTimeout(() => ta.focus(), 50);
+  $('#nmSave', box).onclick = () => {
+    const seen = new Set();
+    NAMES = ta.value.split(/[\n,;]+/).map(s => s.trim().replace(/\s+/g, ' ')).filter(Boolean).map(n => n.charAt(0).toLocaleUpperCase('tr-TR') + n.slice(1)).filter(n => { const k = n.toLocaleLowerCase('tr-TR'); if (seen.has(k)) return false; seen.add(k); return true; });
+    saveNames(); BAG = []; MODAL.close(); mini(`👥 ${NAMES.length} names saved`);
+    if (current.topic === 'hello' || current.topic === 'talk') go(current.topic, current.mode);
+  };
+  $('#nmClear', box).onclick = () => { ta.value = ''; ta.focus(); };
+}
+function openPicker(spin) {
+  if (!NAMES.length) return openNames();
+  const box = MODAL.show(`<h2>Who's next? <span class="e">🎯</span></h2><div class="slot" id="slot"><div class="slot-name" id="slotName">?</div></div>
+    <div class="row"><button class="btn y big" id="spinBtn">🎲 Pick!</button><button class="btn" id="editNames">✏️ Names (${NAMES.length})</button></div>`, e => { if (e.key === ' ' || e.key === 'Enter' || e.key === 'n' || e.key === 'N') { doSpin(); return true; } return false; });
+  const slot = $('#slot', box), nameEl = $('#slotName', box);
+  let spinning = false;
+  function doSpin() {
+    if (spinning) return; spinning = true; slot.classList.remove('win');
+    const final = nextName(); let i = 0; const steps = 22;
+    const tick = () => {
+      if (i >= steps) { nameEl.innerHTML = `<span class="e">${avatarOf(final)}</span>${esc(final)}`; slot.classList.add('win'); spinning = false; SFX.tada(); FX.burst(); return; }
+      const n = NAMES.length > 1 ? pick(NAMES.filter(x => x !== nameEl.dataset.n)) : NAMES[0];
+      nameEl.dataset.n = n; nameEl.innerHTML = `<span class="e">${avatarOf(n)}</span>${esc(n)}`; SFX.tick();
+      i++; MODAL.later(tick, 40 + i * i * .45);
+    };
+    tick();
+  }
+  $('#spinBtn', box).onclick = doSpin;
+  $('#editNames', box).onclick = openNames;
+  if (spin) doSpin();
+}
+function openHelp() {
+  const box = MODAL.show(`<h2><span class="e">📘</span> Öğretmen rehberi</h2>
+    <div class="help-grid">
+      <div><kbd>Boşluk</kbd> <kbd>Enter</kbd> <kbd>→</kbd></div><div>Sonraki / göster / başlat (her oyunun ana düğmesi)</div>
+      <div><kbd>←</kbd></div><div>Önceki kart (Learn ekranlarında)</div>
+      <div><kbd>1</kbd> … <kbd>9</kbd></div><div>Ana sayfada konu seç · konu içinde sekme seç</div>
+      <div><kbd>Esc</kbd></div><div>Geri · ana sayfa</div>
+      <div><kbd>N</kbd></div><div>Sıradaki öğrenci (isim çekilişi 🎯)</div>
+      <div><kbd>F</kbd> &nbsp; <kbd>M</kbd></div><div>Tam ekran · ses aç/kapa</div>
+    </div>
+    <p class="help-note">💡 Derse <b>Hello!</b> ile başla: her çocuk “My name is …” desin, sen ismi yazıp Enter'a bas. İsimler kaydedilir; <b>Talk Time</b>, <b>How are you?</b>, <b>BOOM</b>, <b>I spy</b> ve 🎯 çekiliş sırayı herkese eşit dağıtır.<br>
+    💡 Konuşturma sırası: önce sen modelle → hep birlikte tekrar (choral) → tek tek (chain drill). Tam cümle şart değil, “Hungry!” da harika bir cevap.<br>
+    💡 Bütün oyunlar internetsiz çalışır. Telaffuz düğmesi 🔊 sadece bilgisayarda İngilizce ses yüklüyse konuşur.</p>
+    <div class="row"><button class="btn" id="hNames">👥 İsimleri düzenle</button><button class="btn" id="hStars">⭐ Yıldızları sıfırla (${STARS})</button></div>`);
+  $('#hNames', box).onclick = openNames;
+  $('#hStars', box).onclick = () => { STARS = 0; store.set('stars', 0); const c = $('#starCount'); if (c) c.textContent = 0; MODAL.close(); mini('⭐ Stars reset'); };
+}
+
+/* ================= keyboard ================= */
+addEventListener('pointerdown', () => SFX.init(), true);
+addEventListener('click', e => { if (e.target.closest('button')) setTimeout(() => { const a = document.activeElement; if (a && a.tagName === 'BUTTON') a.blur(); }, 0); }, true);
+addEventListener('keydown', e => {
+  SFX.init();
+  if (e.target.matches && e.target.matches('input, textarea')) { if (e.key === 'Escape') { e.target.blur(); if (MODAL.open) MODAL.close(); } return; }
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+  const k = e.key;
+  if (MODAL.open) { if (k === 'Escape' || (MODAL.onKey && MODAL.onKey(e))) e.preventDefault(); if (k === 'Escape') MODAL.close(); return; }
+  const inst = current.inst || {};
+  if (inst.key && inst.key(e)) { e.preventDefault(); return; }
+  if (k === 'Escape' || k === 'Backspace') { if (!(inst.back && inst.back()) && current.topic) go(null); }
+  else if (k === ' ' || k === 'Enter' || k === 'PageDown') (inst.action || inst.next || (() => {}))();
+  else if (k === 'ArrowRight') (inst.next || inst.action || (() => {}))();
+  else if (k === 'ArrowLeft' || k === 'PageUp') inst.prev && inst.prev();
+  else if (k === 'f' || k === 'F') toggleFS();
+  else if (k === 'n' || k === 'N') openPicker(true);
+  else if (k === 'm' || k === 'M') toggleMute();
+  else if (k === '?' || k === 'h' || k === 'H') openHelp();
+  else if (/^[1-9]$/.test(k)) {
+    const i = +k - 1;
+    if (!current.topic) { if (TOPICS[i]) go(TOPICS[i].id); }
+    else { const tp = TOPICS.find(t => t.id === current.topic); if (tp.modes[i]) go(tp.id, tp.modes[i].id); }
+  } else return;
+  e.preventDefault();
+});
+
+/* ================= start ================= */
+(() => { const [t, m] = decodeURIComponent(location.hash.slice(1)).split('/'); go(t || null, m); })();
+</script>
+</body>
+</html>

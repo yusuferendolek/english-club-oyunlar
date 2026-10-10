@@ -1,0 +1,25 @@
+# TEGV İngilizce Konuşma Kulübü – 2. sınıf oyunları
+
+Modül-3 yönergesinin ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, duygular, renkler, vücut bölümleri, "I can…") göre hazırlanmış, sınıfta projeksiyonla kullanılan etkileşimli konuşma oyunları.
+
+**Kullanım:** `English-Club-Oyunlar.html` dosyasını Chrome ya da Edge ile aç. İnternet gerekmez; tek dosyadır, USB ile taşınabilir.
+
+## İçerik
+
+| Konu | Oyunlar |
+|---|---|
+| 👋 Hello | "My name is…" – isimleri yaz, sınıf listesi oluşsun |
+| 🌦️ Weather | Today (gün/mevsim/hava rutini), Learn, Weather moves, Peek-a-boo, Weather news |
+| 😊 Feelings | Learn, How are you? (sınıf duygu panosu), Guess!, Good or bad? |
+| 🎨 Colors | Learn, I spy, Touch it!, Color magic |
+| 🐾 Animals | Learn, Peek-a-boo, Who says…?, What's missing?, Move like… |
+| 🔢 Numbers | Learn (1–20), BOOM! (no-no sayı oyunu), How many? |
+| 👾 Monsters | Touch your…, Monster maker, Which monster? |
+| 💃 Dance | Freeze dance (müzik dahili), Simon says, I can… |
+| 💬 Talk Time | Soru–cevap zinciri (chain drill) |
+
+## Kısayollar
+
+- **Boşluk / Enter / →** sonraki, göster, başlat
+- **←** önceki kart · **1–9** konu ya da sekme seç · **Esc** geri
+- **N** sıradaki öğrenci (isim çekilişi) · **F** tam ekran · **M** ses · **?** yardım
