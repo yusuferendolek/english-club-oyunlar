@@ -18,6 +18,14 @@ Modül-3 yönergesinin ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava,
 | 💃 Dance | Freeze dance (müzik dahili), Simon says, I can… |
 | 💬 Talk Time | Soru–cevap zinciri (chain drill) |
 
+## Yayın (Vercel) ve CI
+
+- `main`'e her push Vercel'de otomatik yayınlanır. Build adımı (`scripts/build.js`) önce kontrolleri çalıştırır; hata varsa yayın yapılmaz, canlıdaki son sağlam sürüm kalır.
+- GitHub Actions (`.github/workflows/ci.yml`) her push'ta:
+  - `scripts/check.js`: JS sözdizimi ve internetten dosya çekilmediği (offline çalışma) kontrolü
+  - `scripts/smoke.js`: bütün ekranları headless Chrome'da açıp tuşlara basar, JS hatası olursa başarısız olur
+- Yerelde: `node scripts/check.js` ve `node scripts/smoke.js` (Chrome gerekir)
+
 ## Kısayollar
 
 - **Boşluk / Enter / →** sonraki, göster, başlat
