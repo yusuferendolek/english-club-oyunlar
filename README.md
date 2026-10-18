@@ -2,7 +2,9 @@
 
 Konuşma kulübünün ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, duygular, renkler, vücut bölümleri, "I can…") göre hazırlanmış, sınıfta projeksiyonla kullanılan etkileşimli konuşma oyunları.
 
-**Kullanım:** `English-Club-Oyunlar.html` dosyasını Chrome ya da Edge ile aç. İnternet gerekmez; tek dosyadır, USB ile taşınabilir.
+🌐 **Canlı site:** https://english-club-oyunlar.vercel.app
+
+**Kullanım:** Sınıfta internet varsa yukarıdaki linki aç. Yoksa `English-Club-Oyunlar.html` dosyasını Chrome ya da Edge ile aç; tek dosyadır, internet gerekmez, USB ile taşınabilir.
 
 ## İçerik
 
