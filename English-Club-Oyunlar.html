@@ -552,9 +552,18 @@ const T = {
 };
 
 const store = {
-  get(k, d) { try { const v = localStorage.getItem('tegv-ec-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem('tegv-ec-' + k, JSON.stringify(v)); } catch (e) { /* storage blocked: keep going */ } }
+  get(k, d) { try { const v = localStorage.getItem('english-club-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('english-club-' + k, JSON.stringify(v)); } catch (e) { /* storage blocked: keep going */ } }
 };
+/* keep names/stars saved under the older key prefix */
+try {
+  for (const k of Object.keys(localStorage)) {
+    const m = k.match(/^[a-z]+-ec-(names|stars|muted)$/);
+    if (!m) continue;
+    if (localStorage.getItem('english-club-' + m[1]) == null) localStorage.setItem('english-club-' + m[1], localStorage.getItem(k));
+    localStorage.removeItem(k);
+  }
+} catch (e) { /* storage blocked */ }
 let NAMES = store.get('names', []);
 if (!Array.isArray(NAMES)) NAMES = [];
 let STARS = +store.get('stars', 0) || 0;

@@ -1,6 +1,6 @@
-# TEGV İngilizce Konuşma Kulübü – 2. sınıf oyunları
+# English Club – 2. sınıf İngilizce konuşma oyunları
 
-Modül-3 yönergesinin ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, duygular, renkler, vücut bölümleri, "I can…") göre hazırlanmış, sınıfta projeksiyonla kullanılan etkileşimli konuşma oyunları.
+Konuşma kulübünün ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, duygular, renkler, vücut bölümleri, "I can…") göre hazırlanmış, sınıfta projeksiyonla kullanılan etkileşimli konuşma oyunları.
 
 **Kullanım:** `English-Club-Oyunlar.html` dosyasını Chrome ya da Edge ile aç. İnternet gerekmez; tek dosyadır, USB ile taşınabilir.
 
