@@ -19,6 +19,7 @@ Konuşma kulübünün ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, 
 | 👾 Monsters | Touch your…, Monster maker, Which monster? |
 | 💃 Dance | Freeze dance (müzik dahili), Simon says, I can… |
 | 💬 Talk Time | Soru–cevap zinciri (chain drill) |
+| 🇹🇷 29 October | Learn (flag, moon, star… Türkçe karşılıklarıyla), Make the flag, Ask & answer, Poem (dinle–tekrar et), Celebrate |
 
 ## Yayın (Vercel) ve CI
 
@@ -31,5 +32,5 @@ Konuşma kulübünün ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, 
 ## Kısayollar
 
 - **Boşluk / Enter / →** sonraki, göster, başlat
-- **←** önceki kart · **1–9** konu ya da sekme seç · **Esc** geri
+- **←** önceki kart · **1–9, 0** konu ya da sekme seç · **Esc** geri
 - **N** sıradaki öğrenci (isim çekilişi) · **F** tam ekran · **M** ses · **?** yardım

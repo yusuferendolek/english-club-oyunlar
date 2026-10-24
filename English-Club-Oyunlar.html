@@ -122,15 +122,15 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .home-head p{font-size:clamp(15px,2.8vmin,30px);color:var(--muted)}
 .wave{display:inline-block;transform-origin:70% 80%;animation:wave 1.8s ease-in-out infinite}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}}
-.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
-.tile{position:relative;border:var(--bw) solid var(--ink);border-radius:clamp(16px,3vmin,34px);background:var(--c);box-shadow:0 .8vmin 0 var(--ink);cursor:pointer;display:flex;align-items:center;gap:5%;padding:0 6%;text-align:left;container-type:size;overflow:hidden;transition:transform .12s;min-height:0}
+.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
+.tile{position:relative;border:var(--bw) solid var(--ink);border-radius:clamp(16px,3vmin,34px);background:var(--c);box-shadow:0 .8vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqh;padding:3% 3%;text-align:center;container-type:size;overflow:hidden;transition:transform .12s;min-height:0}
 .tile:hover{transform:translateY(-.5vmin) rotate(-.6deg)}
 .tile:active{transform:translateY(.5vmin);box-shadow:0 .2vmin 0 var(--ink)}
-.tile .te{font-size:min(52cqh,28cqw);animation:float 3s ease-in-out infinite;animation-delay:var(--d)}
-.tile .tt{display:flex;flex-direction:column;min-width:0}
-.tile .tn{font-size:min(21cqh,12.5cqw);font-weight:900;line-height:1.05}
-.tile .ts{font-size:min(12cqh,7cqw);font-weight:800;opacity:.72}
-.tile .k{position:absolute;top:7%;right:4%;font-size:min(11cqh,6cqw);width:1.7em;height:1.7em;border-radius:50%;background:rgba(255,255,255,.75);display:grid;place-items:center;border:2px solid var(--ink);font-weight:900}
+.tile .te{font-size:min(38cqh,50cqw);animation:float 3s ease-in-out infinite;animation-delay:var(--d)}
+.tile .tt{display:flex;flex-direction:column;align-items:center;min-width:0}
+.tile .tn{font-size:min(12cqh,14.5cqw);font-weight:900;line-height:1.05}
+.tile .ts{font-size:min(7cqh,8.5cqw);font-weight:800;opacity:.72}
+.tile .k{position:absolute;top:4%;right:5%;font-size:min(6.5cqh,8cqw);width:1.7em;height:1.7em;border-radius:50%;background:rgba(255,255,255,.75);display:grid;place-items:center;border:2px solid var(--ink);font-weight:900}
 
 /* ---------- learn grid + detail ---------- */
 .lgrid{flex:1;display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-template-rows:repeat(var(--rows),1fr);gap:clamp(8px,1.6vmin,18px);min-height:0}
@@ -517,6 +517,57 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .hello-greet{min-height:1.3em;font-size:clamp(26px,6.4vmin,74px);font-weight:900;color:var(--purple)}
 .hello-chips{display:flex;flex-wrap:wrap;gap:1vmin;justify-content:center;max-width:94%;max-height:24vh;overflow:auto;padding:4px}
 .name-chip{display:inline-flex;align-items:center;gap:.3em;border:var(--bw) solid var(--ink);border-radius:999px;background:#fff;padding:.15em .7em;font-size:clamp(15px,2.8vmin,30px);font-weight:900;cursor:pointer;box-shadow:0 .3vmin 0 var(--ink)}
+/* ---------- 29 October ---------- */
+.tr-flag{display:block;border-radius:1.5%;box-shadow:0 0 0 var(--bw) var(--ink);overflow:visible}
+.flag-ico{display:inline-block;width:1.35em;height:.9em;vertical-align:-.08em;box-shadow:0 0 0 .05em var(--ink)}
+.tr-flag .f-moon,.tr-flag .f-star{transform-box:fill-box;transform-origin:center;transition:opacity .3s}
+.tr-flag.hl-moon .f-star,.tr-flag.hl-star .f-moon{opacity:.25}
+.tr-flag.hl-moon .f-moon,.tr-flag.hl-star .f-star,.tr-flag.hl-both .f-moon,.tr-flag.hl-both .f-star{stroke:#FFD23F;stroke-linejoin:round;animation:partGlow 1s ease-in-out infinite}
+@keyframes partGlow{0%,100%{stroke-width:300;transform:scale(1)}50%{stroke-width:1600;transform:scale(1.08)}}
+.tr-flag.wave{transform-origin:left center;animation:flagWave 1.8s ease-in-out infinite}
+@keyframes flagWave{0%,100%{transform:perspective(800px) rotateY(0) skewY(0)}50%{transform:perspective(800px) rotateY(-14deg) skewY(-2deg)}}
+.rep-ico{height:44cqh;display:flex;align-items:center;justify-content:center}
+.rep-ico svg{height:100%;width:auto;max-width:86cqw}
+.trw{font-size:min(9cqh,9cqw);font-weight:800;color:var(--muted)}
+.det-stack .trw{font-size:min(6cqh,5cqw)}
+.rep-big .tr-flag{height:40cqh;width:auto}
+.rep-build{align-items:center}
+.rb-q{font-size:clamp(22px,5vmin,58px);flex:none}
+.rb-stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+.bflag{width:100%;height:100%;max-width:130vh;overflow:visible}
+.bflag .b-base{fill:#fff;stroke:#2B2A4C;stroke-width:500;stroke-dasharray:2200 1300}
+.bflag .b-red{fill:#E30A17;transform-box:fill-box;transform-origin:left center;transform:scaleX(0);transition:transform 1.3s cubic-bezier(.6,0,.3,1)}
+.bflag.s-red .b-red{transform:scaleX(1)}
+.bflag.s-red .b-base{stroke:transparent;transition:stroke .3s 1.2s}
+.bflag .b-moon,.bflag .b-star{fill:#fff;transform-box:fill-box;transform-origin:center;opacity:0;transform:scale(.2) rotate(-120deg);transition:opacity .5s,transform .9s cubic-bezier(.3,1.5,.5,1)}
+.bflag.s-moon .b-moon,.bflag.s-star .b-star{opacity:1;transform:none}
+.bflag.s-wave{transform-origin:left center;animation:flagWave 1.8s ease-in-out infinite}
+.rb-a{flex:none;min-height:1.3em}
+.rep-ask{flex-direction:row;align-items:center;gap:3vmin}
+.ra-flag{flex:1.3;height:78%;min-width:0;padding:3vmin;display:flex;align-items:center;justify-content:center;background:radial-gradient(#fff,#FFF0F0)}
+.ra-flag .tr-flag{width:100%;height:auto;max-height:100%}
+.ra-side{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2.4vmin;text-align:center}
+.ra-who{font-size:clamp(20px,4vmin,46px);font-weight:900;min-height:1.2em}
+.ra-q{font-size:clamp(24px,5.4vmin,62px)}
+.ra-a{min-height:1.3em}
+.poem{align-items:center;justify-content:center;text-align:center;gap:1.6vmin}
+.poem-pic{height:26%;flex:none;display:flex;align-items:center;justify-content:center;font-size:clamp(56px,15vmin,170px)}
+.poem-pic .tr-flag{height:100%;width:auto}
+.poem-tip{font-size:clamp(16px,3.2vmin,34px);font-weight:900;color:var(--muted)}
+.poem-lines{display:flex;flex-direction:column;gap:.4vmin}
+.pl{font-size:clamp(18px,3.6vmin,40px);font-weight:900;transition:font-size .3s,color .3s,opacity .3s}
+.pl.hidden{visibility:hidden}
+.pl.done{color:var(--ink);opacity:.55}
+.pl.on{font-size:clamp(28px,6.2vmin,72px);color:#E30A17}
+.pl.all{font-size:clamp(20px,4.4vmin,50px);color:var(--ink)}
+.party{background:linear-gradient(#141A3D,#3A2E7A 75%,#5B2A6E);color:#fff;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.sky-stars{position:absolute;inset:0;background-image:radial-gradient(2px 2px at 10% 20%,#fff,transparent),radial-gradient(2px 2px at 30% 72%,#fff,transparent),radial-gradient(1.5px 1.5px at 48% 28%,#fff,transparent),radial-gradient(2px 2px at 70% 14%,#fff,transparent),radial-gradient(1.5px 1.5px at 86% 58%,#fff,transparent),radial-gradient(2px 2px at 62% 86%,#fff,transparent),radial-gradient(1.5px 1.5px at 18% 90%,#fff,transparent),radial-gradient(2px 2px at 92% 32%,#fff,transparent);animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.4}}
+.party-flag{position:relative;z-index:1;width:min(48vmin,44vw)}
+.party-flag .tr-flag{width:100%;height:auto;box-shadow:0 0 0 var(--bw) #fff,0 0 4vmin rgba(227,10,23,.6)}
+.party-say{position:relative;z-index:1;font-size:clamp(16px,3vmin,32px);font-weight:900;opacity:.8;margin-top:4vmin}
+.party-chant{position:relative;z-index:1;font-size:clamp(32px,8.5vmin,104px);font-weight:900;text-shadow:0 .8vmin 0 rgba(0,0,0,.35);padding:0 4vmin;min-height:1.3em}
+.party-chant .flag-ico{box-shadow:0 0 0 .05em #fff}
 </style>
 </head>
 <body>
@@ -639,7 +690,8 @@ const SFX = (() => {
     boing() { tone({ f: 180, f2: 520, dur: .25, vol: .18 }); tone({ f: 520, f2: 260, dur: .2, vol: .12, t: .2 }); },
     count(i) { tone({ f: 440 * Math.pow(2, Math.min(i, 24) / 12), dur: .14, vol: .18, type: 'triangle' }); },
     drumroll(d = 1) { for (let t = 0; t < d; t += .05) noise({ ft: 'highpass', f: 1800, dur: .05, vol: .06 + t / d * .12, t }); },
-    beep(hi) { tone({ f: hi ? 1320 : 660, dur: hi ? .45 : .12, vol: .14, type: 'square' }); }
+    beep(hi) { tone({ f: hi ? 1320 : 660, dur: hi ? .45 : .12, vol: .14, type: 'square' }); },
+    firework() { tone({ f: 500, f2: 1600, dur: .45, vol: .06 }); noise({ f: 1800, f2: 200, dur: .7, vol: .45, t: .45 }); for (let i = 0; i < 10; i++) noise({ ft: 'highpass', f: 3000, dur: .04, vol: .1, t: .55 + Math.random() * .6 }); }
   };
 })();
 
@@ -723,8 +775,8 @@ const FX = (() => {
   }
   const run = () => { if (!raf) raf = requestAnimationFrame(loop); };
   return {
-    burst(x = innerWidth / 2, y = innerHeight / 2, n = 110) {
-      for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 10; parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, g: .25, r: 6 + Math.random() * 8, c: pick(COLS), rot: Math.random() * 6, vr: (Math.random() - .5) * .4, life: 90 + Math.random() * 50, sq: Math.random() < .6 }); }
+    burst(x = innerWidth / 2, y = innerHeight / 2, n = 110, cols = COLS) {
+      for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 10; parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, g: .25, r: 6 + Math.random() * 8, c: pick(cols), rot: Math.random() * 6, vr: (Math.random() - .5) * .4, life: 90 + Math.random() * 50, sq: Math.random() < .6 }); }
       run();
     },
     rain(n = 150) {
@@ -1796,6 +1848,170 @@ function talkChain(st) {
   return { action: () => turn(false), next: () => turn(false) };
 }
 
+/* ================= 29 OCTOBER – REPUBLIC DAY ================= */
+/* Turkish flag at the official proportions (height G = 60000: crescent circles r 0.25G / 0.2G, 0.0625G apart; star circle 0.25G wide) */
+const FLAG_MOON = 'M42675 8021A15000 15000 0 1 1 42675-8021A12000 12000 0 1 0 42675 8021Z';
+const FLAG_STAR = 'M41750 0L55318-4408L46932 7133V-7133L55318 4408Z';
+const flagSVG = (hl = '', cls = '') => `<svg class="tr-flag ${hl ? 'hl-' + hl : ''} ${cls}" viewBox="0 -30000 90000 60000"><rect x="0" y="-30000" width="90000" height="60000" fill="#E30A17"/><path class="f-moon" fill="#fff" d="${FLAG_MOON}"/><path class="f-star" fill="#fff" d="${FLAG_STAR}"/></svg>`;
+const FLAG_ICON = flagSVG('', 'flag-ico');
+const REP_AGE = (d => d.getFullYear() - 1923 - (d.getMonth() < 9 ? 1 : 0))(new Date());
+const REP_COLORS = ['#E30A17', '#FFFFFF', '#FFD23F', '#FF5A5F'];
+
+const REPUBLIC = [
+  { w: 'flag', tr: 'bayrak', icon: () => flagSVG(), big: () => flagSVG('', 'wave'), sent: 'This is our flag!' },
+  { w: 'moon', tr: 'ay · hilal', icon: '🌙', big: () => flagSVG('moon'), sent: 'This is a moon.' },
+  { w: 'star', tr: 'yıldız', icon: '⭐', big: () => flagSVG('star'), sent: 'This is a star.' },
+  { w: 'red', tr: 'kırmızı', icon: () => splat('#E30A17'), big: () => flagSVG(), sent: 'Our flag is red.' },
+  { w: 'white', tr: 'beyaz', icon: () => splat('#FFFFFF'), big: () => flagSVG('both'), sent: 'The moon and the star are white.' },
+  { w: 'Republic', tr: 'Cumhuriyet', icon: '🏛️', big: '🏛️', sent: 'Happy Republic Day!' },
+  { w: 'birthday', tr: 'doğum günü', icon: '🎂', big: '🎂', sent: `Happy birthday, Türkiye! ${REP_AGE} years old!` },
+  { w: 'fireworks', tr: 'havai fişek', icon: '🎆', big: '🎆', sent: 'Look! Fireworks!' }
+];
+const repIcon = x => typeof x === 'function' ? `<span class="rep-ico">${x()}</span>` : `<span class="e">${x}</span>`;
+function repFirework() {
+  const x = innerWidth * (.15 + Math.random() * .7), y = innerHeight * (.15 + Math.random() * .3);
+  SFX.firework(); T.after(() => FX.burst(x, y, 90, REP_COLORS), 450);
+}
+
+function repLearn(st) {
+  return learnGrid(st, {
+    items: REPUBLIC, cols: 4, rows: 2,
+    card: it => `${repIcon(it.icon)}<span class="w">${it.w}</span><span class="trw">${it.tr}</span>`,
+    detail: it => `<div class="det-stack">${typeof it.big === 'function' ? `<div class="rep-big">${it.big()}</div>` : `<span class="e emo-big a-bounce">${it.big}</span>`}<div class="det-word">${it.w}</div><div class="trw">${it.tr}</div><div class="det-sent">${it.sent}</div></div>`,
+    say: it => it.w
+  });
+}
+
+/* make the flag step by step: question first, then the answer paints / adds the part */
+function repBuild(st) {
+  const STEPS = [
+    { q: "Let's make our flag! <span class='e'>🖌️</span>" },
+    { q: 'What color is our flag? <span class="e">🎨</span>', a: "It's red!", after: 'red' },
+    { q: "Look! What's this? <span class='e'>🤔</span>", a: "It's a moon! <span class='e'>🌙</span>", before: 'moon' },
+    { q: "And what's this? <span class='e'>🤔</span>", a: "It's a star! <span class='e'>⭐</span>", before: 'star' },
+    { q: 'What color are the moon and the star?', a: "They're white!" },
+    { q: 'How many stars? How many moons?', a: 'One star and one moon!' },
+    { q: "This is our flag! <span class='e'>🎉</span>", before: 'wave', cheer: true }
+  ];
+  let i = 0, shown = false;
+  st.innerHTML = `<div class="screen rep-build">
+    <div class="bubble rb-q" id="rbQ"></div>
+    <div class="rb-stage"><svg class="bflag" id="rbF" viewBox="-1500 -31500 93000 63000"><rect class="b-base" x="0" y="-30000" width="90000" height="60000"/><rect class="b-red" x="0" y="-30000" width="90000" height="60000"/><path class="b-moon" d="${FLAG_MOON}"/><path class="b-star" d="${FLAG_STAR}"/></svg></div>
+    <div class="answer rb-a" id="rbA">&nbsp;</div>
+    <div class="row"><button class="btn y big" id="rbGo">Next ▶</button><button class="btn" id="rbAgain">↺ Again</button></div></div>`;
+  const F = $('#rbF', st), Q = $('#rbQ', st), A = $('#rbA', st), go = $('#rbGo', st);
+  function show() {
+    const s = STEPS[i]; shown = false;
+    if (s.before) { F.classList.add('s-' + s.before); SFX.whoosh(); }
+    Q.innerHTML = s.q; bump(Q); A.innerHTML = '&nbsp;';
+    go.innerHTML = s.cheer ? '↺ Again' : 'Next ▶';
+    if (s.cheer) { celebrate('Our flag!', { emoji: '🎉' }); repFirework(); }
+  }
+  function reset() { i = 0; F.setAttribute('class', 'bflag'); show(); }
+  function step() {
+    const s = STEPS[i];
+    if (s.a && !shown) { shown = true; A.innerHTML = s.a; bump(A); if (s.after) F.classList.add('s-' + s.after); SFX.ding(); return; }
+    if (i === STEPS.length - 1) return reset();
+    i++; show();
+  }
+  go.onclick = step; $('#rbAgain', st).onclick = reset;
+  show();
+  return { action: step, next: step };
+}
+
+const REP_Q = [
+  { q: "What's this?", a: "It's a moon! <span class='e'>🌙</span>", hl: 'moon' },
+  { q: "What's this?", a: "It's a star! <span class='e'>⭐</span>", hl: 'star' },
+  { q: 'What color is the flag?', a: "It's red and white!" },
+  { q: 'What color is the moon?', a: "It's white!", hl: 'moon' },
+  { q: 'What color is the star?', a: "It's white!", hl: 'star' },
+  { q: 'How many stars?', a: 'One star!', hl: 'star' },
+  { q: 'How many moons?', a: 'One moon!', hl: 'moon' },
+  { q: 'Is the star red?', a: "No! It's white.", hl: 'star' },
+  { q: 'Is the flag red?', a: 'Yes, it is!' },
+  { q: 'Is the moon blue?', a: "No! It's white.", hl: 'moon' }
+];
+function repAsk(st) {
+  let bag = [], cur = null, who = null, shown = false;
+  st.innerHTML = `<div class="screen rep-ask"><div class="ra-flag card" id="raF"></div>
+    <div class="ra-side"><div class="ra-who" id="raW"></div><div class="bubble ra-q" id="raQ"></div><div class="answer ra-a" id="raA">&nbsp;</div>
+      <div class="row"><button class="btn y big" id="raGo">👀 Answer</button><button class="btn b" id="raNew" title="Another question">🎲</button></div></div></div>`;
+  const F = $('#raF', st), W = $('#raW', st), Q = $('#raQ', st), A = $('#raA', st), go = $('#raGo', st);
+  function next() {
+    if (!bag.length) bag = shuffle(REP_Q);
+    cur = bag.pop(); who = nextName(who); shown = false;
+    F.innerHTML = flagSVG(cur.hl || '');
+    W.innerHTML = who ? `<span class="e">${avatarOf(who)}</span> ${esc(who)}` : '';
+    Q.innerHTML = who ? `${esc(who)}, ${cur.q.charAt(0).toLowerCase() + cur.q.slice(1)}` : cur.q;
+    A.innerHTML = '&nbsp;'; go.innerHTML = '👀 Answer'; bump(Q); SFX.whoosh();
+  }
+  function step() { if (shown) return next(); shown = true; A.innerHTML = cur.a; bump(A); go.innerHTML = 'Next ▶'; SFX.ding(); }
+  go.onclick = step; $('#raNew', st).onclick = next;
+  next();
+  return { action: step, next: step };
+}
+
+/* echo poem: teacher reads a line, the class repeats it */
+const REP_POEM = [
+  ['Red and white, red and white,', '🔴⚪'],
+  ['our flag is shining bright!', '✨'],
+  ['A moon, a star, up so high,', '🌙⭐'],
+  ['waving, waving in the sky!', 'FLAG'],
+  ['Happy birthday, Türkiye!', '🎂'],
+  ['Happy Republic Day! Hooray!', '🎉']
+];
+function repPoem(st) {
+  let i = -1, phase = 'lines';
+  st.innerHTML = `<div class="screen poem"><div class="poem-pic" id="ppPic"></div><div class="poem-tip" id="ppTip"></div>
+    <div class="poem-lines">${REP_POEM.map(([t], k) => `<div class="pl hidden" data-k="${k}">${t}</div>`).join('')}</div>
+    <div class="row"><button class="btn y big" id="ppGo">▶ Start</button><button class="btn" id="ppAgain">↺ Again</button></div></div>`;
+  const pic = $('#ppPic', st), tip = $('#ppTip', st), go = $('#ppGo', st), lines = $$('.pl', st);
+  const picHTML = e => e === 'FLAG' ? flagSVG('', 'wave') : `<span class="e a-bounce">${e}</span>`;
+  function reset() { i = -1; phase = 'lines'; lines.forEach(l => l.className = 'pl hidden'); pic.innerHTML = picHTML('FLAG'); tip.innerHTML = 'Listen and repeat! <span class="e">👂🗣️</span>'; go.innerHTML = '▶ Start'; }
+  function step() {
+    if (phase === 'lines') {
+      i++;
+      if (i < REP_POEM.length) {
+        lines.forEach((l, k) => l.className = 'pl ' + (k < i ? 'done' : k === i ? 'on' : 'hidden'));
+        pic.innerHTML = picHTML(REP_POEM[i][1]); bump(pic); SFX.pop();
+        tip.innerHTML = 'Listen… now you! <span class="e">🗣️</span>'; go.innerHTML = 'Next line ▶';
+      } else {
+        phase = 'all'; lines.forEach(l => l.className = 'pl all'); pic.innerHTML = picHTML('FLAG');
+        tip.innerHTML = 'All together! <span class="e">🙌</span>'; go.innerHTML = '🎉 Hooray!'; SFX.ding();
+      }
+    } else if (phase === 'all') {
+      phase = 'end'; celebrate('Hooray!', { emoji: '🎆' }); repFirework(); T.after(repFirework, 700); go.innerHTML = '↺ Again';
+    } else reset();
+  }
+  go.onclick = step; $('#ppAgain', st).onclick = reset;
+  reset();
+  return { action: step, next: step };
+}
+
+/* night-sky party: big chants to shout together, fireworks, music */
+function repParty(st) {
+  const CHANTS = [
+    ['Happy Republic Day!', '🎉'], ['Happy birthday, Türkiye!', '🎂'], [`${REP_AGE} years old!`, '🎈'],
+    ['Wave your flag!', 'FLAG'], ['Red and white! Red and white!', '🔴⚪'], ['Clap, clap, clap!', '👏'],
+    ['Thank you, Atatürk!', '❤️'], ['Hooray!', '🎆']
+  ];
+  let i = -1;
+  st.innerHTML = `<div class="screen nopad party"><div class="sky-stars"></div>${floaties(['🎈', '🎈', '✨'], false, 12)}
+    <div class="party-flag">${flagSVG('', 'wave')}</div>
+    <div class="party-say">Say it together! <span class="e">🗣️</span></div>
+    <div class="party-chant" id="pcT"></div>
+    <div class="ctrl-br"><button class="btn" id="pcMusic">🎵 Music</button><button class="btn p" id="pcFire">🎆 Fireworks</button><button class="btn y big" id="pcNext">Next ▶</button></div></div>`;
+  const T_ = $('#pcT', st);
+  function next() {
+    i = (i + 1) % CHANTS.length; const [t, e] = CHANTS[i];
+    T_.innerHTML = `${t} ${e === 'FLAG' ? FLAG_ICON : `<span class="e">${e}</span>`}`; bump(T_); repFirework();
+  }
+  $('#pcNext', st).onclick = next; $('#pcFire', st).onclick = repFirework;
+  $('#pcMusic', st).onclick = e => { const b = e.currentTarget; if (MUSIC.playing) { MUSIC.stop(); b.classList.remove('on'); } else { MUSIC.start(120); b.classList.add('on'); } };
+  T.after(next, 400);
+  return { action: next, next };
+}
+
 /* ================= menu ================= */
 const TOPICS = [
   { id: 'hello', e: '👋', name: 'Hello!', sub: "What's your name?", color: '#FFB4A2', modes: [{ id: 'names', e: '🙋', name: 'My name is…', run: helloNames }] },
@@ -1819,13 +2035,17 @@ const TOPICS = [
     { id: 'touch', e: '👆', name: 'Touch your…', run: bodyTouch }, { id: 'maker', e: '👾', name: 'Monster maker', run: monsterMaker }, { id: 'which', e: '🕵️', name: 'Which monster?', run: monsterWhich }] },
   { id: 'dance', e: '💃', name: 'Dance!', sub: 'Move & Freeze', color: '#7FDBCA', modes: [
     { id: 'freeze', e: '🥶', name: 'Freeze dance', run: danceFreeze }, { id: 'simon', e: '🗣️', name: 'Simon says', run: danceSimon }, { id: 'can', e: '💪', name: 'I can…', run: danceCan }] },
-  { id: 'talk', e: '💬', name: 'Talk Time', sub: 'Ask a friend!', color: '#A0E7E5', modes: [{ id: 'chain', e: '💬', name: 'Talk chain', run: talkChain }] }
+  { id: 'talk', e: '💬', name: 'Talk Time', sub: 'Ask a friend!', color: '#A0E7E5', modes: [{ id: 'chain', e: '💬', name: 'Talk chain', run: talkChain }] },
+  { id: 'republic', e: FLAG_ICON, name: '29 October', sub: 'Republic Day', color: '#FFB3B3', modes: [
+    { id: 'learn', e: '🌙', name: 'Learn', run: repLearn }, { id: 'build', e: '🖌️', name: 'Make the flag', run: repBuild },
+    { id: 'ask', e: '🙋', name: 'Ask & answer', run: repAsk }, { id: 'poem', e: '📜', name: 'Poem', run: repPoem },
+    { id: 'party', e: '🎆', name: 'Celebrate', run: repParty }] }
 ];
 
 function HOME(st) {
   st.innerHTML = `<div class="screen home">
     <div class="home-head"><h1>Hello, friends! <span class="e wave">👋</span></h1><p>Let's speak English!</p></div>
-    <div class="tiles">${TOPICS.map((t, i) => `<button class="tile" data-t="${t.id}" style="--c:${t.color};--d:${(i * .2).toFixed(1)}s"><span class="k">${i + 1}</span><span class="e te">${t.e}</span><span class="tt"><span class="tn">${t.name}</span><span class="ts">${t.sub}</span></span></button>`).join('')}</div></div>`;
+    <div class="tiles">${TOPICS.map((t, i) => `<button class="tile" data-t="${t.id}" style="--c:${t.color};--d:${(i * .2).toFixed(1)}s"><span class="k">${(i + 1) % 10}</span><span class="e te">${t.e}</span><span class="tt"><span class="tn">${t.name}</span><span class="ts">${t.sub}</span></span></button>`).join('')}</div></div>`;
   st.querySelector('.tiles').onclick = e => { const b = e.target.closest('.tile'); if (b) { SFX.pop(); go(b.dataset.t); } };
   return {};
 }
@@ -1923,7 +2143,7 @@ function openHelp() {
     <div class="help-grid">
       <div><kbd>Boşluk</kbd> <kbd>Enter</kbd> <kbd>→</kbd></div><div>Sonraki / göster / başlat (her oyunun ana düğmesi)</div>
       <div><kbd>←</kbd></div><div>Önceki kart (Learn ekranlarında)</div>
-      <div><kbd>1</kbd> … <kbd>9</kbd></div><div>Ana sayfada konu seç · konu içinde sekme seç</div>
+      <div><kbd>1</kbd> … <kbd>9</kbd> <kbd>0</kbd></div><div>Ana sayfada konu seç · konu içinde sekme seç</div>
       <div><kbd>Esc</kbd></div><div>Geri · ana sayfa</div>
       <div><kbd>N</kbd></div><div>Sıradaki öğrenci (isim çekilişi 🎯)</div>
       <div><kbd>F</kbd> &nbsp; <kbd>M</kbd></div><div>Tam ekran · ses aç/kapa</div>
@@ -1955,8 +2175,8 @@ addEventListener('keydown', e => {
   else if (k === 'n' || k === 'N') openPicker(true);
   else if (k === 'm' || k === 'M') toggleMute();
   else if (k === '?' || k === 'h' || k === 'H') openHelp();
-  else if (/^[1-9]$/.test(k)) {
-    const i = +k - 1;
+  else if (/^[0-9]$/.test(k)) {
+    const i = (+k + 9) % 10;
     if (!current.topic) { if (TOPICS[i]) go(TOPICS[i].id); }
     else { const tp = TOPICS.find(t => t.id === current.topic); if (tp.modes[i]) go(tp.id, tp.modes[i].id); }
   } else return;
