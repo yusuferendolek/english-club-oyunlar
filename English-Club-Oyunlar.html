@@ -682,14 +682,24 @@ const SPEAK = (() => {
   function find() { if (!ok) return null; const en = speechSynthesis.getVoices().filter(v => /^en([-_]|$)/i.test(v.lang)); voice = en.find(v => /US/i.test(v.lang) && v.localService) || en.find(v => v.localService) || en[0] || null; return voice; }
   if (ok) { find(); speechSynthesis.onvoiceschanged = find; }
   const clean = t => String(t).replace(/<[^>]+>/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}️‍]/gu, '').replace(/_+/g, ' ').trim();
+  let run = 0, pause = null;
   return {
-    say(text) {
+    /* says the text `times` times, waiting `gap` ms between repeats */
+    say(text, times = 1, gap = 900) {
       if (!ok) return mini('🔇 No voice on this computer');
       if (!voice) find();
       if (!voice) return mini('🔇 No English voice on this computer');
-      speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(clean(text)); u.voice = voice; u.lang = voice.lang; u.rate = .8; u.pitch = 1.1; speechSynthesis.speak(u);
+      this.stop();
+      const my = ++run; let left = times;
+      const once = () => {
+        if (my !== run) return;
+        const u = new SpeechSynthesisUtterance(clean(text)); u.voice = voice; u.lang = voice.lang; u.rate = .8; u.pitch = 1.1;
+        u.onend = () => { if (--left > 0 && my === run) pause = setTimeout(once, gap); };
+        speechSynthesis.speak(u);
+      };
+      once();
     },
-    stop() { if (ok) speechSynthesis.cancel(); }
+    stop() { run++; clearTimeout(pause); if (ok) speechSynthesis.cancel(); }
   };
 })();
 
@@ -974,16 +984,17 @@ function learnGrid(st, { items, cols, rows, card, detail, say, onShow, detailCls
   function open(i) {
     idx = (i + items.length) % items.length; const it = items[idx];
     if (cleanup) { cleanup(); cleanup = null; }
+    SPEAK.stop();
     det.innerHTML = `<div class="det-body">${detail(it, idx)}</div><button class="nav-arrow left" data-nav="-1">‹</button><button class="nav-arrow right" data-nav="1">›</button><div class="det-tools">${say ? '<button class="btn" data-say title="Pronounce">🔊</button>' : ''}<button class="btn" data-close title="All cards (Esc)">✕</button></div>`;
     det.hidden = false; SFX.pop();
     if (onShow) cleanup = onShow(it, det) || null;
   }
-  function close() { if (cleanup) { cleanup(); cleanup = null; } det.hidden = true; det.innerHTML = ''; idx = -1; }
+  function close() { if (cleanup) { cleanup(); cleanup = null; } SPEAK.stop(); det.hidden = true; det.innerHTML = ''; idx = -1; }
   grid.onclick = e => { const b = e.target.closest('.lcard'); if (b) open(+b.dataset.i); };
   det.onclick = e => {
     const n = e.target.closest('[data-nav]'); if (n) return open(idx + +n.dataset.nav);
     if (e.target.closest('[data-close]')) return close();
-    if (e.target.closest('[data-say]')) return SPEAK.say(say(items[idx]));
+    if (e.target.closest('[data-say]')) return SPEAK.say(say(items[idx]), 2);   // the word, twice
   };
   return {
     next() { open(idx + 1); }, action() { open(idx + 1); },
@@ -1089,7 +1100,7 @@ function weatherLearn(st) {
     items: WEATHER, cols: 4, rows: 2, detailCls: 'full',
     card: w => `<span class="e">${w.e}</span><span class="w">${w.w}</span>`,
     detail: w => `${sceneHTML(w.id)}<div class="scene-cap"><div class="scene-label">It's ${w.w}!</div><div class="chip"><span class="e">${w.ae}</span> ${w.act}</div></div>`,
-    say: w => `It's ${w.w}!`,
+    say: w => w.w,
     onShow: (w, el) => startScene(w.id, el)
   });
 }
@@ -1157,7 +1168,7 @@ function feelLearn(st) {
     items: FEELINGS, cols: 4, rows: 3,
     card: f => `<span class="e">${f.e}</span><span class="w">${f.w}</span>`,
     detail: f => `${floaties(f.fx, f.down)}<div class="det-stack"><span class="e emo-big ${f.anim}">${f.e}</span><div class="det-word">${f.w}</div><div class="det-sent">I'm ${f.w}!${f.alt ? ` <small>(I'm ${f.alt}.)</small>` : ''}</div><div class="chip big"><span class="e">${f.ae}</span> ${f.act}</div></div>`,
-    say: f => `I'm ${f.w}!`
+    say: f => f.w
   });
 }
 
@@ -1367,7 +1378,7 @@ function animalLearn(st) {
     items: ANIMALS, cols: 4, rows: 4,
     card: a => `<span class="e">${a.e}</span><span class="w">${a.w}</span>`,
     detail: a => `<div class="det-stack"><div class="ani-det"><span class="e emo-big ${a.a}">${a.e}</span><div class="bubble sound-bubble">${a.s}</div></div><div class="det-word">${a.w}</div><div class="det-sent">It's ${art(a.w)} ${a.w}!</div><div class="chip big"><span class="e">🕺</span> ${a.mv}</div></div>`,
-    say: a => `It's ${art(a.w)} ${a.w}!`
+    say: a => a.w
   });
 }
 
