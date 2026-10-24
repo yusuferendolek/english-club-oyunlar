@@ -526,48 +526,22 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 @keyframes partGlow{0%,100%{stroke-width:300;transform:scale(1)}50%{stroke-width:1600;transform:scale(1.08)}}
 .tr-flag.wave{transform-origin:left center;animation:flagWave 1.8s ease-in-out infinite}
 @keyframes flagWave{0%,100%{transform:perspective(800px) rotateY(0) skewY(0)}50%{transform:perspective(800px) rotateY(-14deg) skewY(-2deg)}}
+.crowd{display:block;overflow:hidden;font-family:var(--font)}
 .rep-ico{height:44cqh;display:flex;align-items:center;justify-content:center}
 .rep-ico svg{height:100%;width:auto;max-width:86cqw}
 .trw{font-size:min(9cqh,9cqw);font-weight:800;color:var(--muted)}
 .det-stack .trw{font-size:min(6cqh,5cqw)}
 .rep-big .tr-flag{height:40cqh;width:auto}
-.rep-build{align-items:center}
-.rb-q{font-size:clamp(22px,5vmin,58px);flex:none}
-.rb-stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
-.bflag{width:100%;height:100%;max-width:130vh;overflow:visible}
-.bflag .b-base{fill:#fff;stroke:#2B2A4C;stroke-width:500;stroke-dasharray:2200 1300}
-.bflag .b-red{fill:#E30A17;transform-box:fill-box;transform-origin:left center;transform:scaleX(0);transition:transform 1.3s cubic-bezier(.6,0,.3,1)}
-.bflag.s-red .b-red{transform:scaleX(1)}
-.bflag.s-red .b-base{stroke:transparent;transition:stroke .3s 1.2s}
-.bflag .b-moon,.bflag .b-star{fill:#fff;transform-box:fill-box;transform-origin:center;opacity:0;transform:scale(.2) rotate(-120deg);transition:opacity .5s,transform .9s cubic-bezier(.3,1.5,.5,1)}
-.bflag.s-moon .b-moon,.bflag.s-star .b-star{opacity:1;transform:none}
-.bflag.s-wave{transform-origin:left center;animation:flagWave 1.8s ease-in-out infinite}
-.rb-a{flex:none;min-height:1.3em}
+.rep-big .crowd{height:46cqh;width:auto;max-width:70cqw}
 .rep-ask{flex-direction:row;align-items:center;gap:3vmin}
-.ra-flag{flex:1.3;height:78%;min-width:0;padding:3vmin;display:flex;align-items:center;justify-content:center;background:radial-gradient(#fff,#FFF0F0)}
-.ra-flag .tr-flag{width:100%;height:auto;max-height:100%}
+.ra-flag{flex:1.3;height:80%;min-width:0;padding:3vmin;display:flex;align-items:center;justify-content:center;background:radial-gradient(#fff,#FFF0F0)}
+.ra-flag svg{width:100%;height:auto;max-height:100%}
+.ra-flag>.e{font-size:clamp(90px,28vmin,300px);animation:float 3s ease-in-out infinite}
 .ra-side{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2.4vmin;text-align:center}
 .ra-who{font-size:clamp(20px,4vmin,46px);font-weight:900;min-height:1.2em}
-.ra-q{font-size:clamp(24px,5.4vmin,62px)}
+.ra-q{font-size:clamp(22px,5vmin,58px)}
 .ra-a{min-height:1.3em}
-.poem{align-items:center;justify-content:center;text-align:center;gap:1.6vmin}
-.poem-pic{height:26%;flex:none;display:flex;align-items:center;justify-content:center;font-size:clamp(56px,15vmin,170px)}
-.poem-pic .tr-flag{height:100%;width:auto}
-.poem-tip{font-size:clamp(16px,3.2vmin,34px);font-weight:900;color:var(--muted)}
-.poem-lines{display:flex;flex-direction:column;gap:.4vmin}
-.pl{font-size:clamp(18px,3.6vmin,40px);font-weight:900;transition:font-size .3s,color .3s,opacity .3s}
-.pl.hidden{visibility:hidden}
-.pl.done{color:var(--ink);opacity:.55}
-.pl.on{font-size:clamp(28px,6.2vmin,72px);color:#E30A17}
-.pl.all{font-size:clamp(20px,4.4vmin,50px);color:var(--ink)}
-.party{background:linear-gradient(#141A3D,#3A2E7A 75%,#5B2A6E);color:#fff;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-.sky-stars{position:absolute;inset:0;background-image:radial-gradient(2px 2px at 10% 20%,#fff,transparent),radial-gradient(2px 2px at 30% 72%,#fff,transparent),radial-gradient(1.5px 1.5px at 48% 28%,#fff,transparent),radial-gradient(2px 2px at 70% 14%,#fff,transparent),radial-gradient(1.5px 1.5px at 86% 58%,#fff,transparent),radial-gradient(2px 2px at 62% 86%,#fff,transparent),radial-gradient(1.5px 1.5px at 18% 90%,#fff,transparent),radial-gradient(2px 2px at 92% 32%,#fff,transparent);animation:twinkle 3s ease-in-out infinite}
-@keyframes twinkle{50%{opacity:.4}}
-.party-flag{position:relative;z-index:1;width:min(48vmin,44vw)}
-.party-flag .tr-flag{width:100%;height:auto;box-shadow:0 0 0 var(--bw) #fff,0 0 4vmin rgba(227,10,23,.6)}
-.party-say{position:relative;z-index:1;font-size:clamp(16px,3vmin,32px);font-weight:900;opacity:.8;margin-top:4vmin}
-.party-chant{position:relative;z-index:1;font-size:clamp(32px,8.5vmin,104px);font-weight:900;text-shadow:0 .8vmin 0 rgba(0,0,0,.35);padding:0 4vmin;min-height:1.3em}
-.party-chant .flag-ico{box-shadow:0 0 0 .05em #fff}
+.btn:disabled{opacity:.35;cursor:default}
 </style>
 </head>
 <body>
@@ -690,8 +664,7 @@ const SFX = (() => {
     boing() { tone({ f: 180, f2: 520, dur: .25, vol: .18 }); tone({ f: 520, f2: 260, dur: .2, vol: .12, t: .2 }); },
     count(i) { tone({ f: 440 * Math.pow(2, Math.min(i, 24) / 12), dur: .14, vol: .18, type: 'triangle' }); },
     drumroll(d = 1) { for (let t = 0; t < d; t += .05) noise({ ft: 'highpass', f: 1800, dur: .05, vol: .06 + t / d * .12, t }); },
-    beep(hi) { tone({ f: hi ? 1320 : 660, dur: hi ? .45 : .12, vol: .14, type: 'square' }); },
-    firework() { tone({ f: 500, f2: 1600, dur: .45, vol: .06 }); noise({ f: 1800, f2: 200, dur: .7, vol: .45, t: .45 }); for (let i = 0; i < 10; i++) noise({ ft: 'highpass', f: 3000, dur: .04, vol: .1, t: .55 + Math.random() * .6 }); }
+    beep(hi) { tone({ f: hi ? 1320 : 660, dur: hi ? .45 : .12, vol: .14, type: 'square' }); }
   };
 })();
 
@@ -1854,8 +1827,86 @@ const FLAG_MOON = 'M42675 8021A15000 15000 0 1 1 42675-8021A12000 12000 0 1 0 42
 const FLAG_STAR = 'M41750 0L55318-4408L46932 7133V-7133L55318 4408Z';
 const flagSVG = (hl = '', cls = '') => `<svg class="tr-flag ${hl ? 'hl-' + hl : ''} ${cls}" viewBox="0 -30000 90000 60000"><rect x="0" y="-30000" width="90000" height="60000" fill="#E30A17"/><path class="f-moon" fill="#fff" d="${FLAG_MOON}"/><path class="f-star" fill="#fff" d="${FLAG_STAR}"/></svg>`;
 const FLAG_ICON = flagSVG('', 'flag-ico');
+const miniFlag = (x, y, w) => `<svg x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${(w * 2 / 3).toFixed(1)}" viewBox="0 -30000 90000 60000"><rect x="0" y="-30000" width="90000" height="60000" fill="#E30A17" stroke="#2B2A4C" stroke-width="4000"/><path fill="#fff" d="${FLAG_MOON}"/><path fill="#fff" d="${FLAG_STAR}"/></svg>`;
+const f1 = n => n.toFixed(1);
+/* the Republic's age: counts the coming 29 October from the start of October */
 const REP_AGE = (d => d.getFullYear() - 1923 - (d.getMonth() < 9 ? 1 : 0))(new Date());
-const REP_COLORS = ['#E30A17', '#FFFFFF', '#FFD23F', '#FF5A5F'];
+/* calendar page: red header text + big number */
+const calendarPage = (x, top, big) => `<g transform="translate(${x} 0)"><rect x="20" y="40" width="200" height="220" rx="18" fill="#fff" stroke="#2B2A4C" stroke-width="5"/><path d="M20 58 Q20 40 38 40 H202 Q220 40 220 58 V100 H20 Z" fill="#E30A17" stroke="#2B2A4C" stroke-width="5"/><text x="120" y="82" text-anchor="middle" font-size="${top.length > 8 ? 22 : 28}" font-weight="900" fill="#fff">${top}</text><text x="120" y="${big.length > 2 ? 200 : 214}" text-anchor="middle" font-size="${big.length > 2 ? 66 : 104}" font-weight="900" fill="#2B2A4C">${big}</text><rect x="62" y="24" width="12" height="32" rx="6" fill="#2B2A4C"/><rect x="166" y="24" width="12" height="32" rx="6" fill="#2B2A4C"/></g>`;
+const calendarSVG = (top, big) => `<svg class="crowd" viewBox="0 10 240 260">${calendarPage(0, top, big)}</svg>`;
+const yearsSVG = () => `<svg class="crowd" viewBox="0 10 540 260">${calendarPage(0, '29 OCTOBER', '1923')}<path d="M246 150 H290" stroke="#2B2A4C" stroke-width="8" stroke-linecap="round"/><path d="M282 134 L302 150 L282 166" stroke="#2B2A4C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>${calendarPage(300, 'TODAY', String(new Date().getFullYear()))}</svg>`;
+
+/* red-white pennant garland hanging between (0,y0) and (w,y0) */
+function bunting(w, y0, sag) {
+  const ink = '#2B2A4C', n = Math.round(w / 40);
+  let s = `<path d="M0 ${y0} Q${w / 2} ${y0 + 2 * sag} ${w} ${y0}" stroke="${ink}" stroke-width="2.5" fill="none"/>`;
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, x = w * t, y = y0 + 4 * sag * t * (1 - t);
+    s += `<path d="M${f1(x - 13)} ${f1(y)} L${f1(x + 13)} ${f1(y)} L${f1(x)} ${f1(y + 30)} Z" fill="${i % 2 ? '#FFFFFF' : '#E30A17'}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  }
+  return s;
+}
+
+/* one cartoon person; pose: 'flag' (waves a small flag) | 'cheer' (both arms up) | 'drum'; ground = y of the feet (draws legs) */
+const REP_SKIN = ['#F2C3A0', '#C68A5C', '#E0A97E', '#F5D0B5', '#A86B45'];
+const REP_HAIR = ['#3E2723', '#212121', '#6D4C41', '#8D6E63', '#4E342E'];
+const REP_SHIRT = ['#E30A17', '#FFFFFF', '#E30A17', '#FFFFFF', '#FF5A5F', '#FFFFFF', '#E30A17'];
+function repPerson(x, hy, r, i, pose, delay, ground) {
+  const ink = '#2B2A4C', skin = REP_SKIN[i % 5], hair = REP_HAIR[(i * 3) % 5], shirt = REP_SHIRT[i % REP_SHIRT.length];
+  const sy = hy + r * 1.05, bw = r * 1.4, aw = r * .42, bottom = ground ? hy + r * 3.4 : 400;
+  const limb = (x1, y1, x2, y2) => `<path d="M${f1(x1)} ${f1(y1)} L${f1(x2)} ${f1(y2)}" stroke="${ink}" stroke-width="${f1(aw + 5)}" stroke-linecap="round"/><path d="M${f1(x1)} ${f1(y1)} L${f1(x2)} ${f1(y2)}" stroke="${skin}" stroke-width="${f1(aw)}" stroke-linecap="round"/>`;
+  const hand = (x2, y2) => `<circle cx="${f1(x2)}" cy="${f1(y2)}" r="${f1(aw * .75)}" fill="${skin}" stroke="${ink}" stroke-width="2"/>`;
+  const swing = (cx, cy, deg, dur) => `<animateTransform attributeName="transform" type="rotate" values="${-deg} ${f1(cx)} ${f1(cy)};${deg} ${f1(cx)} ${f1(cy)};${-deg} ${f1(cx)} ${f1(cy)}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/>`;
+  let back = '', front = '';
+  if (pose === 'flag') {
+    const shx = x + bw * .7, shy = sy + r * .35, hx = x + bw * 1.15, hh = hy - r * 1.5, stick = r * 2.3;
+    back += `<g>${limb(shx, shy, hx, hh)}<path d="M${f1(hx)} ${f1(hh + r * .3)} L${f1(hx)} ${f1(hh - stick)}" stroke="${ink}" stroke-width="${f1(r * .2)}" stroke-linecap="round"/>${miniFlag(hx, hh - stick, r * 2.2)}${hand(hx, hh)}${swing(shx, shy, 12, 1.3)}</g>`;
+    back += limb(x - bw * .7, sy + r * .35, x - bw * 1.05, sy + r * 1.9);
+  } else if (pose === 'cheer') {
+    for (const s of [-1, 1]) back += `<g>${limb(x + s * bw * .7, sy + r * .35, x + s * bw * 1.35, hy - r * 1.3)}${hand(x + s * bw * 1.35, hy - r * 1.3)}${swing(x + s * bw * .7, sy + r * .35, 8, .9)}</g>`;
+  } else if (pose === 'drum') {
+    const dy = sy + r * 1.8, w = r * 2.2, l = x - r * 1.1, z = Array.from({ length: 6 }, (_, k) => `l${f1(r * .37)} ${f1(k % 2 ? r * .8 : -r * .8)}`).join(' ');
+    front += `<rect x="${f1(l)}" y="${f1(dy)}" width="${f1(w)}" height="${f1(r * 1.2)}" rx="${f1(r * .25)}" fill="#E30A17" stroke="${ink}" stroke-width="2.5"/><path d="M${f1(l)} ${f1(dy + r * 1)} ${z}" stroke="#fff" stroke-width="2" fill="none"/><ellipse cx="${x}" cy="${f1(dy)}" rx="${f1(r * 1.1)}" ry="${f1(r * .32)}" fill="#FFF8E1" stroke="${ink}" stroke-width="2.5"/>`;
+    for (const s of [-1, 1]) front += `<g>${limb(x + s * bw * .7, sy + r * .35, x + s * r * .5, dy - r * .25)}<path d="M${f1(x + s * r * .5)} ${f1(dy - r * .25)} l${f1(-s * r * .3)} ${f1(-r * .7)}" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>${swing(x + s * bw * .7, sy + r * .35, 9, .5)}</g>`;
+  }
+  let legs = '';
+  if (ground) for (const s of [-1, 1]) {
+    const lx = x + s * r * .5;
+    legs += `<g><rect x="${f1(lx - r * .3)}" y="${f1(bottom - 6)}" width="${f1(r * .6)}" height="${f1(ground - bottom + 6)}" rx="${f1(r * .25)}" fill="#3A86FF" stroke="${ink}" stroke-width="2.5"/><ellipse cx="${f1(lx + r * .1)}" cy="${f1(ground)}" rx="${f1(r * .45)}" ry="${f1(r * .22)}" fill="${ink}"/><animateTransform attributeName="transform" type="translate" values="0 0;0 ${f1(-r * .6)};0 0;0 0" dur=".8s" begin="${(delay + (s > 0 ? .4 : 0)).toFixed(2)}s" repeatCount="indefinite"/></g>`;
+  }
+  const body = `<path d="M${f1(x - bw)} ${f1(bottom)} L${f1(x - bw)} ${f1(sy + r * .5)} Q${f1(x - bw)} ${f1(sy)} ${f1(x - bw + r * .6)} ${f1(sy)} L${f1(x + bw - r * .6)} ${f1(sy)} Q${f1(x + bw)} ${f1(sy)} ${f1(x + bw)} ${f1(sy + r * .5)} L${f1(x + bw)} ${f1(bottom)} Z" fill="${shirt}" stroke="${ink}" stroke-width="2.5"/>`;
+  const head = `<circle cx="${x}" cy="${hy}" r="${r}" fill="${skin}" stroke="${ink}" stroke-width="2.5"/>`
+    + `<path d="M${f1(x - r * 1.02)} ${f1(hy - r * .05)} A${f1(r * 1.02)} ${f1(r * 1.02)} 0 0 1 ${f1(x + r * 1.02)} ${f1(hy - r * .05)} C${f1(x + r * .5)} ${f1(hy - r * .6)} ${f1(x - r * .3)} ${f1(hy - r * .3)} ${f1(x - r * 1.02)} ${f1(hy - r * .05)} Z" fill="${hair}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`
+    + `<circle cx="${f1(x - r * .33)}" cy="${f1(hy + r * .12)}" r="${f1(r * .11)}" fill="${ink}"/><circle cx="${f1(x + r * .33)}" cy="${f1(hy + r * .12)}" r="${f1(r * .11)}" fill="${ink}"/>`
+    + `<path d="M${f1(x - r * .36)} ${f1(hy + r * .38)} Q${x} ${f1(hy + r * .9)} ${f1(x + r * .36)} ${f1(hy + r * .38)} Z" fill="#E85D75" stroke="${ink}" stroke-width="1.5" stroke-linejoin="round"/>`
+    + `<circle cx="${f1(x - r * .62)}" cy="${f1(hy + r * .4)}" r="${f1(r * .16)}" fill="#FF8FA3" opacity=".6"/><circle cx="${f1(x + r * .62)}" cy="${f1(hy + r * .4)}" r="${f1(r * .16)}" fill="#FF8FA3" opacity=".6"/>`;
+  const hop = `<animateTransform attributeName="transform" type="translate" values="0 0;0 ${f1(-r * (ground ? .25 : .3))};0 0${ground ? '' : ';0 0'}" dur="${ground ? .4 : 1.1}s" begin="${delay}s" repeatCount="indefinite"/>`;
+  return `<g>${legs}<g>${back}${body}${front}${head}${hop}</g></g>`;
+}
+/* a nation celebrating: two rows of people waving flags under red-white bunting */
+function crowdSVG() {
+  const BACK = ['flag', 'cheer', 'flag', 'flag', 'cheer', 'flag', 'cheer'], FRONT = ['flag', 'cheer', 'flag', 'flag', 'cheer'];
+  let s = bunting(480, 6, 34);
+  BACK.forEach((p, i) => { s += repPerson(480 / 7 * (i + .5), 168, 17, i + 3, p, -(i * .27).toFixed(2)); });
+  FRONT.forEach((p, i) => { s += repPerson(480 / 5 * (i + .5), 222, 24, i, p, -(i * .31 + .15).toFixed(2)); });
+  return `<svg class="crowd" viewBox="0 0 480 300">${s}</svg>`;
+}
+/* school parade: children marching with flags, a drummer in the middle */
+const PARADE = ['flag', 'flag', 'drum', 'flag', 'flag'];
+function paradeSVG() {
+  let s = `<rect x="0" y="262" width="480" height="40" fill="#CFD8DC"/><path d="M0 262 H480" stroke="#2B2A4C" stroke-width="2.5"/>`;
+  PARADE.forEach((p, i) => { s += repPerson(46 + i * 86, 124, 20, i + 1, p, -(i * .2).toFixed(2), 262); });
+  return `<svg class="crowd" viewBox="0 30 480 252">${s}</svg>`;
+}
+/* a bunch of red and white balloons */
+function balloonsSVG(n) {
+  const ink = '#2B2A4C', hx = 240, hy = 292; let s = '';
+  for (let i = 0; i < n; i++) {
+    const t = n === 1 ? .5 : i / (n - 1), x = 80 + t * 320, y = 62 + (i % 2) * 58 + Math.abs(t - .5) * 30, c = i % 2 ? '#FFFFFF' : '#E30A17';
+    s += `<g><path d="M${f1(x)} ${f1(y + 50)} Q${f1((x + hx) / 2)} ${f1((y + hy) / 2 + 20)} ${hx} ${hy}" stroke="${ink}" stroke-width="1.8" fill="none"/><ellipse cx="${f1(x)}" cy="${f1(y)}" rx="34" ry="42" fill="${c}" stroke="${ink}" stroke-width="3"/><path d="M${f1(x - 6)} ${f1(y + 49)} L${f1(x + 6)} ${f1(y + 49)} L${f1(x)} ${f1(y + 41)} Z" fill="${c}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="${f1(x - 12)}" cy="${f1(y - 16)}" rx="7" ry="11" fill="#fff" opacity=".5"/><animateTransform attributeName="transform" type="rotate" values="-4 ${hx} ${hy};4 ${hx} ${hy};-4 ${hx} ${hy}" dur="${(2.4 + (i % 3) * .3).toFixed(1)}s" repeatCount="indefinite"/></g>`;
+  }
+  return `<svg class="crowd" viewBox="0 0 480 300">${s}</svg>`;
+}
 
 const REPUBLIC = [
   { w: 'flag', tr: 'bayrak', icon: () => flagSVG(), big: () => flagSVG('', 'wave'), sent: 'This is our flag!' },
@@ -1864,14 +1915,10 @@ const REPUBLIC = [
   { w: 'red', tr: 'kırmızı', icon: () => splat('#E30A17'), big: () => flagSVG(), sent: 'Our flag is red.' },
   { w: 'white', tr: 'beyaz', icon: () => splat('#FFFFFF'), big: () => flagSVG('both'), sent: 'The moon and the star are white.' },
   { w: 'Republic', tr: 'Cumhuriyet', icon: '🏛️', big: '🏛️', sent: 'Happy Republic Day!' },
-  { w: 'birthday', tr: 'doğum günü', icon: '🎂', big: '🎂', sent: `Happy birthday, Türkiye! ${REP_AGE} years old!` },
-  { w: 'fireworks', tr: 'havai fişek', icon: '🎆', big: '🎆', sent: 'Look! Fireworks!' }
+  { w: 'celebration', tr: 'kutlama', icon: crowdSVG, big: crowdSVG, sent: "Let's celebrate together!" },
+  { w: 'parade', tr: 'geçit töreni', icon: paradeSVG, big: paradeSVG, sent: 'Look! A parade!' }
 ];
 const repIcon = x => typeof x === 'function' ? `<span class="rep-ico">${x()}</span>` : `<span class="e">${x}</span>`;
-function repFirework() {
-  const x = innerWidth * (.15 + Math.random() * .7), y = innerHeight * (.15 + Math.random() * .3);
-  SFX.firework(); T.after(() => FX.burst(x, y, 90, REP_COLORS), 450);
-}
 
 function repLearn(st) {
   return learnGrid(st, {
@@ -1882,134 +1929,51 @@ function repLearn(st) {
   });
 }
 
-/* make the flag step by step: question first, then the answer paints / adds the part */
-function repBuild(st) {
-  const STEPS = [
-    { q: "Let's make our flag! <span class='e'>🖌️</span>" },
-    { q: 'What color is our flag? <span class="e">🎨</span>', a: "It's red!", after: 'red' },
-    { q: "Look! What's this? <span class='e'>🤔</span>", a: "It's a moon! <span class='e'>🌙</span>", before: 'moon' },
-    { q: "And what's this? <span class='e'>🤔</span>", a: "It's a star! <span class='e'>⭐</span>", before: 'star' },
-    { q: 'What color are the moon and the star?', a: "They're white!" },
-    { q: 'How many stars? How many moons?', a: 'One star and one moon!' },
-    { q: "This is our flag! <span class='e'>🎉</span>", before: 'wave', cheer: true }
-  ];
-  let i = 0, shown = false;
-  st.innerHTML = `<div class="screen rep-build">
-    <div class="bubble rb-q" id="rbQ"></div>
-    <div class="rb-stage"><svg class="bflag" id="rbF" viewBox="-1500 -31500 93000 63000"><rect class="b-base" x="0" y="-30000" width="90000" height="60000"/><rect class="b-red" x="0" y="-30000" width="90000" height="60000"/><path class="b-moon" d="${FLAG_MOON}"/><path class="b-star" d="${FLAG_STAR}"/></svg></div>
-    <div class="answer rb-a" id="rbA">&nbsp;</div>
-    <div class="row"><button class="btn y big" id="rbGo">Next ▶</button><button class="btn" id="rbAgain">↺ Again</button></div></div>`;
-  const F = $('#rbF', st), Q = $('#rbQ', st), A = $('#rbA', st), go = $('#rbGo', st);
-  function show() {
-    const s = STEPS[i]; shown = false;
-    if (s.before) { F.classList.add('s-' + s.before); SFX.whoosh(); }
-    Q.innerHTML = s.q; bump(Q); A.innerHTML = '&nbsp;';
-    go.innerHTML = s.cheer ? '↺ Again' : 'Next ▶';
-    if (s.cheer) { celebrate('Our flag!', { emoji: '🎉' }); repFirework(); }
-  }
-  function reset() { i = 0; F.setAttribute('class', 'bflag'); show(); }
-  function step() {
-    const s = STEPS[i];
-    if (s.a && !shown) { shown = true; A.innerHTML = s.a; bump(A); if (s.after) F.classList.add('s-' + s.after); SFX.ding(); return; }
-    if (i === STEPS.length - 1) return reset();
-    i++; show();
-  }
-  go.onclick = step; $('#rbAgain', st).onclick = reset;
-  show();
-  return { action: step, next: step };
-}
-
+/* ask & answer about changing pictures: the flag, a celebrating crowd, a school parade, balloons */
 const REP_Q = [
-  { q: "What's this?", a: "It's a moon! <span class='e'>🌙</span>", hl: 'moon' },
-  { q: "What's this?", a: "It's a star! <span class='e'>⭐</span>", hl: 'star' },
-  { q: 'What color is the flag?', a: "It's red and white!" },
-  { q: 'What color is the moon?', a: "It's white!", hl: 'moon' },
-  { q: 'What color is the star?', a: "It's white!", hl: 'star' },
-  { q: 'How many stars?', a: 'One star!', hl: 'star' },
-  { q: 'How many moons?', a: 'One moon!', hl: 'moon' },
-  { q: 'Is the star red?', a: "No! It's white.", hl: 'star' },
-  { q: 'Is the flag red?', a: 'Yes, it is!' },
-  { q: 'Is the moon blue?', a: "No! It's white.", hl: 'moon' }
+  () => ({ pic: flagSVG('moon'), q: "What's this?", a: "It's a moon!", e: '🌙' }),
+  () => ({ pic: flagSVG('star'), q: "What's this?", a: "It's a star!", e: '⭐' }),
+  () => ({ pic: flagSVG(), q: 'What color is the flag?', a: "It's red and white!" }),
+  () => ({ pic: flagSVG('star'), q: 'Is the star red?', a: "No, it isn't. It's white." }),
+  () => ({ pic: flagSVG('moon'), q: 'How many moons can you see?', a: 'One moon!' }),
+  () => ({ pic: crowdSVG(), q: 'What are the people doing?', a: "They're celebrating!", e: '🎉' }),
+  () => ({ pic: crowdSVG(), q: 'Are the people happy?', a: 'Yes, they are!', e: '😄' }),
+  () => ({ pic: crowdSVG(), q: 'What are they waving?', a: "They're waving flags!" }),
+  () => ({ pic: paradeSVG(), q: 'What is this?', a: "It's a parade!" }),
+  () => ({ pic: paradeSVG(), q: 'How many flags can you see?', a: `${cap(NUMW[PARADE.filter(p => p === 'flag').length])} flags!` }),
+  () => ({ pic: paradeSVG(), q: 'Look at the middle. What is it?', a: "It's a drum!", e: '🥁' }),
+  () => { const n = rand(3, 7); return { pic: balloonsSVG(n), q: 'How many balloons?', a: `${cap(NUMW[n])} balloons!`, e: '🎈' }; },
+  () => ({ pic: balloonsSVG(rand(4, 6)), q: 'What color are the balloons?', a: "They're red and white!" }),
+  () => ({ pic: calendarSVG('OCTOBER', '29'), q: 'When is Republic Day?', a: "It's on 29 October!", e: '🎉' }),
+  () => ({ pic: calendarSVG('29 OCTOBER', '1923'), q: 'When was the Republic founded?', a: 'In 1923!' }),
+  () => ({ pic: yearsSVG(), q: 'How old is the Republic of Türkiye?', a: `It's ${REP_AGE} years old!`, e: '🎉' }),
+  () => ({ pic: '<span class="e">🏙️</span>', q: 'What is the capital of Türkiye?', a: "It's Ankara!" }),
+  () => ({ pic: flagSVG('', 'wave'), q: 'Who founded our Republic?', a: 'Atatürk!', e: '❤️' })
 ];
 function repAsk(st) {
   let bag = [], cur = null, who = null, shown = false;
   st.innerHTML = `<div class="screen rep-ask"><div class="ra-flag card" id="raF"></div>
     <div class="ra-side"><div class="ra-who" id="raW"></div><div class="bubble ra-q" id="raQ"></div><div class="answer ra-a" id="raA">&nbsp;</div>
-      <div class="row"><button class="btn y big" id="raGo">👀 Answer</button><button class="btn b" id="raNew" title="Another question">🎲</button></div></div></div>`;
-  const F = $('#raF', st), W = $('#raW', st), Q = $('#raQ', st), A = $('#raA', st), go = $('#raGo', st);
+      <div class="row"><button class="btn y big" id="raGo">👀 Answer</button><button class="btn" id="raSay" title="Read the answer" disabled>🔊</button><button class="btn b" id="raNew" title="Another question">🎲</button></div></div></div>`;
+  const F = $('#raF', st), W = $('#raW', st), Q = $('#raQ', st), A = $('#raA', st), go = $('#raGo', st), sayBtn = $('#raSay', st);
   function next() {
+    SPEAK.stop();
     if (!bag.length) bag = shuffle(REP_Q);
-    cur = bag.pop(); who = nextName(who); shown = false;
-    F.innerHTML = flagSVG(cur.hl || '');
+    cur = bag.pop()(); who = nextName(who); shown = false;
+    F.innerHTML = cur.pic; bump(F);
     W.innerHTML = who ? `<span class="e">${avatarOf(who)}</span> ${esc(who)}` : '';
     Q.innerHTML = who ? `${esc(who)}, ${cur.q.charAt(0).toLowerCase() + cur.q.slice(1)}` : cur.q;
-    A.innerHTML = '&nbsp;'; go.innerHTML = '👀 Answer'; bump(Q); SFX.whoosh();
+    A.innerHTML = '&nbsp;'; go.innerHTML = '👀 Answer'; sayBtn.disabled = true; bump(Q); SFX.whoosh();
   }
-  function step() { if (shown) return next(); shown = true; A.innerHTML = cur.a; bump(A); go.innerHTML = 'Next ▶'; SFX.ding(); }
-  go.onclick = step; $('#raNew', st).onclick = next;
-  next();
-  return { action: step, next: step };
-}
-
-/* echo poem: teacher reads a line, the class repeats it */
-const REP_POEM = [
-  ['Red and white, red and white,', '🔴⚪'],
-  ['our flag is shining bright!', '✨'],
-  ['A moon, a star, up so high,', '🌙⭐'],
-  ['waving, waving in the sky!', 'FLAG'],
-  ['Happy birthday, Türkiye!', '🎂'],
-  ['Happy Republic Day! Hooray!', '🎉']
-];
-function repPoem(st) {
-  let i = -1, phase = 'lines';
-  st.innerHTML = `<div class="screen poem"><div class="poem-pic" id="ppPic"></div><div class="poem-tip" id="ppTip"></div>
-    <div class="poem-lines">${REP_POEM.map(([t], k) => `<div class="pl hidden" data-k="${k}">${t}</div>`).join('')}</div>
-    <div class="row"><button class="btn y big" id="ppGo">▶ Start</button><button class="btn" id="ppAgain">↺ Again</button></div></div>`;
-  const pic = $('#ppPic', st), tip = $('#ppTip', st), go = $('#ppGo', st), lines = $$('.pl', st);
-  const picHTML = e => e === 'FLAG' ? flagSVG('', 'wave') : `<span class="e a-bounce">${e}</span>`;
-  function reset() { i = -1; phase = 'lines'; lines.forEach(l => l.className = 'pl hidden'); pic.innerHTML = picHTML('FLAG'); tip.innerHTML = 'Listen and repeat! <span class="e">👂🗣️</span>'; go.innerHTML = '▶ Start'; }
   function step() {
-    if (phase === 'lines') {
-      i++;
-      if (i < REP_POEM.length) {
-        lines.forEach((l, k) => l.className = 'pl ' + (k < i ? 'done' : k === i ? 'on' : 'hidden'));
-        pic.innerHTML = picHTML(REP_POEM[i][1]); bump(pic); SFX.pop();
-        tip.innerHTML = 'Listen… now you! <span class="e">🗣️</span>'; go.innerHTML = 'Next line ▶';
-      } else {
-        phase = 'all'; lines.forEach(l => l.className = 'pl all'); pic.innerHTML = picHTML('FLAG');
-        tip.innerHTML = 'All together! <span class="e">🙌</span>'; go.innerHTML = '🎉 Hooray!'; SFX.ding();
-      }
-    } else if (phase === 'all') {
-      phase = 'end'; celebrate('Hooray!', { emoji: '🎆' }); repFirework(); T.after(repFirework, 700); go.innerHTML = '↺ Again';
-    } else reset();
+    if (shown) return next();
+    shown = true; A.innerHTML = cur.a + (cur.e ? ` <span class="e">${cur.e}</span>` : ''); bump(A);
+    go.innerHTML = 'Next ▶'; sayBtn.disabled = false; SFX.ding();
   }
-  go.onclick = step; $('#ppAgain', st).onclick = reset;
-  reset();
-  return { action: step, next: step };
-}
-
-/* night-sky party: big chants to shout together, fireworks, music */
-function repParty(st) {
-  const CHANTS = [
-    ['Happy Republic Day!', '🎉'], ['Happy birthday, Türkiye!', '🎂'], [`${REP_AGE} years old!`, '🎈'],
-    ['Wave your flag!', 'FLAG'], ['Red and white! Red and white!', '🔴⚪'], ['Clap, clap, clap!', '👏'],
-    ['Thank you, Atatürk!', '❤️'], ['Hooray!', '🎆']
-  ];
-  let i = -1;
-  st.innerHTML = `<div class="screen nopad party"><div class="sky-stars"></div>${floaties(['🎈', '🎈', '✨'], false, 12)}
-    <div class="party-flag">${flagSVG('', 'wave')}</div>
-    <div class="party-say">Say it together! <span class="e">🗣️</span></div>
-    <div class="party-chant" id="pcT"></div>
-    <div class="ctrl-br"><button class="btn" id="pcMusic">🎵 Music</button><button class="btn p" id="pcFire">🎆 Fireworks</button><button class="btn y big" id="pcNext">Next ▶</button></div></div>`;
-  const T_ = $('#pcT', st);
-  function next() {
-    i = (i + 1) % CHANTS.length; const [t, e] = CHANTS[i];
-    T_.innerHTML = `${t} ${e === 'FLAG' ? FLAG_ICON : `<span class="e">${e}</span>`}`; bump(T_); repFirework();
-  }
-  $('#pcNext', st).onclick = next; $('#pcFire', st).onclick = repFirework;
-  $('#pcMusic', st).onclick = e => { const b = e.currentTarget; if (MUSIC.playing) { MUSIC.stop(); b.classList.remove('on'); } else { MUSIC.start(120); b.classList.add('on'); } };
-  T.after(next, 400);
-  return { action: next, next };
+  go.onclick = step; $('#raNew', st).onclick = next;
+  sayBtn.onclick = () => SPEAK.say(cur.a, 2);
+  next();
+  return { action: step, next: step, destroy() { SPEAK.stop(); } };
 }
 
 /* ================= menu ================= */
@@ -2037,9 +2001,7 @@ const TOPICS = [
     { id: 'freeze', e: '🥶', name: 'Freeze dance', run: danceFreeze }, { id: 'simon', e: '🗣️', name: 'Simon says', run: danceSimon }, { id: 'can', e: '💪', name: 'I can…', run: danceCan }] },
   { id: 'talk', e: '💬', name: 'Talk Time', sub: 'Ask a friend!', color: '#A0E7E5', modes: [{ id: 'chain', e: '💬', name: 'Talk chain', run: talkChain }] },
   { id: 'republic', e: FLAG_ICON, name: '29 October', sub: 'Republic Day', color: '#FFB3B3', modes: [
-    { id: 'learn', e: '🌙', name: 'Learn', run: repLearn }, { id: 'build', e: '🖌️', name: 'Make the flag', run: repBuild },
-    { id: 'ask', e: '🙋', name: 'Ask & answer', run: repAsk }, { id: 'poem', e: '📜', name: 'Poem', run: repPoem },
-    { id: 'party', e: '🎆', name: 'Celebrate', run: repParty }] }
+    { id: 'learn', e: '🌙', name: 'Learn', run: repLearn }, { id: 'ask', e: '🙋', name: 'Ask & answer', run: repAsk }] }
 ];
 
 function HOME(st) {
