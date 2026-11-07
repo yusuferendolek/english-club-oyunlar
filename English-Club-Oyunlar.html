@@ -122,7 +122,7 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .home-head p{font-size:clamp(15px,2.8vmin,30px);color:var(--muted)}
 .wave{display:inline-block;transform-origin:70% 80%;animation:wave 1.8s ease-in-out infinite}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}}
-.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
+.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(3,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
 .tile{position:relative;border:var(--bw) solid var(--ink);border-radius:clamp(16px,3vmin,34px);background:var(--c);box-shadow:0 .8vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqh;padding:3% 3%;text-align:center;container-type:size;overflow:hidden;transition:transform .12s;min-height:0}
 .tile:hover{transform:translateY(-.5vmin) rotate(-.6deg)}
 .tile:active{transform:translateY(.5vmin);box-shadow:0 .2vmin 0 var(--ink)}
@@ -545,6 +545,8 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .cw{display:inline-block;background:var(--c);color:var(--t);border:3px solid var(--ink);border-radius:.35em;padding:0 .22em;line-height:1.15}
 .sch-pic{background:radial-gradient(#fff,#EEF4FF)}
 .fam-pic{background:#fff;padding:1.4vmin}
+.gift-pic{background:radial-gradient(#fff,#FFF3D6);cursor:pointer}
+.ra-flag>.gift-box{animation:wiggle .9s ease-in-out infinite}
 .fam-svg{border-radius:1.4vmin}
 .se{font-family:var(--emoji)}
 .sv-t{font-family:var(--font);font-weight:900;fill:var(--ink)}
@@ -577,7 +579,7 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
   .tabs:empty{display:none}
   .tab{font-size:14px}
 
-  .tiles{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(6,1fr)}
+  .tiles{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(7,1fr)}
   .tile .tn{font-size:min(16cqh,13cqw)}
   .tile .ts{font-size:min(10cqh,8cqw)}
   .tile .k{display:none}
@@ -1869,6 +1871,7 @@ const TALK_Q = [
   { id: 'animal', e: '🐾', short: 'Animal', q: n => `What's your favorite animal${n}?`, a: 'I like ___.', hints: () => ANIMALS.map(a => ({ t: a.p, e: a.e })), fill: t => `I like ${t}!` },
   { id: 'weather', e: '🌦️', short: 'Weather', q: n => `How's the weather today${n}?`, a: "It's ___.", hints: () => WEATHER.map(w => ({ t: w.w, e: w.e })), fill: t => `It's ${t}!` },
   { id: 'day', e: '📅', short: 'Day', q: n => `What day is it today${n}?`, a: 'Today is ___.', hints: () => DAYS.map(d => ({ t: d })), fill: t => `Today is ${t}!` },
+  { id: 'pet', e: '🐶', short: 'Pet', q: n => `Have you got a pet${n}?`, a: "Yes, I have. I've got a ___. / No, I haven't.", hints: () => [{ t: "No, I haven't.", e: '👎' }].concat([['dog', '🐶'], ['cat', '🐱'], ['fish', '🐟'], ['bird', '🐦'], ['rabbit', '🐰']].map(([t, e]) => ({ t, e }))), fill: t => t.startsWith('No') ? t : `Yes, I have! I've got a ${t}.` },
   { id: 'can', e: '💪', short: 'Can you…?', q: (n, v) => `Can you ${v[0]}${n}? <span class="e">${v[1]}</span>`, a: "Yes, I can! / No, I can't!", hints: () => [{ t: 'Yes, I can!', e: '👍' }, { t: "No, I can't!", e: '👎' }], fill: t => t }
 ];
 function talkChain(st) {
@@ -2058,14 +2061,16 @@ function askGame(st, POOL, picCls = '') {
     F.innerHTML = cur.pic; bump(F);
     W.innerHTML = who ? `<span class="e">${avatarOf(who)}</span> ${esc(who)}` : '';
     Q.innerHTML = who ? `${esc(who)}, ${cur.q.charAt(0).toLowerCase() + cur.q.slice(1)}` : cur.q;
-    A.innerHTML = cur.f ? `<span class="ra-frame">${cur.f}</span>` : '&nbsp;'; go.innerHTML = '👀 Answer'; sayBtn.disabled = true; bump(Q); SFX.whoosh();
+    A.innerHTML = cur.f ? `<span class="ra-frame">${cur.f}</span>` : '&nbsp;'; go.innerHTML = cur.open ? '🎁 Open' : '👀 Answer'; sayBtn.disabled = true; bump(Q); SFX.whoosh();
   }
   function step() {
     if (shown) return next();
+    if (cur.open) { F.innerHTML = cur.open; cur.open = null; bump(F); celebrate(null, { el: F, star: false, big: false }); go.innerHTML = '👀 Answer'; return; }   // surprise picture first, answer next
     shown = true; A.innerHTML = (cur.ah || cur.a) + (cur.e ? ` <span class="e">${cur.e}</span>` : ''); bump(A);
     go.innerHTML = 'Next ▶'; sayBtn.disabled = false; SFX.ding();
   }
   go.onclick = step; $('#raNew', st).onclick = next;
+  F.onclick = () => { if (cur.open) step(); };
   sayBtn.onclick = () => SPEAK.say(cur.a, 2);
   next();
   return { action: step, next: step, destroy() { SPEAK.stop(); } };
@@ -2264,6 +2269,70 @@ const FAM_SAM = [
 ];
 const famSam = st => askGame(st, FAM_SAM, 'fam-pic');
 
+/* ================= HAVE YOU GOT…? ================= */
+const HAVE = [
+  { w: 'plane', e: '✈️', tr: 'uçak' }, { w: 'skateboard', e: '🛹', tr: 'kaykay' }, { w: 'ball', e: '⚽', tr: 'top' },
+  { w: 'boat', e: '⛵', tr: 'tekne' }, { w: 'bike', e: '🚲', tr: 'bisiklet' }, { w: 'car', e: '🚗', tr: 'araba' },
+  { w: 'teddy bear', e: '🧸', tr: 'oyuncak ayı' }, { w: 'balloon', e: '🎈', tr: 'balon' }, { w: 'ice cream', e: '🍦', tr: 'dondurma' },
+  { w: 'pet', e: '🐶', big: '🐶🐱🐰', tr: 'evcil hayvan', sent: "I've got a pet! It's a dog." }
+];
+const haveSent = t => t.sent || `I've got ${aOrAn(t.w)} ${t.w}.`;
+function haveLearn(st) {
+  return learnGrid(st, {
+    items: HAVE, cols: 5, rows: 2,
+    card: t => `<span class="e">${t.e}</span><span class="w">${t.w}</span><span class="trw">${t.tr}</span>`,
+    detail: t => `<div class="det-stack"><span class="e emo-big a-bounce">${t.big || t.e}</span><div class="det-word">${t.w}</div><div class="trw">${t.tr}</div><div class="det-sent">${haveSent(t)}</div></div>`,
+    say: t => t.w
+  });
+}
+
+/* gift box: a named child opens a present → "I've got a bike!" (or first: "Have you got a ball?") */
+const GIFTS = HAVE.filter(t => t.w !== 'pet').concat([{ w: 'dog', e: '🐶' }, { w: 'cat', e: '🐱' }, { w: 'rabbit', e: '🐰' }, { w: 'fish', e: '🐟' }]);
+const GIFT_BOX = '<span class="e gift-box">🎁</span>';
+const giftOpen = t => `<span class="e a-bounce">${t.e}</span>`;
+const GIFT_Q = [
+  ...Array(2).fill(() => { const t = pick(GIFTS); return { pic: GIFT_BOX, open: giftOpen(t), q: 'What have you got?', f: "I've got ___ ___.", a: `I've got ${aOrAn(t.w)} ${t.w}!` }; }),
+  () => { const t = pick(GIFTS), g = Math.random() < .4 ? t : pick(GIFTS.filter(x => x !== t));
+    return { pic: GIFT_BOX, open: giftOpen(t), q: `Have you got ${aOrAn(g.w)} ${g.w}?`, f: "Yes, I have. / No, I haven't.",
+      a: g === t ? `Yes, I have! I've got ${aOrAn(t.w)} ${t.w}.` : `No, I haven't. I've got ${aOrAn(t.w)} ${t.w}.` }; }
+];
+const haveGift = st => askGame(st, GIFT_Q, 'gift-pic');
+
+/* in the park: who has got what? ("What has the girl got? – She's got an ice cream!") */
+const PARK_PEOPLE = [
+  { w: 'girl', e: '👧', he: 'she', age: 0, sh: '#FFB703' }, { w: 'boy', e: '👦', he: 'he', age: 0, sh: '#2EC4B6' },
+  { w: 'man', e: '👨', he: 'he', age: 1, sh: '#3A86FF' }, { w: 'woman', e: '👩', he: 'she', age: 1, sh: '#FF70A6' }
+];
+const PARK_THINGS = [
+  { w: 'ice cream', e: '🍦', k: 'hold', s: .5 }, { w: 'teddy bear', e: '🧸', k: 'hold', s: .6 }, { w: 'boat', e: '⛵', k: 'hold', s: .55 },
+  { w: 'plane', e: '✈️', k: 'up', s: .55 }, { w: 'balloon', e: '🎈', k: 'balloon', s: .6 },
+  { w: 'ball', e: '⚽', k: 'ground', s: .42 }, { w: 'bike', e: '🚲', k: 'ground', s: 1 }, { w: 'skateboard', e: '🛹', k: 'ground', s: .8 },
+  { w: 'dog', e: '🐶', k: 'ground', s: .62 }, { w: 'car', e: '🚗', k: 'ground', s: .62 }
+];
+function parkScene() {
+  const ppl = shuffle(PARK_PEOPLE), things = shuffle(PARK_THINGS).slice(0, ppl.length);
+  let s = '';
+  ppl.forEach((p, i) => {
+    const t = things[i], x = 70 + i * 150, u = FIG_U[p.age] * 1.05, L = FIG_L[p.age] * u, feet = 334, hy = feet - L - .9 * u;
+    if (t.k === 'hold') s += famFig(x, hy, u, p.e, p.sh, { L, arm: [x + .42 * u, hy + .62 * u] }) + seC(x + .5 * u, hy + .5 * u, t.s * u, t.e);
+    else if (t.k === 'up') s += famFig(x, hy, u, p.e, p.sh, { L, arm: [x + .5 * u, hy - .2 * u] }) + seC(x + .62 * u, hy - .42 * u, t.s * u, t.e);
+    else if (t.k === 'balloon') s += `<path d="M${f1(x + .5 * u)} ${f1(hy + .5 * u)}Q${f1(x + .75 * u)} ${f1(hy - .1 * u)} ${f1(x + .62 * u)} ${f1(hy - .55 * u)}" stroke="#2B2A4C" stroke-width="2" fill="none"/>`
+      + famFig(x, hy, u, p.e, p.sh, { L, arm: [x + .48 * u, hy + .52 * u] }) + seC(x + .62 * u, hy - .85 * u, t.s * u, t.e);
+    else s += famFig(x - .1 * u, hy, u, p.e, p.sh, { L }) + seC(x + .75 * u, feet - t.s * u * .42, t.s * u, t.e);
+  });
+  const svg = `<svg class="fam-svg" viewBox="0 0 600 360"><rect width="600" height="360" fill="#CFEFFF"/><circle cx="548" cy="52" r="30" fill="#FFD60A"/><rect y="276" width="600" height="84" fill="#9BD77A"/><path d="M0 276H600" stroke="#2B2A4C" stroke-width="3"/>${s}</svg>`;
+  return { svg, pairs: ppl.map((p, i) => [p, things[i]]) };
+}
+const PARK_Q = [
+  ...Array(3).fill(() => { const S = parkScene(), [p, t] = pick(S.pairs);
+    return { pic: S.svg, q: `What has the ${p.w} got?`, f: `${cap(p.he)}'s got ___ ___.`, a: `${cap(p.he)}'s got ${aOrAn(t.w)} ${t.w}!` }; }),
+  () => { const S = parkScene(), [p, t] = pick(S.pairs), g = Math.random() < .5 ? t : pick(PARK_THINGS.filter(x => x !== t));
+    return { pic: S.svg, q: `Has the ${p.w} got ${aOrAn(g.w)} ${g.w}?`, f: `Yes, ${p.he} has. / No, ${p.he} hasn't.`,
+      a: g === t ? `Yes, ${p.he} has!` : `No, ${p.he} hasn't. ${cap(p.he)}'s got ${aOrAn(t.w)} ${t.w}.` }; },
+  () => { const S = parkScene(), [p, t] = pick(S.pairs); return { pic: S.svg, q: `Who has got ${aOrAn(t.w)} ${t.w}?`, f: 'The ___!', a: `The ${p.w}!` }; }
+];
+const havePark = st => askGame(st, PARK_Q, 'fam-pic');
+
 /* ================= menu ================= */
 const TOPICS = [
   { id: 'hello', e: '👋', name: 'Hello!', sub: "What's your name?", color: '#FFB4A2', modes: [{ id: 'names', e: '🙋', name: 'My name is…', run: helloNames }] },
@@ -2292,6 +2361,8 @@ const TOPICS = [
     { id: 'learn', e: '✏️', name: 'Learn', run: schoolLearn }, { id: 'say', e: '💬', name: 'Sentences', run: schoolSay }] },
   { id: 'family', e: '👪', name: 'Family', sub: 'This is my mum!', color: '#FFC8DD', modes: [
     { id: 'learn', e: '👵', name: 'Learn', run: famLearn }, { id: 'who', e: '🕵️', name: 'Who is it?', run: famWho }, { id: 'sam', e: '🌳', name: "Sam's family", run: famSam }] },
+  { id: 'have', e: '🎁', name: 'Have you got…?', sub: "I've got a bike!", color: '#C4F0C5', modes: [
+    { id: 'learn', e: '🚲', name: 'Learn', run: haveLearn }, { id: 'gift', e: '🎁', name: 'Gift box', run: haveGift }, { id: 'park', e: '🌳', name: 'In the park', run: havePark }] },
   { id: 'republic', e: FLAG_ICON, name: '29 October', sub: 'Republic Day', color: '#FFB3B3', modes: [
     { id: 'learn', e: '🌙', name: 'Learn', run: repLearn }, { id: 'ask', e: '🙋', name: 'Ask & answer', run: repAsk }] }
 ];
