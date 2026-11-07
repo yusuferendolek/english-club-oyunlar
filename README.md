@@ -20,6 +20,7 @@ Konuşma kulübünün ilk oturumlarına (tanışma, okul eşyaları, sayılar, g
 | 💃 Dance | Freeze dance (müzik dahili), Simon says, I can… |
 | 💬 Talk Time | Soru–cevap zinciri (chain drill) |
 | 🎒 School things | Learn (book, pencil, eraser, ruler, sharpener, board… hepsi tek renk; renk değiştirilebilir: "This is a red book."), Sentences ("What's this? – It's a blue pen.", "What color…?", "Is it…?", "How many…?"; cümle kalıbı + cevabı okuma 🔊) |
+| 👪 Family | Learn (family, grandma, grandpa, mum, dad, sister, brother, me), Who is it? ("me"nin yanındaki kişi kim? "He's my brother!"), Sam's family (parkta aile: "What's dad doing? – He's taking a photo.", "Where's grandma? – She's sitting on a box.", "in the tree") |
 | 🇹🇷 29 October | Learn (flag, moon, star, celebration, parade… Türkçe karşılıklarıyla), Ask & answer (bayrak, kutlama, geçit töreni, balonlar, takvim, Ankara; cevabı okuma 🔊) |
 
 ## Yayın (Vercel) ve CI

@@ -544,6 +544,11 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .ra-frame{color:var(--muted);opacity:.75}
 .cw{display:inline-block;background:var(--c);color:var(--t);border:3px solid var(--ink);border-radius:.35em;padding:0 .22em;line-height:1.15}
 .sch-pic{background:radial-gradient(#fff,#EEF4FF)}
+.fam-pic{background:#fff;padding:1.4vmin}
+.fam-svg{border-radius:1.4vmin}
+.se{font-family:var(--emoji)}
+.sv-t{font-family:var(--font);font-weight:900;fill:var(--ink)}
+.det-stack .fam-all{line-height:1.05;font-size:min(12cqh,12cqw)}
 .sch-big svg{height:36cqh;width:auto;display:block}
 .sch-dots{display:flex;gap:1.4cqh;flex-wrap:wrap;justify-content:center}
 .sch-dot{width:6.5cqh;height:6.5cqh;min-width:24px;min-height:24px;border-radius:50%;border:3px solid var(--ink);background:var(--c);cursor:pointer;padding:0;transition:transform .12s}
@@ -2160,6 +2165,105 @@ const SCH_Q = [
 ];
 const schoolSay = st => askGame(st, SCH_Q, 'sch-pic');
 
+/* ================= FAMILY ================= */
+const FAMILY = [
+  { w: 'family', tr: 'aile', e: '👪', big: '👴👵<br>👨👩<br>👦👧', sent: 'This is my family.' },
+  { w: 'grandma', tr: 'büyükanne · nine', e: '👵', he: 'she', age: 2, sh: '#B388EB' },
+  { w: 'grandpa', tr: 'büyükbaba · dede', e: '👴', he: 'he', age: 2, sh: '#A1887F' },
+  { w: 'mum', tr: 'anne', e: '👩', he: 'she', age: 1, sh: '#FF70A6' },
+  { w: 'dad', tr: 'baba', e: '👨', he: 'he', age: 1, sh: '#3A86FF' },
+  { w: 'sister', tr: 'kız kardeş · abla', e: '👧', he: 'she', age: 0, sh: '#FFB703' },
+  { w: 'brother', tr: 'erkek kardeş · abi', e: '👦', he: 'he', age: 0, sh: '#2EC4B6' },
+  { w: 'me', tr: 'ben', e: '🙋', sent: 'This is me!' }
+];
+const FAM = FAMILY.filter(f => f.he);
+const famOf = w => FAMILY.find(f => f.w === w);
+const He = f => cap(f.he);
+const se = (x, y, size, e, extra = '') => `<text class="se" x="${x}" y="${y}" font-size="${size}" text-anchor="middle" ${extra}>${e}</text>`;
+
+function famLearn(st) {
+  return learnGrid(st, {
+    items: FAMILY, cols: 4, rows: 2,
+    card: f => `<span class="e">${f.e}</span><span class="w">${f.w}</span><span class="trw">${f.tr}</span>`,
+    detail: f => `<div class="det-stack"><span class="e emo-big a-bounce ${f.big ? 'fam-all' : ''}">${f.big || f.e}</span><div class="det-word">${f.w}</div><div class="trw">${f.tr}</div><div class="det-sent">${f.sent || `This is my ${f.w}.`}</div></div>`,
+    say: f => f.w
+  });
+}
+
+/* emoji face on a simple body (shirt + legs); hy = centre of the face, u = face size */
+const seC = (x, cy, size, e) => se(f1(x), f1(cy + .36 * size), f1(size), e);
+function famFig(x, hy, u, e, shirt, { L = 0, sit = false, arm = null } = {}) {
+  const t = hy + .38 * u, h = .58 * u, w = .62 * u, lw = .15 * u, ink = '#2B2A4C', pants = '#3D405B';
+  let s = '';
+  for (const dx of [-.22, .07]) s += sit
+    ? `<rect x="${f1(x + dx * u)}" y="${f1(t + h - .1 * u)}" width="${f1(lw)}" height="${f1(.4 * u)}" rx="${f1(lw / 2)}" fill="${pants}" stroke="${ink}" stroke-width="3"/>`
+    : `<rect x="${f1(x + dx * u)}" y="${f1(t + h - .08 * u)}" width="${f1(lw)}" height="${f1(L + .08 * u)}" rx="${f1(lw / 2)}" fill="${pants}" stroke="${ink}" stroke-width="3"/><ellipse cx="${f1(x + dx * u + lw / 2 + .03 * u)}" cy="${f1(t + h + L)}" rx="${f1(.12 * u)}" ry="${f1(.06 * u)}" fill="${ink}"/>`;
+  s += `<rect x="${f1(x - w / 2)}" y="${f1(t)}" width="${f1(w)}" height="${f1(h)}" rx="${f1(.2 * u)}" fill="${shirt}" stroke="${ink}" stroke-width="3"/>`;
+  if (sit) s += `<rect x="${f1(x - .3 * u)}" y="${f1(t + h - .16 * u)}" width="${f1(.6 * u)}" height="${f1(.2 * u)}" rx="${f1(.08 * u)}" fill="${pants}" stroke="${ink}" stroke-width="3"/>`;
+  if (arm) { const d = `M${f1(x + .24 * u)} ${f1(t + .14 * u)}L${f1(arm[0])} ${f1(arm[1])}`; s += `<path d="${d}" stroke="${ink}" stroke-width="${f1(.17 * u)}" stroke-linecap="round"/><path d="${d}" stroke="${shirt}" stroke-width="${f1(.1 * u)}" stroke-linecap="round"/>`; }
+  return s + seC(x, hy, u, e);
+}
+/* standing figure with its feet on the ground: kids are smaller, grown-ups have longer legs */
+const FIG_U = [46, 56, 54], FIG_L = [.36, .5, .44];
+const famStand = (x, feet, e, sh, age, k = 1, opt = {}) => { const u = FIG_U[age] * k, L = FIG_L[age] * u; return famFig(x, feet - L - .9 * u, u, e, sh, { L, ...opt }); };
+
+/* "me" (a boy or a girl) next to a family member: kids work out who it is (a boy my age → my brother) */
+function famPair(me, f) {
+  return `<svg class="fam-svg" viewBox="0 0 400 300"><rect x="0" y="236" width="400" height="64" fill="#CDEBB5"/><path d="M0 236H400" stroke="#2B2A4C" stroke-width="3"/>
+    <ellipse cx="110" cy="250" rx="48" ry="8" fill="rgba(43,42,76,.15)"/><ellipse cx="290" cy="250" rx="54" ry="9" fill="rgba(43,42,76,.15)"/>
+    ${famStand(110, 250, me.e, me.sh, 0, 1.55)}${famStand(290, 250, f.e, f.sh, f.age, 1.55)}
+    <rect x="72" y="258" width="76" height="34" rx="17" fill="#FFD23F" stroke="#2B2A4C" stroke-width="3"/><text x="110" y="282" text-anchor="middle" class="sv-t" font-size="24">me ⭐</text>
+    <rect x="262" y="258" width="56" height="34" rx="17" fill="#fff" stroke="#2B2A4C" stroke-width="3"/><text x="290" y="284" text-anchor="middle" class="sv-t" font-size="28">?</text></svg>`;
+}
+const ME_KIDS = [{ e: '👦', sh: '#FF5A5F' }, { e: '👧', sh: '#FF5A5F' }];
+const FAM_WHO = [
+  ...Array(3).fill(() => { const me = pick(ME_KIDS), f = pick(FAM);
+    return { pic: famPair(me, f), q: `Who is ${f.he}?`, f: `${He(f)}'s my ___.`, a: `${He(f)}'s my ${f.w}!` }; }),
+  () => { const me = pick(ME_KIDS), f = pick(FAM), g = Math.random() < .4 ? f : pick(FAM.filter(x => x !== f && x.he === f.he));
+    return { pic: famPair(me, f), q: `Is ${f.he} your ${g.w}?`, f: `Yes, ${f.he} is. / No, ${f.he} isn't.`,
+      a: g === f ? `Yes, ${f.he} is! ${He(f)}'s my ${f.w}.` : `No, ${f.he} isn't. ${He(f)}'s my ${f.w}.` }; }
+];
+const famWho = st => askGame(st, FAM_WHO, 'fam-pic');
+
+/* Sam's family in the park: everyone is doing something different every time */
+const FAM_ACTS = [
+  { a: 'taking a photo', p: '📷', at: [.5, -.05, .5], arm: [.42, .12] },
+  { a: 'playing football', p: '⚽', foot: true },
+  { a: 'reading a book', p: '📖', at: [.42, .62, .5], arm: [.36, .62] },
+  { a: 'eating an ice cream', p: '🍦', at: [.5, .2, .45], arm: [.44, .4] },
+  { a: 'sitting on a box', p: '📦', where: true },
+  { a: 'sitting on a ball', p: '🏐', where: true },
+  { a: 'sitting on a frog', p: '🐸', where: true },
+  { a: 'in the tree', p: '🌳', where: true, tree: true }
+];
+function famScene() {
+  const acts = shuffle(FAM_ACTS).slice(0, FAM.length), who = shuffle(FAM), ti = acts.findIndex(a => a.tree);
+  if (ti === 0 || ti === acts.length - 1) [acts[ti], acts[2]] = [acts[2], acts[ti]];   // keep the tree away from the edges
+  let back = '', front = '';
+  who.forEach((f, i) => {
+    const x = 52 + i * 99, A = acts[i];
+    if (A.tree) { back += seC(x, 252, 150, '🌳'); front += famFig(x, 222, 38, f.e, f.sh, { sit: true }); }
+    else if (A.where) { const u = FIG_U[f.age] * .95; front += seC(x, 302, 60, A.p) + famFig(x, 282 - .96 * u, u, f.e, f.sh, { sit: true }); }
+    else {
+      const u = FIG_U[f.age], L = FIG_L[f.age] * u, hy = 334 - L - .9 * u;
+      if (A.foot) front += famFig(x - 8, hy, u, f.e, f.sh, { L }) + seC(x + .55 * u, 334 - .2 * u, .4 * u, A.p);
+      else front += famFig(x - 8, hy, u, f.e, f.sh, { L, arm: [x - 8 + A.arm[0] * u, hy + A.arm[1] * u] }) + seC(x - 8 + A.at[0] * u, hy + A.at[1] * u, A.at[2] * u, A.p);
+    }
+  });
+  const svg = `<svg class="fam-svg" viewBox="0 0 600 360"><rect width="600" height="360" fill="#CFEFFF"/><circle cx="548" cy="52" r="30" fill="#FFD60A"/><rect y="276" width="600" height="84" fill="#9BD77A"/><path d="M0 276H600" stroke="#2B2A4C" stroke-width="3"/>${back}${front}</svg>`;
+  return { svg, pairs: who.map((f, i) => [f, acts[i]]) };
+}
+const FAM_SAM = [
+  ...Array(3).fill(() => { const S = famScene(), [f, A] = pick(S.pairs);
+    return A.where
+      ? { pic: S.svg, q: `Where's ${f.w}?`, f: `${He(f)}'s ___ ___ ___.`, a: `${He(f)}'s ${A.a}!` }
+      : { pic: S.svg, q: `What's ${f.w} doing?`, f: `${He(f)}'s ___ ___.`, a: `${He(f)}'s ${A.a}!` }; }),
+  () => { const S = famScene(), [f, A] = pick(S.pairs); return { pic: S.svg, q: `Who is ${A.a}?`, f: 'My ___!', a: `My ${f.w}!` }; },
+  () => { const S = famScene(), [f, A] = pick(S.pairs), B = Math.random() < .5 ? A : pick(FAM_ACTS.filter(x => x !== A));
+    return { pic: S.svg, q: `Is ${f.w} ${B.a}?`, f: `Yes, ${f.he} is. / No, ${f.he} isn't.`, a: B === A ? `Yes, ${f.he} is!` : `No, ${f.he} isn't. ${He(f)}'s ${A.a}.` }; }
+];
+const famSam = st => askGame(st, FAM_SAM, 'fam-pic');
+
 /* ================= menu ================= */
 const TOPICS = [
   { id: 'hello', e: '👋', name: 'Hello!', sub: "What's your name?", color: '#FFB4A2', modes: [{ id: 'names', e: '🙋', name: 'My name is…', run: helloNames }] },
@@ -2186,6 +2290,8 @@ const TOPICS = [
   { id: 'talk', e: '💬', name: 'Talk Time', sub: 'Ask a friend!', color: '#A0E7E5', modes: [{ id: 'chain', e: '💬', name: 'Talk chain', run: talkChain }] },
   { id: 'school', e: '🎒', name: 'School things', sub: 'A red book!', color: '#F7D9B0', modes: [
     { id: 'learn', e: '✏️', name: 'Learn', run: schoolLearn }, { id: 'say', e: '💬', name: 'Sentences', run: schoolSay }] },
+  { id: 'family', e: '👪', name: 'Family', sub: 'This is my mum!', color: '#FFC8DD', modes: [
+    { id: 'learn', e: '👵', name: 'Learn', run: famLearn }, { id: 'who', e: '🕵️', name: 'Who is it?', run: famWho }, { id: 'sam', e: '🌳', name: "Sam's family", run: famSam }] },
   { id: 'republic', e: FLAG_ICON, name: '29 October', sub: 'Republic Day', color: '#FFB3B3', modes: [
     { id: 'learn', e: '🌙', name: 'Learn', run: repLearn }, { id: 'ask', e: '🙋', name: 'Ask & answer', run: repAsk }] }
 ];
