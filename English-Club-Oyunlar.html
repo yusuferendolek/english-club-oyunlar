@@ -122,7 +122,7 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .home-head p{font-size:clamp(15px,2.8vmin,30px);color:var(--muted)}
 .wave{display:inline-block;transform-origin:70% 80%;animation:wave 1.8s ease-in-out infinite}
 @keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}}
-.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
+.tiles{flex:1;width:100%;max-width:170vh;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,1fr);gap:clamp(10px,2vmin,24px);min-height:0}
 .tile{position:relative;border:var(--bw) solid var(--ink);border-radius:clamp(16px,3vmin,34px);background:var(--c);box-shadow:0 .8vmin 0 var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqh;padding:3% 3%;text-align:center;container-type:size;overflow:hidden;transition:transform .12s;min-height:0}
 .tile:hover{transform:translateY(-.5vmin) rotate(-.6deg)}
 .tile:active{transform:translateY(.5vmin);box-shadow:0 .2vmin 0 var(--ink)}
@@ -541,6 +541,13 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
 .ra-who{font-size:clamp(20px,4vmin,46px);font-weight:900;min-height:1.2em}
 .ra-q{font-size:clamp(22px,5vmin,58px)}
 .ra-a{min-height:1.3em}
+.ra-frame{color:var(--muted);opacity:.75}
+.cw{display:inline-block;background:var(--c);color:var(--t);border:3px solid var(--ink);border-radius:.35em;padding:0 .22em;line-height:1.15}
+.sch-pic{background:radial-gradient(#fff,#EEF4FF)}
+.sch-big svg{height:36cqh;width:auto;display:block}
+.sch-dots{display:flex;gap:1.4cqh;flex-wrap:wrap;justify-content:center}
+.sch-dot{width:6.5cqh;height:6.5cqh;min-width:24px;min-height:24px;border-radius:50%;border:3px solid var(--ink);background:var(--c);cursor:pointer;padding:0;transition:transform .12s}
+.sch-dot.on{transform:scale(1.25);box-shadow:0 0 0 3px #fff,0 0 0 6px var(--ink)}
 .btn:disabled{opacity:.35;cursor:default}
 /* ---------- phones & tablets (none of these rules apply to a landscape projector with a mouse) ---------- */
 @media (pointer:coarse){
@@ -565,7 +572,7 @@ kbd{display:inline-block;border:2px solid var(--ink);border-bottom-width:4px;bor
   .tabs:empty{display:none}
   .tab{font-size:14px}
 
-  .tiles{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(5,1fr)}
+  .tiles{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(6,1fr)}
   .tile .tn{font-size:min(16cqh,13cqw)}
   .tile .ts{font-size:min(10cqh,8cqw)}
   .tile .k{display:none}
@@ -2031,24 +2038,26 @@ const REP_Q = [
   () => ({ pic: '<span class="e">🏙️</span>', q: 'What is the capital of Türkiye?', a: "It's Ankara!" }),
   () => ({ pic: flagSVG('', 'wave'), q: 'Who founded our Republic?', a: 'Atatürk!', e: '❤️' })
 ];
-function repAsk(st) {
+const repAsk = st => askGame(st, REP_Q);
+/* shared "picture + question → answer" screen; a question can show a sentence frame (f) before the answer and an html answer (ah) */
+function askGame(st, POOL, picCls = '') {
   let bag = [], cur = null, who = null, shown = false;
-  st.innerHTML = `<div class="screen rep-ask"><div class="ra-flag card" id="raF"></div>
+  st.innerHTML = `<div class="screen rep-ask"><div class="ra-flag card ${picCls}" id="raF"></div>
     <div class="ra-side"><div class="ra-who" id="raW"></div><div class="bubble ra-q" id="raQ"></div><div class="answer ra-a" id="raA">&nbsp;</div>
       <div class="row"><button class="btn y big" id="raGo">👀 Answer</button><button class="btn" id="raSay" title="Read the answer" disabled>🔊</button><button class="btn b" id="raNew" title="Another question">🎲</button></div></div></div>`;
   const F = $('#raF', st), W = $('#raW', st), Q = $('#raQ', st), A = $('#raA', st), go = $('#raGo', st), sayBtn = $('#raSay', st);
   function next() {
     SPEAK.stop();
-    if (!bag.length) bag = shuffle(REP_Q);
+    if (!bag.length) bag = shuffle(POOL);
     cur = bag.pop()(); who = nextName(who); shown = false;
     F.innerHTML = cur.pic; bump(F);
     W.innerHTML = who ? `<span class="e">${avatarOf(who)}</span> ${esc(who)}` : '';
     Q.innerHTML = who ? `${esc(who)}, ${cur.q.charAt(0).toLowerCase() + cur.q.slice(1)}` : cur.q;
-    A.innerHTML = '&nbsp;'; go.innerHTML = '👀 Answer'; sayBtn.disabled = true; bump(Q); SFX.whoosh();
+    A.innerHTML = cur.f ? `<span class="ra-frame">${cur.f}</span>` : '&nbsp;'; go.innerHTML = '👀 Answer'; sayBtn.disabled = true; bump(Q); SFX.whoosh();
   }
   function step() {
     if (shown) return next();
-    shown = true; A.innerHTML = cur.a + (cur.e ? ` <span class="e">${cur.e}</span>` : ''); bump(A);
+    shown = true; A.innerHTML = (cur.ah || cur.a) + (cur.e ? ` <span class="e">${cur.e}</span>` : ''); bump(A);
     go.innerHTML = 'Next ▶'; sayBtn.disabled = false; SFX.ding();
   }
   go.onclick = step; $('#raNew', st).onclick = next;
@@ -2056,6 +2065,100 @@ function repAsk(st) {
   next();
   return { action: step, next: step, destroy() { SPEAK.stop(); } };
 }
+
+/* ================= SCHOOL THINGS ================= */
+/* every thing is drawn in ONE colour so the kids can say "a red book", "a blue pen" */
+const mixHex = (hex, to, k) => { const n = parseInt(hex.slice(1), 16), m = v => Math.round(v + (to - v) * k); return '#' + [n >> 16, n >> 8 & 255, n & 255].map(v => m(v).toString(16).padStart(2, '0')).join(''); };
+const isDark = hex => { const n = parseInt(hex.slice(1), 16); return (n >> 16) * .3 + (n >> 8 & 255) * .59 + (n & 255) * .11 < 60; };
+const SK = 'stroke="#2B2A4C" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"', SK4 = 'stroke="#2B2A4C" stroke-width="4" stroke-linejoin="round"';
+const SCH_DRAW = {
+  book: (c, d) => `<rect x="56" y="34" width="106" height="140" rx="6" fill="#FFF8E7" ${SK}/><path d="M157 42V168M64 170H158" stroke="#D7CFBC" stroke-width="3"/><rect x="40" y="26" width="112" height="140" rx="8" fill="${c}" ${SK}/><rect x="40" y="26" width="24" height="140" rx="8" fill="${d}" ${SK}/><path d="M82 62H136M82 82H122" stroke="${d}" stroke-width="9" stroke-linecap="round"/>`,
+  notebook: (c, d, l) => `<rect x="50" y="26" width="112" height="148" rx="8" fill="${c}" ${SK}/><rect x="80" y="56" width="64" height="36" rx="6" fill="${l}" ${SK4}/><path d="M90 69H134M90 80H122" stroke="${d}" stroke-width="4" stroke-linecap="round"/>${[40, 57, 74, 91, 108, 125, 142, 159].map(y => `<rect x="38" y="${y - 4}" width="26" height="8" rx="4" fill="#CFD8DC" stroke="#2B2A4C" stroke-width="3"/>`).join('')}`,
+  pencil: (c, d) => `<g transform="rotate(-35 100 100)"><rect x="18" y="85" width="24" height="30" rx="7" fill="#FF8FA3" ${SK}/><rect x="36" y="83" width="18" height="34" rx="3" fill="#B0BEC5" ${SK}/><path d="M54 85H140V115H54Z" fill="${c}" ${SK}/><path d="M60 100H134" stroke="${d}" stroke-width="6"/><path d="M140 85L176 100L140 115Z" fill="#F5D6A0" ${SK}/><path d="M163 94.6L176 100L163 105.4Z" fill="${c}" ${SK4}/></g>`,
+  pen: (c, d) => `<g transform="rotate(-35 100 100)"><rect x="30" y="88" width="122" height="24" rx="10" fill="${c}" ${SK}/><rect x="128" y="86" width="24" height="28" rx="6" fill="${d}" ${SK}/><path d="M152 90L176 100L152 110Z" fill="#CFD8DC" ${SK}/><circle cx="177" cy="100" r="3.5" fill="#2B2A4C"/><rect x="30" y="72" width="56" height="10" rx="5" fill="${d}" ${SK4}/><rect x="20" y="84" width="48" height="32" rx="11" fill="${d}" ${SK}/></g>`,
+  eraser: (c, d, l) => `<path d="M36 92L120 62L168 88L84 118Z" fill="${l}" ${SK}/><path d="M36 92L84 118V154L36 128Z" fill="${d}" ${SK}/><path d="M84 118L168 88V124L84 154Z" fill="${c}" ${SK}/>`,
+  ruler: (c) => `<g transform="rotate(-25 100 100)"><rect x="8" y="74" width="184" height="52" rx="6" fill="${c}" ${SK}/>${Array.from({ length: 17 }, (_, i) => `<path d="M${20 + i * 10} 76V${76 + (i % 4 === 0 ? 22 : i % 2 ? 10 : 15)}" stroke="#2B2A4C" stroke-width="3" stroke-linecap="round"/>`).join('')}</g>`,
+  sharpener: (c, d) => `<rect x="104" y="58" width="58" height="16" rx="4" fill="#CFD8DC" ${SK}/><circle cx="148" cy="66" r="4" fill="#2B2A4C"/><rect x="78" y="70" width="104" height="80" rx="16" fill="${c}" ${SK}/><path d="M88 138H172" stroke="${d}" stroke-width="9" stroke-linecap="round"/><ellipse cx="80" cy="110" rx="9" ry="19" fill="#2B2A4C"/><rect x="12" y="97" width="44" height="26" rx="4" fill="#F5D6A0" ${SK}/><path d="M56 97L82 110L56 123Z" fill="#F5D6A0" ${SK}/><path d="M18 97V123" stroke="#FFD23F" stroke-width="10"/>`,
+  crayon: (c, d) => `<g transform="rotate(-35 100 100)"><path d="M144 86L170 94Q178 100 170 106L144 114Z" fill="${c}" ${SK}/><rect x="20" y="80" width="126" height="40" rx="10" fill="${c}" ${SK}/><path d="M44 83V117M124 83V117" stroke="${d}" stroke-width="9"/><path d="M62 106L72 94L82 106L92 94L102 106" fill="none" stroke="${d}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g>`,
+  bag: (c, d, l) => `<path d="M78 54V42Q100 20 122 42V54" fill="none" stroke="#2B2A4C" stroke-width="15" stroke-linecap="round"/><path d="M78 54V42Q100 20 122 42V54" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round"/><rect x="42" y="48" width="116" height="136" rx="32" fill="${c}" ${SK}/><path d="M46 78Q48 54 76 52H124Q152 54 154 78V96Q100 116 46 96Z" fill="${d}" ${SK}/><rect x="91" y="98" width="18" height="20" rx="4" fill="${l}" ${SK4}/><rect x="64" y="126" width="72" height="44" rx="12" fill="${d}" ${SK}/><path d="M74 139H126" stroke="#2B2A4C" stroke-width="3" stroke-dasharray="4 4"/>`,
+  case: (c, d, l) => `<rect x="20" y="64" width="160" height="78" rx="36" fill="${c}" ${SK}/><path d="M30 120Q100 150 170 120" fill="none" stroke="${d}" stroke-width="8" stroke-linecap="round"/><path d="M44 88H156" stroke="#2B2A4C" stroke-width="4" stroke-dasharray="5 4"/><path d="M140 88V104" stroke="#2B2A4C" stroke-width="4"/><rect x="131" y="102" width="18" height="22" rx="6" fill="${l}" ${SK4}/>`,
+  chair: (c, d) => `<rect x="66" y="116" width="12" height="60" rx="3" fill="${d}" ${SK4}/><rect x="122" y="116" width="12" height="60" rx="3" fill="${d}" ${SK4}/><rect x="66" y="84" width="12" height="30" fill="${d}" ${SK4}/><rect x="122" y="84" width="12" height="30" fill="${d}" ${SK4}/><rect x="54" y="16" width="92" height="72" rx="12" fill="${c}" ${SK}/><path d="M50 110H150L162 132H38Z" fill="${c}" ${SK}/><rect x="38" y="132" width="124" height="13" rx="3" fill="${d}" ${SK}/><rect x="44" y="145" width="14" height="40" rx="3" fill="${d}" ${SK4}/><rect x="142" y="145" width="14" height="40" rx="3" fill="${d}" ${SK4}/>`,
+  board: (c) => `<rect x="10" y="28" width="180" height="128" rx="8" fill="#A1887F" ${SK}/><rect x="22" y="40" width="156" height="104" rx="3" fill="${c}" ${SK4}/><text x="100" y="106" text-anchor="middle" font-size="44" font-weight="900" font-family="Comic Sans MS, sans-serif" fill="${c === '#FFFFFF' ? '#2B2A4C' : '#fff'}">ABC</text><rect x="32" y="154" width="136" height="10" rx="3" fill="#8D6E63" ${SK4}/><rect x="122" y="146" width="22" height="8" rx="2" fill="#fff" stroke="#2B2A4C" stroke-width="2.5"/>`
+};
+const SCHOOL = [
+  { k: 'book', w: 'book', p: 'books', tr: 'kitap', c: 'red' },
+  { k: 'notebook', w: 'notebook', p: 'notebooks', tr: 'defter', c: 'purple' },
+  { k: 'pencil', w: 'pencil', p: 'pencils', tr: 'kurşun kalem', c: 'yellow' },
+  { k: 'pen', w: 'pen', p: 'pens', tr: 'tükenmez kalem', c: 'blue' },
+  { k: 'eraser', w: 'eraser', p: 'erasers', tr: 'silgi', c: 'white' },
+  { k: 'ruler', w: 'ruler', p: 'rulers', tr: 'cetvel', c: 'green' },
+  { k: 'sharpener', w: 'sharpener', p: 'sharpeners', tr: 'kalemtıraş', c: 'orange' },
+  { k: 'crayon', w: 'crayon', p: 'crayons', tr: 'pastel boya', c: 'pink' },
+  { k: 'bag', w: 'bag', p: 'bags', tr: 'çanta', c: 'brown' },
+  { k: 'case', w: 'pencil case', p: 'pencil cases', tr: 'kalem kutusu', c: 'black' },
+  { k: 'chair', w: 'chair', p: 'chairs', tr: 'sandalye', c: 'blue' },
+  { k: 'board', w: 'board', p: 'boards', tr: 'tahta', c: 'green', cols: ['green', 'black', 'white'], noCount: true }
+];
+const ALL_COLS = COLORS.map(c => c.id);
+const schCols = it => it.cols || ALL_COLS;
+function schDraw(it, cid) {
+  const hex = colorOf(cid).hex, dark = isDark(hex);
+  const d = dark ? mixHex(hex, 255, .28) : mixHex(hex, 0, .2), l = mixHex(hex, 255, .45);
+  return SCH_DRAW[it.k](hex, d, l, dark);
+}
+const schoolSVG = (it, cid) => `<svg class="sch" viewBox="0 0 200 200">${schDraw(it, cid)}</svg>`;
+/* n copies of the same thing (for "How many …?") */
+function schoolMany(it, cid, n) {
+  const cols = n <= 3 ? n : Math.ceil(n / 2), rows = n <= 3 ? 1 : 2, g = schDraw(it, cid);
+  let s = '';
+  for (let i = 0; i < n; i++) {
+    const r = i < cols ? 0 : 1, inRow = r ? n - cols : cols, x = (i - r * cols) * 200 + (cols - inRow) * 100;
+    s += `<g transform="translate(${x} ${r * 200})">${g}</g>`;
+  }
+  return `<svg class="sch" viewBox="0 0 ${cols * 200} ${rows * 200}">${s}</svg>`;
+}
+const aOrAn = w => /^[aeiou]/i.test(w) ? 'an' : 'a';
+const cw = id => { const c = colorOf(id); return `<span class="cw" style="--c:${c.hex};--t:${c.txt}">${id}</span>`; };
+const schNP = (c, w) => `${aOrAn(c)} ${c} ${w}`;
+const schNPh = (c, w) => `${aOrAn(c)} ${cw(c)} ${w}`;
+
+function schoolLearn(st) {
+  return learnGrid(st, {
+    items: SCHOOL, cols: 4, rows: 3,
+    card: it => `<span class="rep-ico">${schoolSVG(it, it.c)}</span><span class="w">${it.w}</span><span class="trw">${it.tr}</span>`,
+    detail: it => `<div class="det-stack"><div class="sch-big">${schoolSVG(it, it.c)}</div><div class="det-word">${it.w}</div><div class="trw">${it.tr}</div><div class="det-sent">This is ${schNPh(it.c, it.w)}.</div>
+      <div class="sch-dots" title="Change the color">${schCols(it).map(id => `<button class="sch-dot ${id === it.c ? 'on' : ''}" data-c="${id}" style="--c:${colorOf(id).hex}" title="${id}"></button>`).join('')}</div></div>`,
+    say: it => it.w,
+    onShow: (it, det) => {
+      $('.sch-dots', det).onclick = e => {
+        const b = e.target.closest('[data-c]'); if (!b) return;
+        const id = b.dataset.c; SFX.pop();
+        $('.sch-big', det).innerHTML = schoolSVG(it, id); bump($('.sch-big', det));
+        $('.det-sent', det).innerHTML = `This is ${schNPh(id, it.w)}.`;
+        $$('.sch-dot', det).forEach(x => x.classList.toggle('on', x === b));
+      };
+    }
+  });
+}
+
+/* sentences: the same things in changing colours, with a sentence frame to fill */
+const schPick = (pool = SCHOOL) => { const it = pick(pool); return [it, pick(schCols(it))]; };
+const whatsThis = () => { const [it, c] = schPick(); return { pic: schoolSVG(it, c), q: "What's this?", f: `It's ${aOrAn(c)} ___ ___.`, a: `It's ${schNP(c, it.w)}.`, ah: `It's ${schNPh(c, it.w)}.` }; };
+const SCH_Q = [
+  whatsThis, whatsThis, whatsThis,
+  () => { const [it, c] = schPick(); return { pic: schoolSVG(it, c), q: `What color is the ${it.w}?`, f: "It's ___.", a: `It's ${c}.`, ah: `It's ${cw(c)}.` }; },
+  () => { const [it, c] = schPick(); const other = pick(schCols(it).filter(x => x !== c)), [x, y] = shuffle([c, other]);
+    return { pic: schoolSVG(it, c), q: `Is the ${it.w} ${x} or ${y}?`, f: "It's ___.", a: `It's ${c}.`, ah: `It's ${cw(c)}.` }; },
+  () => { const [it, c] = schPick(); const ask = Math.random() < .5 ? c : pick(schCols(it).filter(x => x !== c));
+    return { pic: schoolSVG(it, c), q: `Is it ${schNP(ask, it.w)}?`, f: "Yes, it is. / No, it isn't.",
+      a: ask === c ? 'Yes, it is!' : `No, it isn't. It's ${schNP(c, it.w)}.`, ah: ask === c ? 'Yes, it is! <span class="e">👍</span>' : `No, it isn't. It's ${schNPh(c, it.w)}.` }; },
+  () => { const [it, c] = schPick(); const o = pick(SCHOOL.filter(x => x !== it));
+    return { pic: schoolSVG(it, c), q: `Is it ${aOrAn(o.w)} ${o.w}?`, f: "No, it isn't. It's ___ ___ ___.", a: `No, it isn't. It's ${schNP(c, it.w)}.`, ah: `No, it isn't. It's ${schNPh(c, it.w)}.` }; },
+  () => { const [it, c] = schPick(SCHOOL.filter(x => !x.noCount)), n = rand(2, 5);
+    return { pic: schoolMany(it, c, n), q: `How many ${it.p} can you see?`, f: 'I can see ___ ___ ___.', a: `I can see ${NUMW[n]} ${c} ${it.p}.`, ah: `I can see ${NUMW[n]} ${cw(c)} ${it.p}.` }; },
+  () => { const [it, c] = schPick(SCHOOL.filter(x => !x.noCount)); return { pic: schoolSVG(it, c), q: 'What do you have?', f: `I have ${aOrAn(c)} ___ ___.`, a: `I have ${schNP(c, it.w)}.`, ah: `I have ${schNPh(c, it.w)}.`, e: '🙋' }; }
+];
+const schoolSay = st => askGame(st, SCH_Q, 'sch-pic');
 
 /* ================= menu ================= */
 const TOPICS = [
@@ -2081,6 +2184,8 @@ const TOPICS = [
   { id: 'dance', e: '💃', name: 'Dance!', sub: 'Move & Freeze', color: '#7FDBCA', modes: [
     { id: 'freeze', e: '🥶', name: 'Freeze dance', run: danceFreeze }, { id: 'simon', e: '🗣️', name: 'Simon says', run: danceSimon }, { id: 'can', e: '💪', name: 'I can…', run: danceCan }] },
   { id: 'talk', e: '💬', name: 'Talk Time', sub: 'Ask a friend!', color: '#A0E7E5', modes: [{ id: 'chain', e: '💬', name: 'Talk chain', run: talkChain }] },
+  { id: 'school', e: '🎒', name: 'School things', sub: 'A red book!', color: '#F7D9B0', modes: [
+    { id: 'learn', e: '✏️', name: 'Learn', run: schoolLearn }, { id: 'say', e: '💬', name: 'Sentences', run: schoolSay }] },
   { id: 'republic', e: FLAG_ICON, name: '29 October', sub: 'Republic Day', color: '#FFB3B3', modes: [
     { id: 'learn', e: '🌙', name: 'Learn', run: repLearn }, { id: 'ask', e: '🙋', name: 'Ask & answer', run: repAsk }] }
 ];
@@ -2088,7 +2193,7 @@ const TOPICS = [
 function HOME(st) {
   st.innerHTML = `<div class="screen home">
     <div class="home-head"><h1>Hello, friends! <span class="e wave">👋</span></h1><p>Let's speak English!</p></div>
-    <div class="tiles">${TOPICS.map((t, i) => `<button class="tile" data-t="${t.id}" style="--c:${t.color};--d:${(i * .2).toFixed(1)}s"><span class="k">${(i + 1) % 10}</span><span class="e te">${t.e}</span><span class="tt"><span class="tn">${t.name}</span><span class="ts">${t.sub}</span></span></button>`).join('')}</div></div>`;
+    <div class="tiles">${TOPICS.map((t, i) => `<button class="tile" data-t="${t.id}" style="--c:${t.color};--d:${(i * .2).toFixed(1)}s">${i < 10 ? `<span class="k">${(i + 1) % 10}</span>` : ''}<span class="e te">${t.e}</span><span class="tt"><span class="tn">${t.name}</span><span class="ts">${t.sub}</span></span></button>`).join('')}</div></div>`;
   st.querySelector('.tiles').onclick = e => { const b = e.target.closest('.tile'); if (b) { SFX.pop(); go(b.dataset.t); } };
   return {};
 }

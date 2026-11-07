@@ -1,6 +1,6 @@
 # English Club – 2. sınıf İngilizce konuşma oyunları
 
-Konuşma kulübünün ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, duygular, renkler, vücut bölümleri, "I can…") göre hazırlanmış, sınıfta projeksiyonla kullanılan etkileşimli konuşma oyunları.
+Konuşma kulübünün ilk oturumlarına (tanışma, okul eşyaları, sayılar, gün/mevsim/hava, duygular, renkler, vücut bölümleri, "I can…") göre hazırlanmış, sınıfta projeksiyonla kullanılan etkileşimli konuşma oyunları.
 
 🌐 **Canlı site:** https://english-club-oyunlar.vercel.app
 
@@ -19,6 +19,7 @@ Konuşma kulübünün ilk oturumlarına (tanışma, sayılar, gün/mevsim/hava, 
 | 👾 Monsters | Touch your…, Monster maker, Which monster? |
 | 💃 Dance | Freeze dance (müzik dahili), Simon says, I can… |
 | 💬 Talk Time | Soru–cevap zinciri (chain drill) |
+| 🎒 School things | Learn (book, pencil, eraser, ruler, sharpener, board… hepsi tek renk; renk değiştirilebilir: "This is a red book."), Sentences ("What's this? – It's a blue pen.", "What color…?", "Is it…?", "How many…?"; cümle kalıbı + cevabı okuma 🔊) |
 | 🇹🇷 29 October | Learn (flag, moon, star, celebration, parade… Türkçe karşılıklarıyla), Ask & answer (bayrak, kutlama, geçit töreni, balonlar, takvim, Ankara; cevabı okuma 🔊) |
 
 ## Yayın (Vercel) ve CI
